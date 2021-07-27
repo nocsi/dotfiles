@@ -1,7 +1,39 @@
+# Editing
+alias aliases='$EDITOR ~/dotfiles/zsh/config/00_aliases.zsh ; zi update aliases ; reload ; echo "Aliases reloaded"'
+alias funcs='$EDITOR ~/dotfiles/zsh/config/20_functions.zsh ; zi update functions ; reload ; echo "Aliases reloaded"'
+alias ke='$EDITOR ~/dotfiles/etc/karabiner.edn'
+alias zshrc='$EDITOR ~/.zshrc ; reload'
+alias .tmux='$EDITOR ~/.tmux.conf.local'
+
+# M1
+alias aa='arch -arm64 '
+alias ax='arch -x86_64 '
+alias ibrewx='ax /usr/local/Homebrew/bin/brew'
+
+# Rust
+alias cg="cargo"
+alias ct="cargo test"
+alias ctw="cargo watch -x test"
+
+# Docker & Kubernetes
+alias d='docker'
+alias dx='docker exec'
+alias ds='docker ps'
+alias dc='docker-compose'
+alias k='kubectl'
+alias kc='kubectx'
+alias kn='kubens'
+alias kg='kubectl get'
+alias kgj='kubectl get job'
+alias kgn='kubectl get node'
+alias kd='kubectl describe'
+alias kx='kubectl exec'
+
 alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
 alias ls="exa -bh --color=auto --icons"
 alias "lst"="exa --color=auto -l -snew --icons"
-alias vi='nvim'
+#alias vi='VIMRUNTIME=$HOME/neovim/runtime nvim'
+alias vi='vim'
 alias vim='nvim'
 alias vimdiff='nvim -d'
 #alias tmux='direnv exec / tmux'
@@ -12,7 +44,7 @@ alias vimdiff='nvim -d'
 alias zplupdate="rm -rf -- ${ZPLGM[SNIPPETS_DIR]} && zinit update"
 alias pandoc="docker run --rm -v `pwd`:/pandoc nocsi/pandoc:1.0"
 alias a="arch -x86_64"
-alias ibrew="arch -x86_64 /usr/local/Homebrew/bin/brew"
 #alias pip="/opt/homebrew/bin/pip3"
 alias macclean="nvm cache clear"
 alias dsclean="find ~/ -name '.DS_Store' -delete"
+alias pyinstall="CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" pyenv install -v"

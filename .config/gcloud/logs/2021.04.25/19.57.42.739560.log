@@ -1,0 +1,18 @@
+2021-04-25 19:57:42,740 DEBUG    root            Loaded Command Group: ['gcloud', 'config']
+2021-04-25 19:57:42,741 DEBUG    root            Loaded Command Group: ['gcloud', 'config', 'list']
+2021-04-25 19:57:42,742 DEBUG    root            Running [gcloud.config.list] with arguments: []
+2021-04-25 19:57:42,743 INFO     root            Display format: "config"
+2021-04-25 19:57:42,777 INFO     ___FILE_ONLY___ [core]
+account = locnguyen@nocsi.org
+disable_usage_reporting = True
+project = corp-286819
+
+2021-04-25 19:57:42,777 INFO     ___FILE_ONLY___ 
+Your active configuration is: [default]
+
+2021-04-25 19:57:42,778 INFO     ___FILE_ONLY___ 
+
+To take a quick anonymous survey, run:
+  $ gcloud survey
+
+

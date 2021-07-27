@@ -1,12 +1,11 @@
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
 export CLICOLOR=1
 export EDITOR="nvim"
-export VISUAL="nvim"
 export TERM="xterm-256color"
-#export TERM="xterm-256color-italic"
 export OPENSSL_STATIC=yes
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+export LANG='en_US.UTF-8'
+export LC_ALL=en_US.UTF-8
 
 export HOMEBREW_NO_ANALYTICS=1
 export SDKROOT=`xcrun --show-sdk-path`
@@ -19,21 +18,10 @@ export PATH="${PATH}:$GOPATH/bin:$GOROOT/bin"
 
 export GEM_HOME=$HOME/.gem
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"
 #export PATH="/Users/locnguyen/.gem/ruby/2.6.0/bin:${PATH}"
 export PATH="$GEM_HOME/bin:/Users/locnguyen/.bin/:${PATH}"
 
-
-#export PATH="$HOME/.cargo/bin:/opt/pivy/bin:$PYENV_ROOT/bin:/usr/local/opt/llvm/bin:$HOME/.mix:$PATH"
-
-export PATH="$HOME/.cargo/bin:/usr/local/opt/llvm/bin:$HOME/.mix:$PATH"
-
-#export PATH="/Applications/Wireshark.app/Contents/MacOS/extcap/:$PATH"
-#export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src"
-#export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-aarch64-apple-darwin/lib/rustlib/src/rust/src"
-
-#PATH="/Users/locnguyen/.perl5/bin${PATH:+:${PATH}}"; export PATH;
-#PERL5LIB="/Users/locnguyen/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-#PERL_LOCAL_LIB_ROOT="/Users/locnguyen/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-#PERL_MB_OPT="--install_base \"/Users/locnguyen/.perl5\""; export PERL_MB_OPT;
-#PERL_MM_OPT="INSTALL_BASE=/Users/locnguyen/.perl5"; export PERL_MM_OPT;
+export LDFLAGS="-L$(brew --prefix xz)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib"
+export CPPFLAGS="-I$(brew --prefix xz)/include  -I$(brew --prefix readline)/include -I$(brew --prefix zlib)/include -I$(xcrun --show-sdk-path)/usr/include"
+export PATH="$HOME/.cargo/bin:/opt/homebrew/opt/llvm/bin:$HOME/.mix:$HOME/.mix/escripts:$PATH"

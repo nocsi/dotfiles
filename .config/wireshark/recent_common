@@ -1,4 +1,4 @@
-# Common recent settings file for Wireshark 3.4.2.
+# Common recent settings file for Wireshark 3.4.6.
 #
 # This file is regenerated each time Wireshark is quit
 # and when changing configuration profile.
@@ -6,19 +6,22 @@
 
 ######## Recent capture files (latest last), cannot be altered through command line ########
 
+recent.capture_file: /Users/locnguyen/Downloads/dump.pcap
+recent.capture_file: /Users/locnguyen/Downloads/dump2.pcap
 
 ######## Recent capture filters (latest last), cannot be altered through command line ########
 
 
 ######## Recent display filters (latest last), cannot be altered through command line ########
 
+recent.display_filter: tcp.stream eq 0
 
 # Main window geometry.
 # Decimal numbers.
-gui.geometry_main_x: 336
-gui.geometry_main_y: 75
-gui.geometry_main_width: 960
-gui.geometry_main_height: 768
+gui.geometry_main_x: 0
+gui.geometry_main_y: 25
+gui.geometry_main_width: 1280
+gui.geometry_main_height: 1331
 
 # Main window maximized.
 # TRUE or FALSE (case-insensitive).
@@ -66,6 +69,15 @@ gui.search_case_sensitive: FALSE
 # Find packet search type.
 # One of: DISPLAY_FILTER, HEX_VALUE, STRING, REGEX
 gui.search_type: DISPLAY_FILTER
+
+# Geometry and maximized state of FollowStreamDialog window.
+# Decimal integers.
+gui.geom.FollowStreamDialog.x: 204
+gui.geom.FollowStreamDialog.y: 25
+gui.geom.FollowStreamDialog.width: 853
+gui.geom.FollowStreamDialog.height: 1331
+# TRUE or FALSE (case-insensitive).
+gui.geom.FollowStreamDialog.maximized: FALSE
 
 # Custom colors.
 # List of custom colors selected in Qt color picker.

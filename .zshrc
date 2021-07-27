@@ -1,4 +1,4 @@
-### Added by Zinit's installer
+## Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
 command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
@@ -17,6 +17,16 @@ zinit light-mode for \
     zinit-zsh/z-a-as-monitor \
     zinit-zsh/z-a-patch-dl \
     zinit-zsh/z-a-bin-gem-node
+
+# Turbo mode with "wait"
+zinit light-mode lucid wait for \
+  is-snippet OMZ::lib/history.zsh \
+  MichaelAquilina/zsh-you-should-use \
+  romkatv/zsh-prompt-benchmark \
+  zdharma/history-search-multi-word \
+  mollifier/cd-gitroot \
+  atload"alias zi='zinit'" \
+    ajeetdsouza/zoxide
 
 typeset -g HISTSIZE=290000 SAVEHIST=290000 HISTFILE=~/.zhistory
 setopt inc_append_history
@@ -84,6 +94,8 @@ autoload -Uz _zinit
 NVM_LAZY_LOAD=true
 
 #zinit light "zsh-users/zsh-history-substring-search"
+#zinit ice wait"1" atload'_history_substring_search_bind_keys' lucid
+#zinit light zsh-users/zsh-history-substring-search
 
 # diff-so-fancy
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
@@ -210,6 +222,13 @@ zinit ice atclone'PYENV_ROOT="$PWD" ./libexec/pyenv init - > zpyenv.zsh && git c
     as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
 zinit light pyenv/pyenv
 
+if [ -d "$HOME/.rbenv" ]; then
+  zinit light-mode wait lucid for \
+    atload'eval "$(rbenv init - --no-rehash)"' \
+      zdharma/null
+fi
+
+
 zinit ice wait"0" lucid
 zinit light htlsne/zinit-rbenv
 eval "$(rbenv init -)"
@@ -240,6 +259,19 @@ zinit light "lukechilds/zsh-nvm"
 
 # zinit ice as"completion"
 # zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+
+zinit wait lucid for \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma/fast-syntax-highlighting \
+  atload"zpcdreplay" wait"1" \
+    OMZP::kubectl \
+  blockf \
+    zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  as"completion" is-snippet \
+    https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
+    https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
 
 zinit ice as"completion" id-as"dc-completion"
 zinit load docker/compose
@@ -283,7 +315,7 @@ PURE_PROMPT_SYMBOL="${SYMBOLS[$RANDOM % ${#SYMBOLS[@]} + 1]}"
 source $HOME/.exports
 source $HOME/.aliases
 
-[[ -s "$HOME/.kerl/23.2.6/activate" ]] && source "$HOME/.kerl/23.2.6/activate"
+[[ -s "$HOME/.kerl/24.0.3/activate" ]] && source "$HOME/.kerl/24.0.3/activate"
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -291,3 +323,32 @@ source $HOME/.aliases
 fpath=($HOME/.config/fpath $fpath)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/locnguyen/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/locnguyen/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/locnguyen/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/locnguyen/google-cloud-sdk/completion.zsh.inc'; fi
+
+if [[ "$(uname -m)" == "arm64" ]]; then
+  # Use arm64 brew, with fallback to x86 brew
+  if [ -f /opt/homebrew/bin/brew ]; then
+    export PATH="/usr/local/bin${PATH+:$PATH}";
+    eval $(/opt/homebrew/bin/brew shellenv)
+  fi
+else
+  # Use x86 brew, with fallback to arm64 brew
+  if [ -f /usr/local/bin/brew ]; then
+    export PATH="/opt/homebrew/bin${PATH+:$PATH}";
+    eval $(/usr/local/bin/brew shellenv)
+  fi
+fi
+
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
+# NixOS
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+  . ~/.nix-profile/etc/profile.d/nix.sh;
+fi
