@@ -124,13 +124,13 @@ zinit load zdharma/zinit-crasis
 #autoload -Uz compinit
 #compinit
 
-zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" \
+zinit wait lucid for \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
       zdharma/fast-syntax-highlighting \
-  atload"_zsh_autosuggest_start" \
-      zsh-users/zsh-autosuggestions \
-  blockf atpull'zinit creinstall -q .' \
-      zsh-users/zsh-completions
+  blockf  \
+      zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+      zsh-users/zsh-autosuggestions
 
 #zinit ice blockf atpull'zinit creinstall -q .'
 #zinit light zsh-users/zsh-completions
@@ -263,8 +263,6 @@ zinit light "lukechilds/zsh-nvm"
 zinit wait lucid for \
   atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \
-  atload"zpcdreplay" wait"1" \
-    OMZP::kubectl \
   blockf \
     zsh-users/zsh-completions \
   atload"!_zsh_autosuggest_start" \
