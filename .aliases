@@ -42,7 +42,7 @@ alias vimdiff='nvim -d'
 #alias curlwifi="/usr/local/opt/curl/bin/curl --progress-bar --interface en0 -C - -O"
 #alias pyenv="CFLAGS='-I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include' LDFLAGS='-L$(brew --prefix openssl)/lib pyenv'"
 alias zplupdate="rm -rf -- ${ZPLGM[SNIPPETS_DIR]} && zinit update"
-alias pandoc="docker run --rm -v `pwd`:/pandoc nocsi/pandoc:1.0"
+#alias pandoc="docker run --rm -v `pwd`:/pandoc nocsi/pandoc:1.0"
 alias a="arch -x86_64"
 #alias pip="/opt/homebrew/bin/pip3"
 alias macclean="nvm cache clear"

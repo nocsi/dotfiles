@@ -1,5 +1,7 @@
+[init]
+  defaultBranch = main
 [color]
-	ui = true
+  ui = true
 [user]
   name = Loc Nguyen
   email = l@nocsi.com
