@@ -19,13 +19,11 @@ export PATH="${PATH}:$GOPATH/bin:$GOROOT/bin"
 export GEM_HOME=$HOME/.gem
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"
-#export PATH="/Users/locnguyen/.gem/ruby/2.6.0/bin:${PATH}"
-#export PATH="$GEM_HOME/bin:/Users/locnguyen/.bin/:${PATH}"
-#export PATH="${GEM_HOME}/bin:/Users/locnguyen/.bin/:/Users/locnguyen/.zinit/plugins/rust/bin:${PATH}"
-#export PATH="${GEM_HOME}/bin:/Users/locnguyen/.bin/:/Users/locnguyen/.zinit/plugins/rust/bin:${PATH}"
 
 export PYTHONPATH=$PYTHONPATH:/Users/locnguyen/Library/Python/3.9/lib/python/site-packages/
 
 export LDFLAGS="-L$(brew --prefix xz)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib"
 export CPPFLAGS="-I$(brew --prefix xz)/include  -I$(brew --prefix readline)/include -I$(brew --prefix zlib)/include -I$(xcrun --show-sdk-path)/usr/include"
-export PATH="$HOME/.cargo/bin:/opt/homebrew/opt/llvm/bin:$HOME/.mix:$HOME/.mix/escripts:$HOME/Library/Python/3.9/bin:$PATH"
+#export PATH="$HOME/.cargo/bin:/opt/homebrew/opt/llvm/bin:$HOME/.mix:$HOME/.mix/escripts:$HOME/Library/Python/3.9/bin:$PATH"
+export PATH="$PATH:/Users/locnguyen/Library/Python/3.10/bin"
+
