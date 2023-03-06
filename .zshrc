@@ -11,7 +11,7 @@ zstyle ':z4h:' auto-update      'no'
 zstyle ':z4h:' auto-update-days '28'
 
 # Keyboard type: 'mac' or 'pc'.
-zstyle ':z4h:bindkey' keyboard  'pc'
+zstyle ':z4h:bindkey' keyboard  'mac'
 
 # Don't start tmux.
 zstyle ':z4h:' start-tmux       no
@@ -56,7 +56,29 @@ z4h install ohmyzsh/ohmyzsh || return
 z4h init || return
 
 # Extend PATH.
+#
+if [[ "$(uname -m)" == "arm64" ]]; then
+  # Use arm64 brew, with fallback to x86 brew
+  if [ -f /opt/homebrew/bin/brew ]; then
+    path=(/opt/homebrew/bin $path)
+    eval $(/opt/homebrew/bin/brew shellenv)
+  fi
+else
+  # Use x86 brew, with fallback to arm64 brew
+  if [ -f /usr/local/bin/brew ]; then
+    path=(/usr/local/bin $path)
+    eval $(/usr/local/bin/brew shellenv)
+  fi
+fi
+
+export PYENV_ROOT="$HOME/.pyenv"
 path=(~/bin $path)
+path=("$(pyenv root)/shims" $path)
+path=("$(pyenv root)/bin" $path)
+path=(~/.cargo/bin /opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts ~/Library/Python/3.9/bin $path)
+path=(/opt/homebrew/opt/llvm/bin $path)
+
+#export PATH="$(pyenv root)/shims:${PATH}"
 
 # Export environment variables.
 export GPG_TTY=$TTY
@@ -64,29 +86,14 @@ export GPG_TTY=$TTY
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
 
-z4h source ~/.aliases
+#z4h source ~/.aliases
 z4h source ~/.exports
 
 
-[[ -s "$HOME/.kerl/24.3.3/activate" ]] && z4h source "$HOME/.kerl/24.3.3/activate"
-[[ -s "$HOME/.kiex/scripts/kiex" ]] && z4h source "$HOME/.kiex/scripts/kiex"
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-if [[ "$(uname -m)" == "arm64" ]]; then
-  # Use arm64 brew, with fallback to x86 brew
-  if [ -f /opt/homebrew/bin/brew ]; then
-    export PATH="/usr/local/bin${PATH+:$PATH}";
-    eval $(/opt/homebrew/bin/brew shellenv)
-  fi
-else
-  # Use x86 brew, with fallback to arm64 brew
-  if [ -f /usr/local/bin/brew ]; then
-    export PATH="/opt/homebrew/bin${PATH+:$PATH}";
-    eval $(/usr/local/bin/brew shellenv)
-  fi
-fi
-
+[[ -s "$HOME/.kerl/25.2.2/activate" ]] && z4h source "$HOME/.kerl/25.2.2/activate"
+#[[ -s "$HOME/.kiex/scripts/kiex" ]] && z4h source "$HOME/.kiex/scripts/kiex"
+test -s "$HOME/.kiex/scripts/kiex" && z4h source "$HOME/.kiex/scripts/kiex"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && z4h source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
@@ -118,6 +125,14 @@ compdef _directories md
 
 # Define aliases.
 alias tree='tree -a -I .git'
+alias aa='arch -arm64 '
+alias ax='arch -x86_64 '
+alias ls="exa -bh --color=auto --icons"
+alias vi='vim'
+alias vim='nvim'
+alias vimdiff='nvim -d'
+alias dsclean="find ~/ -name '.DS_Store' -delete"
+alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
 
 # Add flags to existing aliases.
 #alias ls="${aliases[ls]:-ls} -A"

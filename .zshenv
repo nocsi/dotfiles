@@ -49,7 +49,7 @@ if [ -e /usr/share/terminfo/x/xterm-256color ]; then
   else
     export TERM='xterm-color'
   fi
-source "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
 
 export EDITOR=nvim
-. "$HOME/.cargo/env"
+#. "$HOME/.cargo/env"
