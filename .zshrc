@@ -9,28 +9,51 @@
 zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
+zstyle ':z4h:*'                 channel                testing
+
 
 # Keyboard type: 'mac' or 'pc'.
 zstyle ':z4h:bindkey' keyboard  'mac'
 
 # Don't start tmux.
 zstyle ':z4h:' start-tmux       no
+zstyle ':z4h:' term-vresize top
 
-# Mark up shell's output with semantic information.
-zstyle ':z4h:' term-shell-integration 'yes'
+# Move prompt to the bottom when zsh starts and on Ctrl+L.
+zstyle ':z4h:' prompt-at-bottom 'yes'
+alias clear=z4h-clear-screen-soft-bottom
+
 
 # Right-arrow key accepts one character ('partial-accept') from
 # command autosuggestions or the whole thing ('accept')?
-zstyle ':z4h:autosuggestions' forward-char 'accept'
+# zstyle ':z4h:autosuggestions' forward-char 'accept'
+zstyle ':z4h:autosuggestions' forward-char accept
+zstyle ':z4h:autosuggestions' vi-forward-char accept
+zstyle ':z4h:autosuggestions' end-of-line  partial-accept
 
-# Recursively traverse directories when TAB-completing files.
-zstyle ':z4h:fzf-complete' recurse-dirs 'no'
+zstyle ':z4h:term-title:ssh' preexec '%n@'${${${Z4H_SSH##*:}//\%/%%}:-%m}': ${1//\%/%%}'
+zstyle ':z4h:term-title:ssh' precmd  '%n@'${${${Z4H_SSH##*:}//\%/%%}:-%m}': %~'
 
-# Enable direnv to automatically source .envrc files.
+zstyle ':z4h:command-not-found' to-file                "$TTY"
+zstyle ':z4h:' term-shell-integration 'yes'
+zstyle ':z4h:' propagate-cwd yes
 zstyle ':z4h:direnv'         enable 'yes'
-# Show "loading" and "unloading" notifications from direnv.
 zstyle ':z4h:direnv:success' notify 'yes'
 
+if [[ -e ~/.ssh/id_rsa ]]; then
+  zstyle ':z4h:ssh-agent:' start      yes
+  zstyle ':z4h:ssh-agent:' extra-args -t 20h
+else
+  : ${GITSTATUS_AUTO_INSTALL:=0}
+fi
+
+
+bindkey '^I' autosuggest-accept
+
+# Recursively traverse directories when TAB-completing files.
+zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
+#zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
+zstyle ':z4h:fzf-complete' fzf-bindings tab:repeat
 # Enable ('yes') or disable ('no') automatic teleportation of z4h over
 # SSH when connecting to these hosts.
 zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
@@ -41,6 +64,9 @@ zstyle ':z4h:ssh:*'                   enable 'no'
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
 zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
+
+bindkey z4h-eof Ctrl+D
+setopt ignore_eof
 
 # Clone additional Git repositories from GitHub.
 #
@@ -54,6 +80,7 @@ z4h install ohmyzsh/ohmyzsh || return
 # is fully initialized. Everything that requires user interaction or can
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
+bindkey -v
 
 # Extend PATH.
 #
@@ -71,11 +98,8 @@ else
   fi
 fi
 
-export PYENV_ROOT="$HOME/.pyenv"
 path=(~/bin $path)
-path=("$(pyenv root)/shims" $path)
-path=("$(pyenv root)/bin" $path)
-path=(~/.cargo/bin /opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts ~/Library/Python/3.9/bin $path)
+#path=(/opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts $path)
 path=(/opt/homebrew/opt/llvm/bin $path)
 
 #export PATH="$(pyenv root)/shims:${PATH}"
@@ -84,19 +108,15 @@ path=(/opt/homebrew/opt/llvm/bin $path)
 export GPG_TTY=$TTY
 
 # Source additional local files if they exist.
-z4h source ~/.env.zsh
+#z4h source ~/.env.zsh
 
 #z4h source ~/.aliases
-z4h source ~/.exports
 
+# Export environment variables.
+export GPG_TTY=$TTY
 
-[[ -s "$HOME/.kerl/25.2.2/activate" ]] && z4h source "$HOME/.kerl/25.2.2/activate"
-#[[ -s "$HOME/.kiex/scripts/kiex" ]] && z4h source "$HOME/.kiex/scripts/kiex"
-test -s "$HOME/.kiex/scripts/kiex" && z4h source "$HOME/.kiex/scripts/kiex"
-test -e "${HOME}/.iterm2_shell_integration.zsh" && z4h source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Use additional Git repositories pulled in with `z4h install`.
-#
 # This is just an example that you should delete. It does nothing useful.
 z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
 z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
@@ -112,6 +132,11 @@ z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
 z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
 z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
 z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
+#asdf 
+z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
+z4h source -- $HOME/.asdf/plugins/golang/set-env.zsh
+
+z4h source ~/.exports
 
 # Autoload functions.
 autoload -Uz zmv
@@ -134,9 +159,11 @@ alias vimdiff='nvim -d'
 alias dsclean="find ~/ -name '.DS_Store' -delete"
 alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
 
-# Add flags to existing aliases.
-#alias ls="${aliases[ls]:-ls} -A"
-
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
+
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+z4h source -c -- $ZDOTDIR/.zshrc-private
+z4h compile -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
+z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}

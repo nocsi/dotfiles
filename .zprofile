@@ -16,7 +16,7 @@ fi
 #
 # Paths
 #
-eval "$(pyenv init --path)"
+#eval "$(pyenv init --path)"
 
 # Ensure path arrays do not contain duplicates.
 declare -gU cdpath fpath mailpath path
@@ -52,3 +52,5 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+# Added by OrbStack: command-line tools and integration
+# source ~/.orbstack/shell/init.zsh 2>/dev/null || :

@@ -1,0 +1,204 @@
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[env]
+TERM = "xterm-256color"
+#TERM = "screen-256color"
+#TERM = "alacritty-direct"
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "ProFontWindows Nerd Font"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "ProFontWindows Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "ProFontWindows Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+chars = "\u0003"
+key = "C"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0005"
+key = "D"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0013"
+key = "R"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0017"
+key = "W"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0001"
+key = "A"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\b"
+key = "H"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = """
+
+"""
+key = "J"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000B"
+key = "K"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\f"
+key = "L"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0015"
+key = "Back"
+mods = "Super"
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "Left"
+mods = "Super"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "Right"
+mods = "Super"
+
+[[keyboard.bindings]]
+chars = "\u001BOH"
+key = "Left"
+mode = "AppCursor"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001BOF"
+key = "Right"
+mode = "AppCursor"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bj"
+key = "J"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bk"
+key = "K"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bh"
+key = "H"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bl"
+key = "L"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001Bn"
+key = "N"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B-"
+key = "Minus"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B="
+key = "Equals"
+mods = "Alt"
+
+[[mouse.bindings]]
+action = "Paste"
+mouse = "Middle"
+
+[scrolling]
+history = 50000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[shell]
+program = "/opt/homebrew/bin/zsh"
+
+[window]
+decorations = "buttonless"
+decorations_theme_variant = "Dark"
+dynamic_padding = false
+dynamic_title = true
+startup_mode = "Windowed"
+opacity = 0.9
+
+[window.padding]
+x = 4
+y = 4
+
+[window.position]
+x = 50
+y = 50
+
+[colors.primary]
+background = "#101010"
+foreground = "#ffffff"
+
+[colors.footer_bar.matches]
+background = "CellBackground"
+foreground = "#ee5396"
+
+[colors.footer_bar]
+background = "#262626"
+foreground = "#ffffff"
+
+[colors.normal]
+black = "#262626"
+magenta = "#ff7eb6"
+green = "#42be65"
+yellow = "#ffe97b"
+blue = "#33b1ff"
+red = "#ee5396"
+cyan = "#3ddbd9"
+white = "#dde1e6"
+
+[colors.bright]
+black = "#393939"
+magenta = "#ff7eb6"
+green = "#42be65"
+yellow = "#ffe97b"
+blue = "#33b1ff"
+red = "#ee5396"
+cyan = "#3ddbd9"
+white = "#ffffff"
