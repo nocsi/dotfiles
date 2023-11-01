@@ -9,7 +9,7 @@
 zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
-zstyle ':z4h:*'                 channel                testing
+# zstyle ':z4h:*'                 channel                testing
 
 
 # Keyboard type: 'mac' or 'pc'.
@@ -17,36 +17,38 @@ zstyle ':z4h:bindkey' keyboard  'mac'
 
 # Don't start tmux.
 zstyle ':z4h:' start-tmux       no
+
+# Mark up shell's output with semantic information.
+zstyle ':z4h:' term-shell-integration 'yes'
+
 zstyle ':z4h:' term-vresize top
 
 # Move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
 alias clear=z4h-clear-screen-soft-bottom
 
-
 # Right-arrow key accepts one character ('partial-accept') from
 # command autosuggestions or the whole thing ('accept')?
 # zstyle ':z4h:autosuggestions' forward-char 'accept'
 zstyle ':z4h:autosuggestions' forward-char accept
-zstyle ':z4h:autosuggestions' vi-forward-char accept
-zstyle ':z4h:autosuggestions' end-of-line  partial-accept
 
-zstyle ':z4h:term-title:ssh' preexec '%n@'${${${Z4H_SSH##*:}//\%/%%}:-%m}': ${1//\%/%%}'
-zstyle ':z4h:term-title:ssh' precmd  '%n@'${${${Z4H_SSH##*:}//\%/%%}:-%m}': %~'
+# zstyle ':z4h:autosuggestions' vi-forward-char accept
+# zstyle ':z4h:autosuggestions' end-of-line  partial-accept
+
+#zstyle ':z4h:term-title:ssh' preexec '%n@'${${${Z4H_SSH##*:}//\%/%%}:-%m}': ${1//\%/%%}'
+#zstyle ':z4h:term-title:ssh' precmd  '%n@'${${${Z4H_SSH##*:}//\%/%%}:-%m}': %~'
 
 zstyle ':z4h:command-not-found' to-file                "$TTY"
-zstyle ':z4h:' term-shell-integration 'yes'
 zstyle ':z4h:' propagate-cwd yes
 zstyle ':z4h:direnv'         enable 'yes'
 zstyle ':z4h:direnv:success' notify 'yes'
 
-if [[ -e ~/.ssh/id_rsa ]]; then
-  zstyle ':z4h:ssh-agent:' start      yes
-  zstyle ':z4h:ssh-agent:' extra-args -t 20h
-else
-  : ${GITSTATUS_AUTO_INSTALL:=0}
-fi
-
+#if [[ -e ~/.ssh/id_rsa ]]; then
+#  zstyle ':z4h:ssh-agent:' start      yes
+#  zstyle ':z4h:ssh-agent:' extra-args -t 20h
+#else
+#  : ${GITSTATUS_AUTO_INSTALL:=0}
+#fi
 
 bindkey '^I' autosuggest-accept
 
@@ -56,8 +58,8 @@ zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
 zstyle ':z4h:fzf-complete' fzf-bindings tab:repeat
 # Enable ('yes') or disable ('no') automatic teleportation of z4h over
 # SSH when connecting to these hosts.
-zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
-zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
+# zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
+# zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
 # The default value if none of the overrides above match the hostname.
 zstyle ':z4h:ssh:*'                   enable 'no'
 
@@ -98,11 +100,9 @@ else
   fi
 fi
 
-path=(~/bin $path)
+# path=(~/bin $path)
 #path=(/opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts $path)
-path=(/opt/homebrew/opt/llvm/bin $path)
-
-#export PATH="$(pyenv root)/shims:${PATH}"
+# path=(/opt/homebrew/opt/llvm/bin $path)
 
 # Export environment variables.
 export GPG_TTY=$TTY
@@ -113,8 +113,7 @@ export GPG_TTY=$TTY
 #z4h source ~/.aliases
 
 # Export environment variables.
-export GPG_TTY=$TTY
-
+# export GPG_TTY=$TTY
 
 # Use additional Git repositories pulled in with `z4h install`.
 # This is just an example that you should delete. It does nothing useful.
@@ -132,6 +131,7 @@ z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
 z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
 z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
 z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
+
 #asdf 
 z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
 z4h source -- $HOME/.asdf/plugins/golang/set-env.zsh
@@ -142,8 +142,8 @@ z4h source ~/.exports
 autoload -Uz zmv
 
 # Define functions and completions.
-function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-compdef _directories md
+#function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
+#compdef _directories md
 
 # Define named directories: ~w <=> Windows home directory on WSL.
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
