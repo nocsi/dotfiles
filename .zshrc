@@ -82,7 +82,7 @@ z4h install ohmyzsh/ohmyzsh || return
 # is fully initialized. Everything that requires user interaction or can
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
-bindkey -v
+# bindkey -v
 
 # Extend PATH.
 #
@@ -140,13 +140,12 @@ z4h source ~/.exports
 
 # Autoload functions.
 autoload -Uz zmv
-
 # Define functions and completions.
-#function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-#compdef _directories md
+# function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
+# compdef _directories md
 
 # Define named directories: ~w <=> Windows home directory on WSL.
-[[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
+# [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Define aliases.
 alias tree='tree -a -I .git'
@@ -167,3 +166,11 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 z4h source -c -- $ZDOTDIR/.zshrc-private
 z4h compile -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
 z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
+
+# pnpm
+export PNPM_HOME="/Users/locnguyen/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

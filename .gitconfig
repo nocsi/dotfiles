@@ -28,3 +28,10 @@
 	editor = nvim
 [tag]
 	forceSignAnnotated = true
+[push]
+	default = current
+[pull]
+	default = current
+[oh-my-zsh]
+	hide-status = 1
+	hide-dirty = 1
