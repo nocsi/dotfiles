@@ -4,63 +4,7 @@
 #         without any warranty.
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
-
-# -- navigation ----------------------------------------------------------------
-
-# if you're running tmux within iTerm2
-#   - and tmux is 1.9 or 1.9a
-#   - and iTerm2 is configured to let option key act as +Esc
-#   - and iTerm2 is configured to send [1;9A -> [1;9D for option + arrow keys
-# then uncomment the following line to make Meta + arrow keys mapping work
-#set -ga terminal-overrides "*:kUP3=\e[1;9A,*:kDN3=\e[1;9B,*:kRIT3=\e[1;9C,*:kLFT3=\e[1;9D"
-#set-option -a terminal-overrides ",alacritty:RGB"
-#set-option default-terminal "tmux-256color"
-set -sa default-terminal "screen-256color"
-#set -sa terminal-features ",xterm-256color:RGB"
-#set-option -a terminal-overrides ",*256col*:RGB"
-set-option -a terminal-overrides ",alacritty:RGB"
-set-option -ga terminal-overrides "alacritty:Tc"
-
-# smart pane switching with awareness of vim splits
-is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-bind h if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
-bind j if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
-bind k if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
-bind l if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-
-#bind h select-pane -L
-#bind j select-pane -D
-#bind k select-pane -U
-#bind l select-pane -R
-
-# resize panes using PREFIX H, J, K, L
-bind -r H resize-pane -L 2
-bind -r J resize-pane -D 2
-bind -r K resize-pane -U 2
-bind -r L resize-pane -R 2
-
-
-# Reordering windows
-bind-key P swap-window -t -1
-bind-key N swap-window -t +1
-
-# Sessions
-
-bind ^ switch-client -l
-bind -n M-BSpace switch-client -l
-
-# don't rename windows automatically
-set-option -g allow-rename off
-set-option -g mouse on
-
-set-window-option -g mode-keys vi
-
-bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
-bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
-
-unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode when dragging with mouse
-
+# set-option -g default-shell /opt/homebrew/bin/zsh
 
 # -- session creation ----------------------------------------------------------
 
@@ -70,11 +14,13 @@ unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode when dragging wi
 #   - disabled (do not modify new-session bindings)
 tmux_conf_new_session_prompt=false
 
+
 # -- windows & pane creation ---------------------------------------------------
 
 # new window retains current path, possible values are:
 #   - true
 #   - false (default)
+#   - disabled (do not modify new-window bindings)
 tmux_conf_new_window_retain_current_path=false
 
 # new window tries to reconnect ssh sessions, possible values are:
@@ -86,12 +32,15 @@ tmux_conf_new_window_reconnect_ssh=false
 # new pane retains current path, possible values are:
 #   - true (default)
 #   - false
+#   - disabled (do not modify split-window bindings)
 tmux_conf_new_pane_retain_current_path=true
 
-# new pane tries to reconnect ssh sessions (experimental), possible values are:
+# new pane tries to reconnect ssh sessions, possible values are:
 #   - true
 #   - false (default)
+#   - disabled (do not modify split-window bindings)
 tmux_conf_new_pane_reconnect_ssh=false
+
 
 # -- display -------------------------------------------------------------------
 
@@ -161,7 +110,7 @@ tmux_conf_theme_colour_17="#e4e4e4"   # white
 tmux_conf_theme_window_fg="default"
 tmux_conf_theme_window_bg="default"
 
-# highlight focused pane (tmux >= 2.1), possible values are:
+# highlight focused pane, possible values are:
 #   - true
 #   - false (default)
 tmux_conf_theme_highlight_focused_pane=false
@@ -230,12 +179,9 @@ tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
 tmux_conf_theme_window_status_fg="$tmux_conf_theme_colour_3"
 tmux_conf_theme_window_status_bg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_window_status_attr="none"
-tmux_conf_theme_window_status_format="#I #W"
-#tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
-#tmux_conf_theme_window_status_format="#{circled_window_index} #W"
-#tmux_conf_theme_window_status_format="#I #W#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
 
 # window current status style
 #   - built-in variables are:
@@ -250,8 +196,7 @@ tmux_conf_theme_window_status_format="#I #W"
 tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_4"
 tmux_conf_theme_window_status_current_attr="bold"
-tmux_conf_theme_window_status_current_format="#I #W"
-#tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_current_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
 
@@ -271,14 +216,14 @@ tmux_conf_theme_window_status_last_bg="$tmux_conf_theme_colour_2"
 tmux_conf_theme_window_status_last_attr="none"
 
 # status left/right sections separators
-#tmux_conf_theme_left_separator_main=""
-#tmux_conf_theme_left_separator_sub="|"
-#tmux_conf_theme_right_separator_main=""
-#tmux_conf_theme_right_separator_sub="|"
-tmux_conf_theme_left_separator_main="\uE0B0"  # /!\ you don't need to install Powerline
-tmux_conf_theme_left_separator_sub="\uE0B1"   #   you only need fonts patched with
-tmux_conf_theme_right_separator_main="\uE0B2" #   Powerline symbols or the standalone
-tmux_conf_theme_right_separator_sub="\uE0B3"  #   PowerlineSymbols.otf font, see README.md
+tmux_conf_theme_left_separator_main=""
+tmux_conf_theme_left_separator_sub="|"
+tmux_conf_theme_right_separator_main=""
+tmux_conf_theme_right_separator_sub="|"
+#tmux_conf_theme_left_separator_main='\uE0B0'  # /!\ you don't need to install Powerline
+#tmux_conf_theme_left_separator_sub='\uE0B1'   #   you only need fonts patched with
+#tmux_conf_theme_right_separator_main='\uE0B2' #   Powerline symbols or the standalone
+#tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see README.md
 
 # status left/right content:
 #   - separate main sections with "|"
@@ -393,14 +338,17 @@ tmux_conf_battery_status_discharging="↓"    # U+2193
 tmux_conf_theme_clock_colour="$tmux_conf_theme_colour_4"
 tmux_conf_theme_clock_style="24"
 
+
 # -- clipboard -----------------------------------------------------------------
 
 # in copy mode, copying selection also copies to the OS clipboard
 #   - true
 #   - false (default)
+#   - disabled
 # on macOS, this requires installing reattach-to-user-namespace, see README.md
-# on Linux, this requires xsel or xclip
+# on Linux, this requires xsel, xclip or wl-copy
 tmux_conf_copy_to_os_clipboard=true
+
 
 # -- user customizations -------------------------------------------------------
 # this is the place to override or undo settings
@@ -423,8 +371,12 @@ set -g mouse on
 # set -g prefix C-a
 # bind C-a send-prefix
 
+# if you don't want Oh my tmux! to alter a binding, use #!important
+# bind c new-window -c '#{pane_current_path}' #!important
+
 # move status line to top
 #set -g status-position top
+
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -461,13 +413,13 @@ tmux_conf_uninstall_plugins_on_reload=true
 
 # to enable a plugin, use the 'set -g @plugin' syntax:
 # visit https://github.com/tmux-plugins for available plugins
+# set -g @plugin 'tmux-plugins/tmux-copycat'
+#set -g @plugin 'tmux-plugins/tmux-cpu'
 #set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'schasse/tmux-jump'
-set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'jimeh/tmux-themepack'
-set -g @continuum-restore 'on'
+#set -g @continuum-restore 'on'
+set -g @plugin "arcticicestudio/nord-tmux"
+
 
 # -- custom variables ----------------------------------------------------------
 
@@ -494,4 +446,4 @@ set -g @continuum-restore 'on'
 # }
 #
 # "$@"
-# # /!\ do not remove the previous line
+# /!\ do not remove the previous line

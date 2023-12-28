@@ -44,12 +44,11 @@ fi
 
 setopt rcs
 
-if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-    export TERM='xterm-256color'
-  else
-    export TERM='xterm-color'
-  fi
-#source "$HOME/.cargo/env"
+#if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+#  export TERM='xterm-256color'
+#else
+#  export TERM='xterm-color'
+#fi
 
-export EDITOR=nvim
-#. "$HOME/.cargo/env"
+#export EDITOR=nvim
+

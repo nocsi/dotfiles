@@ -117,6 +117,7 @@ brew "llvm"
 brew "llvm@14"
 brew "lsusb"
 brew "mas"
+brew "md5deep"
 brew "moreutils"
 brew "neofetch"
 brew "neovim"
@@ -126,11 +127,13 @@ brew "node"
 brew "openssl@1.1"
 brew "p7zip"
 brew "pkg-config"
+brew "postgresql@14"
 brew "protobuf"
 brew "re2c"
 brew "reattach-to-user-namespace"
 brew "rust"
 brew "scdoc"
+brew "semgrep"
 brew "shellcheck"
 brew "shfmt"
 brew "standard"
@@ -181,7 +184,7 @@ cask "font-3270-nerd-font"
 cask "font-agave-nerd-font"
 cask "font-anonymice-nerd-font"
 cask "font-arimo-nerd-font"
-cask "font-aurulent-nerd-font"
+cask "font-aurulent-sans-mono-nerd-font"
 cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 cask "font-monofur-nerd-font"
@@ -223,23 +226,3 @@ cask "temurin"
 cask "vmware-fusion"
 cask "whisky"
 cask "wireshark"
-mas "Amphetamine", id: 937984704
-mas "Bakery", id: 1575220747
-mas "Compressor", id: 424390742
-mas "DaisyDisk", id: 411643860
-mas "Final Cut Pro", id: 424389933
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Logic Pro", id: 634148309
-mas "Motion", id: 434290957
-mas "Numbers", id: 409203825
-mas "One Thing", id: 1604176982
-mas "Pages", id: 409201541
-mas "Pixelmator Pro", id: 1289583905
-mas "Reeder", id: 1529448980
-mas "Remote Desktop", id: 409907375
-mas "SnippetsLab", id: 1006087419
-mas "Synalyze It! Pro", id: 475193367
-mas "Twitter", id: 1482454543
-mas "Xcode", id: 497799835
