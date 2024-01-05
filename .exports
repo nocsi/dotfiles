@@ -17,13 +17,50 @@ export PIP_REQUIRE_VIRTUALENV=false
 
 # alias brew="env PATH=\"\${PATH//.asdf/shims:/}\" brew"
 
-export GOPATH=$(mise where golang)/packages
-export PATH="${PATH}:${GOPATH}/bin"
+#export GOPATH=$(mise where golang)/packages
+#export PATH="${PATH}:${GOPATH}/bin"
 #export PATH="${PATH}:$(go env GOPATH)/bin"
 
-export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"
+#export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
+#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"
+#export PYTHON_CONFIGURE_OPTS="--enable-framework --enable-optimizations --with-lto=full"
 
-export LDFLAGS="-L$(brew --prefix llvm)/lib -L$(brew --prefix xz)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib"
-export CPPFLAGS="-I$(brew --prefix llvm)/include -I$(brew --prefix xz)/include  -I$(brew --prefix readline)/include -I$(brew --prefix zlib)/include -I$(xcrun --show-sdk-path)/usr/include"
+export LDFLAGS="-L/opt/homebrew/lib \
+-L/opt/homebrew/opt/bzip2/lib \
+-L/opt/homebrew/opt/curl/lib \
+-L/opt/homebrew/opt/llvm/lib \
+-L/opt/homebrew/opt/ncurses/lib \
+-L/opt/homebrew/opt/xz/lib \
+-L/opt/homebrew/opt/zlib/lib \
+-L/opt/homebrew/opt/readline/lib \
+-L/opt/homebrew/opt/openssl@1.1/lib \
+-L/opt/homebrew/opt/openssl@3/lib \
+-L/opt/homebrew/opt/libffi/lib"
+
+export CPPFLAGS="-I/opt/homebrew/include \
+-I/opt/homebrew/opt/llvm/include \
+-I/opt/homebrew/opt/bzip2/include \
+-I/opt/homebrew/opt/curl/include \
+-I/opt/homebrew/opt/ncurses/include \
+-I/opt/homebrew/opt/xz/include \
+-I/opt/homebrew/opt/zlib/include \
+-I/opt/homebrew/opt/readline/include \
+-I/opt/homebrew/opt/openssl@1.1/include \
+-I/opt/homebrew/opt/openssl@3/include \
+-I/opt/homebrew/opt/libffi/include \
+-I$(xcrun --show-sdk-path)/usr/include"
+
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig \
+/opt/homebrew/opt/openssl@1.1/lib/pkgconfig \
+/opt/homebrew/opt/openssl@3/lib/pkgconfig \
+/opt/homebrew/opt/bzip2/lib/pkgconfig \
+/opt/homebrew/opt/curl/lib/pkgconfig \
+/opt/homebrew/opt/xz/lib/pkgconfig \
+/opt/homebrew/opt/zlib/lib/pkgconfig \
+/opt/homebrew/opt/readline/lib/pkgconfig \
+/opt/homebrew/share/pkgconfig"
+
 export DYLD_LIBRARY_PATH=/opt/homebrew/opt/unicorn/lib/:$DYLD_LIBRARY_PATH
+
+# export LDFLAGS="-L$(brew --prefix)/lib -L$(brew --prefix llvm)/lib -L$(brew --prefix bzip2)/lib -L$(brew --prefix xz)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib"
+#export CPPFLAGS="-I$(brew --prefix)/include -I$(brew --prefix llvm)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix xz)/include  -I$(brew --prefix readline)/include -I$(brew --prefix zlib)/include -I$(xcrun --show-sdk-path)/usr/include"
