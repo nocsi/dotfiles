@@ -12,12 +12,12 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export HOMEBREW_NO_AUTO_UPDATE=1 # stop brew install from update=everything
 export HOMEBREW_NO_ANALYTICS=1
 export SDKROOT=`xcrun --sdk macosx --show-sdk-path`
-export ASDF_GOLANG_MOD_VERSION_ENABLED=false # don't read go.mod/go.work for go version (rtx)
+export MISE_GOLANG_MOD_VERSION_ENABLED=false # don't read go.mod/go.work for go version (rtx)
 export PIP_REQUIRE_VIRTUALENV=false
 
 # alias brew="env PATH=\"\${PATH//.asdf/shims:/}\" brew"
 
-export GOPATH=$(asdf where golang)/packages
+export GOPATH=$(mise where golang)/packages
 export PATH="${PATH}:${GOPATH}/bin"
 #export PATH="${PATH}:$(go env GOPATH)/bin"
 

@@ -132,9 +132,14 @@ z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
 z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
 z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 
+#rtx
+z4h load -- $($HOMEBREW_PREFIX/bin/mise activate zsh)
+eval "$(mise hook-env)"
+# z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
+
 #asdf 
-z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
-z4h source -- $HOME/.asdf/plugins/golang/set-env.zsh
+# z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
+# z4h source -- $HOME/.asdf/plugins/golang/set-env.zsh
 
 z4h source ~/.exports
 
@@ -165,7 +170,7 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 z4h source -c -- $ZDOTDIR/.zshrc-private
 z4h compile -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
-z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
+# z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
 
 # pnpm
 export PNPM_HOME="/Users/locnguyen/Library/pnpm"
@@ -174,3 +179,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# export WASMTIME_HOME="$HOME/.wasmtime"
+
+# export PATH="$WASMTIME_HOME/bin:$PATH"
