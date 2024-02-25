@@ -100,7 +100,7 @@ else
   fi
 fi
 
-# path=(~/bin $path)
+path=(~/.bin $path)
 #path=(/opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts $path)
 # path=(/opt/homebrew/opt/llvm/bin $path)
 
@@ -137,6 +137,9 @@ z4h load -- $($HOMEBREW_PREFIX/bin/mise activate zsh)
 eval "$(mise hook-env -s zsh)"
 # z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
 
+# nix
+# z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
+
 #asdf 
 # z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
 # z4h source -- $HOME/.asdf/plugins/golang/set-env.zsh
@@ -162,6 +165,8 @@ alias vim='nvim'
 alias vimdiff='nvim -d'
 alias dsclean="find ~/ -name '.DS_Store' -delete"
 alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
+
+alias nerdctl="/opt/homebrew/bin/colima nerdctl --profile default -- $@"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot

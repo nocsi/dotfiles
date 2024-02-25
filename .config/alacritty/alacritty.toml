@@ -1,31 +1,90 @@
-live_config_reload = true
+[env]
+TERM = "xterm-256color"
+LANG = "en_US.UTF-8"
+LC_CTYPE = "en_US.UTF-8"
+
+
+[window]
+opacity = 0.80
+dynamic_padding = false
+dynamic_title = true
+startup_mode = "Windowed"
+decorations = "buttonless"
+decorations_theme_variant = "Dark" 
+
+[window.padding]
+x = 4
+y = 4
+
+[window.position]
+x = 50
+y = 50
+
+[shell]
+args = ['--login']
+program = "/opt/homebrew/bin/zsh"
 
 [colors]
 draw_bold_text_with_bright_colors = true
 
-[env]
-TERM = "xterm-256color"
-#TERM = "screen-256color"
-#TERM = "alacritty-direct"
+[colors.primary]
+background = "#101010"
+foreground = "#ffffff"
+
+[colors.footer_bar.matches]
+background = "CellBackground"
+foreground = "#ee5396"
+
+[colors.footer_bar]
+background = "#262626"
+foreground = "#ffffff"
+
+[colors.normal]
+black = "#262626"
+magenta = "#ff7eb6"
+green = "#42be65"
+yellow = "#ffe97b"
+blue = "#33b1ff"
+red = "#ee5396"
+cyan = "#3ddbd9"
+white = "#dde1e6"
+
+[colors.bright]
+black = "#393939"
+magenta = "#ff7eb6"
+green = "#42be65"
+yellow = "#ffe97b"
+blue = "#33b1ff"
+red = "#ee5396"
+cyan = "#3ddbd9"
+white = "#ffffff"
+
+[cursor]
+blink_interval = 500
+style = "Beam"
 
 [font]
-size = 12.0
+size = 11.0
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Regular"
 
 [font.bold]
-family = "ProFontWindows Nerd Font"
+family = "FiraCode Nerd Font"
 style = "Bold"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+
+[font.bold_italic]
+family = "FiraCode Nerd Font"
+style = "Bold Italic"
 
 [font.glyph_offset]
 x = 0
 y = 0
-
-[font.italic]
-family = "ProFontWindows Nerd Font"
-style = "Italic"
-
-[font.normal]
-family = "ProFontWindows Nerd Font"
-style = "Regular"
 
 [font.offset]
 x = 0
@@ -59,13 +118,6 @@ mods = "Command"
 [[keyboard.bindings]]
 chars = "\b"
 key = "H"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = """
-
-"""
-key = "J"
 mods = "Command"
 
 [[keyboard.bindings]]
@@ -147,58 +199,3 @@ mouse = "Middle"
 [scrolling]
 history = 50000
 multiplier = 3
-
-[selection]
-save_to_clipboard = true
-semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
-
-[shell]
-program = "/opt/homebrew/bin/zsh"
-
-[window]
-decorations = "buttonless"
-decorations_theme_variant = "Dark"
-dynamic_padding = false
-dynamic_title = true
-startup_mode = "Windowed"
-opacity = 0.9
-
-[window.padding]
-x = 4
-y = 4
-
-[window.position]
-x = 50
-y = 50
-
-[colors.primary]
-background = "#101010"
-foreground = "#ffffff"
-
-[colors.footer_bar.matches]
-background = "CellBackground"
-foreground = "#ee5396"
-
-[colors.footer_bar]
-background = "#262626"
-foreground = "#ffffff"
-
-[colors.normal]
-black = "#262626"
-magenta = "#ff7eb6"
-green = "#42be65"
-yellow = "#ffe97b"
-blue = "#33b1ff"
-red = "#ee5396"
-cyan = "#3ddbd9"
-white = "#dde1e6"
-
-[colors.bright]
-black = "#393939"
-magenta = "#ff7eb6"
-green = "#42be65"
-yellow = "#ffe97b"
-blue = "#33b1ff"
-red = "#ee5396"
-cyan = "#3ddbd9"
-white = "#ffffff"

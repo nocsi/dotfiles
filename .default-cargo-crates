@@ -4,6 +4,4 @@ cross
 exa
 rigrep
 rls
-rust-analyzer
-sift
 tree-sitter-cli
