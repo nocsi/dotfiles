@@ -2,12 +2,7 @@
 
 set -e
 
-source $HOME/.config/yadm/utils.sh
-let OS=substitute(system('uname -s'),"\n","","")
-
-version_gte() {
-  printf '%s\n%s' "$1" "$2" | sort -C -V -r
-}
+source $HOME/.config/yadm/scripts/utils.sh
 
 export PROCESSOR_ARCHITECTURE=${PROCESSOR_ARCHITECTURE:-$(uname -p)}
 
@@ -27,18 +22,12 @@ if ! [ -f ~/.local/bin/mise ]; then
 fi
 
 step "Install using mise"
-if executable_exists mise then
+if executable_exists mise; then
+  mise version
+  mise install
+  run mise version
   run mise install
   path=($HOME/.local/share/mise/shims $path)
-
-  info "Installing various Python bits"
-  run 'python -c "$(curl -sSL https://install.python-poetry.org)"'
-  run pip install --upgrade pip
-  run pip install spritemapper
-
-  # info "Updating Ruby 'gem' installer and 'bundler'..."
-  # run gem update --system
 fi
-
 
 echo 'export PATH="$HOME/.local/share/mise/shims:$PATH"' >> ~/.zprofile

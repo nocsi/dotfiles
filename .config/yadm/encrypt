@@ -1,1 +1,6 @@
-.ssh/id_ecdsa
+.aws/*
+.cloudflare/*
+.ssh/id_*
+!.ssh/known_hosts*
+.gnupg/.exported-keyring/*
+.mc/config.json

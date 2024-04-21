@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+
 #
 # Sets reasonable macOS defaults.
 #
@@ -6,12 +7,15 @@
 # https://github.com/holman/dotfiles/blob/master/macos/set-defaults.sh
 # https://github.com/mathiasbynens/dotfiles/blob/master/.macOS
 
-system_type=$(uname -s)
+SYSTEM_TYPE=$(uname -s)
+
+source $HOME/.config/yadm/scripts/utils.sh
+autoload -U colors && colors
 
 mkdir "${HOME}/tmp"
 
 
-if [ "$system_type" = "Darwin" ]; then
+if [ "$SYSTEM_TYPE" = "Darwin" ]; then
 
   ###############################################################################
   # Global Config                                                               #
@@ -135,8 +139,8 @@ if [ "$system_type" = "Darwin" ]; then
   defaults write com.crowdcafe.windowmagnet maximizeWindowComboKey -dict keyCode 126 modifierFlags 1572864
   defaults write com.crowdcafe.windowmagnet restoreWindowComboKey -dict keyCode 125 modifierFlags 1572864
 
-    ###############################################################################
-  # Finder Settings                                                             #
+  ###############################################################################
+  #  Settings                                                             #
   ###############################################################################
   echo "Finder Settings"
   # disable siri icon
@@ -151,12 +155,10 @@ if [ "$system_type" = "Darwin" ]; then
   # Remove the auto-hiding Dock delay
   defaults write com.apple.dock autohide-delay -float 0
 
-  # disable user switcher
-  defaults write com.apple.menuextra.appleuser -int 0
-
   ###############################################################################
   # Audio                                                                       #
   ###############################################################################
+  echo "Audio Settings"
   # Increase sound quality for Bluetooth headphones/headsets
   defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 80
   defaults write com.apple.BluetoothAudioAgent "Apple Initial Bitpool (editable)" -int 80
@@ -164,22 +166,22 @@ if [ "$system_type" = "Darwin" ]; then
   defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool" -int 80
   defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool Min" -int 80
 
-    ###############################################################################
-  # Kill affected applications                                                  #
   ###############################################################################
-  for app in "Activity Monitor" \
-    "Address Book" \
-    "Calendar" \
-    "cfprefsd" \
-    "Contacts" \
-    "Dock" \
-    "Magnet" \
-    "Alfred" \
-    "Finder" \
-    "Google Chrome Canary" \
-    "Google Chrome" \
-    "SystemUIServer" \
-    "iCal"; do
-    killall "${app}" &>/dev/null
-  done
+  # System
+  ###############################################################################
+  defaults write com.apple.screencapture location -string "${HOME}/Desktop"
+  defaults write com.apple.screencapture type -string "png" # Other options: BMP, GIF, JPG, PDF, TIFF
+  defaults write NSGlobalDomain AppleFontSmoothing -int 2     # Enabling subpixel font rendering on non-Apple LCDs
+  defaults write -g NSOverlayScrollerHideDelay -float 5       # Autohide scrollbar timeout
+  defaults write NSGlobalDomain AppleKeyboardUIMode -int 3    # Keyboard access for all controls (e.g. enable Tab in modal dialogs)
+  defaults write -g com.apple.trackpad.scaling 2              # Setting trackpad & mouse speed to a reasonable number
+  defaults write -g com.apple.mouse.scaling 2.5
+  defaults write NSGlobalDomain InitialKeyRepeat -int 15      # Set a really fast key repeat
+  defaults write NSGlobalDomain KeyRepeat -int 1              # Set a really fast key repeat
+  defaults write com.apple.BluetoothAudioAgent \
+    "Apple Bitpool Min (editable)" -int 40                    # Set bluetooth audio quality so that it does not skip
+  defaults write com.apple.BezelServices kDimTime -int 300    # Turn off keyboard lights when not touched for 5 minutes
+  sudo systemsetup -settimezone "America/Los_Angeles" > /dev/null
+
+  chflags nohidden ~/Library
 fi

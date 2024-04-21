@@ -1,18 +1,35 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -eu
+
+source "${HOME}/.config/yadm/scripts/colors.sh"
 
 # Variables for dotfiles repo.
 git_host="github.com"
 git_user="nocsi"
 git_repo="dotfiles"
 git_url="https://${git_host}/${git_user}/"
-#
+
+git config --global core.editor nvim
+# specify how to handle divergent branches
+git config --global pull.rebase false
+git config --global core.pager 'less -i'
+
+yadm gitconfig core.editor nvim
+yadm gitconfig pull.rebase false
+yadm gitconfig core.pager 'less -i'
+
 # Switch to zsh
 if [[ "$SHELL" != *"zsh" ]]; then
     chsh -s $(which zsh)
 fi
 
+
+
+
+if [ $USER == "locnguyen" ]; then
+    yadm decrypt --yadm-archive "$HOME/.config/yadm/archive"
+fi
 
 
 # Variables for temporary files/directories.
@@ -98,6 +115,59 @@ cleanup_tmp() {
     rm -rf "${temp_file}" "${temp_dir}"
 }
 
+
+
+cleanup_options() {
+    echo -e "${yellow}
+  Cleanup home directory?${no_color}
+" >&1
+    echo -e "${yellow}  y)${white} Yes. This removes unused dotfiles.${no_color}" >&1
+    echo -e "${yellow}  n)${white} No. Skip this step and leave all existing dotfiles as is.${no_color}" >&1
+    echo
+}
+
+cleanup_home() {
+    # Array for common dotfiles.
+    dotfiles=(".bash_history" ".bash_logout" ".bash_profile" ".bashrc" \
+    ".dircolors" ".dir_colors" ".gconf" ".gitconfig" ".kde" ".kde4" ".lesshst" \
+    ".profile" ".vim" ".viminfo" ".vimrc" ".zlogin" ".zlogout" ".zprofile" \
+    ".zshenv" ".zshrc" ".wget-hsts")
+    found=0 # Set to 1 if file found in the for loop.
+    # Find any pre-esisting dotfiles.
+    for file in "${dotfiles[@]}"; do
+        if [ -e "${HOME}/${file}" ]; then
+            found=1; break
+        fi
+    done
+    # If true, offer to cleanup home directory.
+    if [ "${found}" = 1 ]; then
+        cleanup_options
+        while [ -z "${cleanup_option}" ]; do
+            echo -en "${white}  Option${yellow} [y/n]${white}: ${no_color}"
+            read -r opt
+            echo
+            case "${opt}" in
+                [y]|[Y]*) cleanup_option=1 ;;
+                [n]|[N]*) cleanup_option=2 ;;
+                *) echo -e "Invalid option '${opt}'." >&2; cleanup_options ;;
+            esac
+        done
+        if [ "${cleanup_option}" = 1 ]; then
+            print_msg "Cleaning home directory..."
+            # Cleanup user's home directory.
+            for file in "${dotfiles[@]}"; do
+                [ -e "${HOME}/${file}" ] && rm -ri "${HOME:?}/${file}"
+            done
+        fi
+    fi
+}
+
+
+update_yadm_repo() {
+    print_msg "Updating the yadm repo origin URL..."
+    yadm remote set-url origin "git@${git_host}:${git_user}/${git_repo}.git"
+}
+
 # EXECUTE FUNCTIONS ############################################################
 
 print_header
@@ -111,7 +181,7 @@ if [[ ! -d "$BOOTSTRAP_D" ]]; then
 fi
 
 
-find "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
+find -L "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
     if [[ -x "$bootstrap" && ! "$bootstrap" =~ "##" && ! "$bootstrap" =~ "~$" ]]; then
         if ! "$bootstrap"; then
             BOOTSTRAP_FILENAME=$(basename -- $bootstrap)
@@ -125,3 +195,8 @@ find "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
         fi
     fi
 done
+
+#cleanup_home
+update_yadm_repo
+cleanup_tmp
+print_footer

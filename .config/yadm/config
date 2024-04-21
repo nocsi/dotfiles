@@ -1,2 +1,11 @@
 [yadm]
-	cipher = openssl
+	cipher = gpg
+	gpg-program = /usr/local/MacGPG2/bin/gpg2
+	gpg-pinentry = /usr/local/MacGPG2/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac
+[gpg]
+	program = /usr/local/MacGPG2/bin/gpg2
+[user]
+  name = "Loc N"
+  email = "l@nocsi.com"
+[commit]
+	gpgsign = false

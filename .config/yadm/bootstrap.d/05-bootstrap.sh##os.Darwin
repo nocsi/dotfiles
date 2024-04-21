@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 SYSTEM_TYPE=$(uname -s)
 
-source $HOME/.config/yadm/utils.sh
+source $HOME/.config/yadm/scripts/utils.sh
 autoload -U colors && colors
 
 path=(/opt/homebrew/bin /usr/local/bin $path)
@@ -12,12 +12,21 @@ for x in cups ; do
   run mkdir -p $HOME/.local/share/$x
 done
 
-
 step "Installing XCode Command Line Tools..."
 run xcode-select --install
 info "Press enter after XCode tools install is complete..."
 warn "Manual intervention may be required!"
 read
+
+
+step "Updating macOS..."
+run softwareupdate --all --install --force
+
+
+#if [[ $(uname -m) == 'arm64' ]]; then
+#  step "Installing Rosetta ..."
+#  sudo softwareupdate --install-rosetta --agree-to-license
+#fi
 
 
 
@@ -32,12 +41,16 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     brew update
   fi
 
-  if [ -f "$HOME/.Brewfile" ]; then
+  if [ -f "$HOME/.config/yadm/Brewfile" ]; then
     echo "Updating homebrew bundle"
+    brew update
+    brew doctor
+    brew upgrade
+    brew cleanup --prune=14
     brew bundle --global
   fi
 
-  if [[ -f $HOME/.config/yadm/Brewfile ]]; then
+  if [[ -f "$HOME/.config/yadm/Brewfile" ]]; then
     step "Installing Homebrew bundle"
     run brew bundle install --verbose --file=$HOME/.config/yadm/Brewfile
   fi
@@ -72,7 +85,8 @@ fi
 step "Updating /etc/shells and setting default shell to fish..."
 update_shells zsh
 update_shells bash
-run chsh -s /opt/homebrew/bin/zsh
+
+run chsh -s $(brew --prefix)/bin/zsh
 
 
 step "Hammerspoon setup"
