@@ -1,0 +1,127 @@
+#!/bin/bash
+
+set -eu
+
+# Variables for dotfiles repo.
+git_host="github.com"
+git_user="nocsi"
+git_repo="dotfiles"
+git_url="https://${git_host}/${git_user}/"
+#
+# Switch to zsh
+if [[ "$SHELL" != *"zsh" ]]; then
+    chsh -s $(which zsh)
+fi
+
+
+
+# Variables for temporary files/directories.
+temp_file="$(mktemp -u)"
+temp_dir="$(mktemp -d)"
+
+# Set XDG directories.
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+
+# Set Zsh configuration directory.
+export ZDOTDIR="${HOME}/.config/zsh"
+# Set Vim configuration directory.
+export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
+
+# Set user bin directory.
+export USER_BIN_DIR="${HOME}/.local/bin"
+
+## Colorize output.
+# shellcheck disable=SC2034
+red="\033[91m"
+# shellcheck disable=SC2034
+green="\033[92m"
+# shellcheck disable=SC2034
+blue="\033[94m"
+# shellcheck disable=SC2034
+yellow="\033[93m"
+# shellcheck disable=SC2034
+white="\033[97m"
+# shellcheck disable=SC2034
+no_color="\033[0m"
+
+
+# ARRAYS #######################################################################
+
+# Array for package dependencies.
+pkg_list=("git"
+          "zsh"
+          "vim"
+          "curl"
+          "ranger"
+          "w3m"         # Optional dependency for 'ranger'.
+          "highlight"   # Optional dependency for 'ranger'.
+          "thefuck"
+          "tree"
+          "unzip")
+
+# FUNCTIONS ####################################################################
+
+print_header() {
+    echo -e "${blue}
+       _     _   ___ _ _
+     _| |___| |_|  _|_| |___ ___
+   _| . | . |  _|  _| | | -_|_ -|
+  |_|___|___|_| |_| |_|_|___|___|${yellow}
+  BOOTSTRAP SCRiPT${white}
+
+  ${git_url}${git_repo}${no_color}
+" >&1
+}
+
+
+print_footer() {
+    echo -e "${blue}
+  Bootstrap of dotfiles completed!${yellow}
+  Log out${blue} and${yellow} login${blue} to apply changes!${white}
+
+  See README for more information;
+  ${git_url}${git_repo}/.github/README.md${no_color}
+" >&1
+}
+
+print_msg() {
+    echo -e "${green}=>${no_color}${white}" "${@}" "${no_color}" >&1
+}
+
+print_error() {
+    echo -e "${red}=> ERROR:${no_color}${white}" "${@}" "${no_color}" >&2
+}
+
+cleanup_tmp() {
+    rm -rf "${temp_file}" "${temp_dir}"
+}
+
+# EXECUTE FUNCTIONS ############################################################
+
+print_header
+
+# Directory to look for bootstrap executables in
+BOOTSTRAP_D="${BASH_SOURCE[0]}.d"
+
+if [[ ! -d "$BOOTSTRAP_D" ]]; then
+    echo "Error: bootstrap directory '$BOOTSTRAP_D' not found" >&2
+    exit 1
+fi
+
+
+find "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
+    if [[ -x "$bootstrap" && ! "$bootstrap" =~ "##" && ! "$bootstrap" =~ "~$" ]]; then
+        if ! "$bootstrap"; then
+            BOOTSTRAP_FILENAME=$(basename -- $bootstrap)
+            echo -e "\033[0;31m\nFailed installing '${BOOTSTRAP_FILENAME%%.*}'...\033[0m" >&2
+            echo -e "\033[0;31mYou can try one of the following:\033[0m" >&2
+            echo -e "\033[0;31m\t(1) Check the output above to see what went wrong and try to manually fix it\033[0m" >&2
+            echo -e "\033[0;31m\t(2) Open the bootstrap script and manually run each command: '$HOME/.config/yadm/bootstrap.d/$BOOTSTRAP_FILENAME'\033[0m" >&2
+            echo -e "\033[0;31m\t(3) Skip the installation of '${BOOTSTRAP_FILENAME%%.*}' by removing its bootstrap script: 'rm $HOME/.config/yadm/bootstrap.d/$BOOTSTRAP_FILENAME'\033[0m" >&2
+            echo -e "\033[0;31m\t(4) If nothing is working, you can always open a new issue in my dotfiles repo: 'https://github.com/ZhongXiLu/dotfiles/issues/new'\033[0m" >&2
+            exit 1
+        fi
+    fi
+done

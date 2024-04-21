@@ -1,0 +1,9 @@
+cuelang.org/go/cmd/cue@latest
+github.com/dagger/cuelsp/cmd/cuelsp@latest
+github.com/jesseduffield/lazygit@latest
+github.com/svent/sift@latest
+mvdan.cc/sh/v3/cmd/shfmt@latest
+github.com/jesseduffield/lazygit@latest
+github.com/dundee/gdu@latest
+github.com/seanbreckenridge/on_machine@latest
+github.com/seanbreckenridge/spkglist@latest

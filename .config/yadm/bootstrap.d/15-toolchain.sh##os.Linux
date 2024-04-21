@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+let OS=substitute(system('uname -s'),"\n","","")
+
+version_gte() {
+  printf '%s\n%s' "$1" "$2" | sort -C -V -r
+}
+
+
+export PROCESSOR_ARCHITECTURE=${PROCESSOR_ARCHITECTURE:-$(uname -p)}
+
+if [ -f "/Library/Apple/System/Library/Receipts/com.apple.pkg.RosettaUpdateAuto.bom" ]; then
+  export ROSETTA_INSTALLED=1
+fi
+if [[ $PROCESSOR_ARCHITECTURE != 'arm' || -n "$ROSETTA_INSTALLED" ]]; then
+  export X86_OR_ROSETTA=1
+fi
+
+if [ -x "$(command -v lsb_release)" ] && [[ $(lsb_release -si) == 'Ubuntu' ]]; then
+  OS_UBUNTU=1
+  if dpkg -l ubuntu-desktop >/dev/null; then
+    UBUNTU_DESKTOP=1
+  fi
+fi
+
+
+
+# install asdf version manager https://asdf-vm.com/
+if [ ! -d ~/.asdf ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+  source ~/.asdf/asdf.sh
+fi
+asdf update
+asdf plugin update --all-0-
+
+
+if ! [ -f ~/.local/bin/mise ]; then
+  curl https://mise.jdx.dev/mise-latest-macos-arm64 > ~/.local/bin/mise
+fi

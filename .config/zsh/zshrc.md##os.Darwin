@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+: '
+<!-- ex: set syntax=markdown : set ft=markdown : '; mdsh="$( dirname "${BASH_SOURCE[0]}" )/mdsh" eval "$($mdsh --eval "$BASH_SOURCE")" # -->
+
+
+# zshrc
+
+## Setup
+
+	

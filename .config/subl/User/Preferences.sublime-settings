@@ -1,0 +1,22 @@
+{
+	"caret_extra_width": 2,
+	"caret_style": "blink",
+	"close_windows_when_empty": true,
+	"color_scheme": "Spaceduck.sublime-color-scheme",
+	"font_face": "JetBrainsMono-Regular",
+	"font_options": ["no_liga", "no_clig", "no_calt"],
+	"font_size": 14,
+	"highlight_line": true,
+	"hot_exit": false,
+	"ignored_packages":
+	[
+		"TypeScript",
+		"Vintage",
+	],
+	"open_files_in_new_window": false,
+	"overlay_scroll_bars": "enabled",
+	"scroll_past_end": false,
+	"theme": "ayu-dark.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"word_wrap": true,
+}

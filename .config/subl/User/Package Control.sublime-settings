@@ -1,0 +1,18 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+		"TypeScript",
+	],
+	"installed_packages":
+	[
+		"ayu",
+		"Color Highlight",
+		"FileManager",
+		"HTML-CSS-JS Prettify",
+		"Package Control",
+		"Pretty JSON",
+		"SpaceDuck Color Scheme",
+		"TypeScript",
+	],
+}

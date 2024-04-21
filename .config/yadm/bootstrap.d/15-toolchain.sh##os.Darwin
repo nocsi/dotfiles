@@ -1,0 +1,44 @@
+#!/usr/bin/env zsh
+
+set -e
+
+source $HOME/.config/yadm/utils.sh
+let OS=substitute(system('uname -s'),"\n","","")
+
+version_gte() {
+  printf '%s\n%s' "$1" "$2" | sort -C -V -r
+}
+
+export PROCESSOR_ARCHITECTURE=${PROCESSOR_ARCHITECTURE:-$(uname -p)}
+
+if [ -f "/Library/Apple/System/Library/Receipts/com.apple.pkg.RosettaUpdateAuto.bom" ]; then
+  export ROSETTA_INSTALLED=1
+fi
+if [[ $PROCESSOR_ARCHITECTURE != 'arm' || -n "$ROSETTA_INSTALLED" ]]; then
+  export X86_OR_ROSETTA=1
+fi
+
+if ! [ -f ~/.local/bin/mise ]; then
+  if [ "PROCESSOR_ARCHITECTURE" = "arm" ]; then
+    curl https://mise.jdx.dev/mise-latest-macos-arm64 > ~/.local/bin/mise
+  else
+    curl https://mise.jdx.dev/mise-latest-macos-x64 > ~/.local/bin/mise
+  fi
+fi
+
+step "Install using mise"
+if executable_exists mise then
+  run mise install
+  path=($HOME/.local/share/mise/shims $path)
+
+  info "Installing various Python bits"
+  run 'python -c "$(curl -sSL https://install.python-poetry.org)"'
+  run pip install --upgrade pip
+  run pip install spritemapper
+
+  # info "Updating Ruby 'gem' installer and 'bundler'..."
+  # run gem update --system
+fi
+
+
+echo 'export PATH="$HOME/.local/share/mise/shims:$PATH"' >> ~/.zprofile

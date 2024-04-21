@@ -1,0 +1,5 @@
+.gitattributes !filter !diff
+#.config/hexchat/servlist.conf filter=git-crypt diff=git-crypt
+#.ssh/id_* filter=git-crypt diff=git-crypt
+#.ssh/id_*.pub !filter !diff
+sensitive_file  filter=crypt diff=crypt merge=crypt

@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+SYSTEM_TYPE=$(uname -s)
+
+source $HOME/.config/yadm/utils.sh
+autoload -U colors && colors
+
+path=(/opt/homebrew/bin /usr/local/bin $path)
+
+step "Creating '.local/share' directory structure..."
+for x in cups ; do
+  run mkdir -p $HOME/.local/share/$x
+done
+
+
+step "Installing XCode Command Line Tools..."
+run xcode-select --install
+info "Press enter after XCode tools install is complete..."
+warn "Manual intervention may be required!"
+read
+
+
+
+if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+ # install homebrew if it's missing
+  if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  else
+    echo "Homebrew is already installed ..."
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    brew update
+  fi
+
+  if [ -f "$HOME/.Brewfile" ]; then
+    echo "Updating homebrew bundle"
+    brew bundle --global
+  fi
+
+  if [[ -f $HOME/.config/yadm/Brewfile ]]; then
+    step "Installing Homebrew bundle"
+    run brew bundle install --verbose --file=$HOME/.config/yadm/Brewfile
+  fi
+
+
+  if [[ -f $HOME/.config/yadm/Casks ]]; then
+    step "Installing Homebrew Casks"
+    while IFS= read -r cask; do
+      run brew install $cask
+      run rm -rf /opt/homebrew/Caskroom/$cask
+    done < $HOME/.config/yadm/Casks
+  fi
+
+  info "Downloading Mac App Store apps..."
+  run brew install mas
+  echo "Ensure you are logged into Mac App Store then press enter... " && read
+  run mas install 1289583905     # Pixelmator Pro
+  #run mas install 1295203466     # Microsoft Remote Desktop
+  # run mas install 803453959      # Slack
+  #run brew uninstall mas
+  # Create cronjob
+  if [ $(crontab -l | grep brew | wc -l) -eq 0 ]; then
+    (
+      crontab -l
+      echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      echo "0 */3 * * * brew bundle dump --force --file ~/.Brewfile"
+    ) | crontab -
+  fi
+fi
+
+
+step "Updating /etc/shells and setting default shell to fish..."
+update_shells zsh
+update_shells bash
+run chsh -s /opt/homebrew/bin/zsh
+
+
+step "Hammerspoon setup"
+if [[ -d /Applications/Hammerspoon.app ]]; then
+  info "Setting Hammerspoon default config dir and remapping CapsLock..."
+  info "A reboot is required for the key mapping to take place"
+  run defaults write org.hammerspoon.Hammerspoon MJConfigFile "$HOME/.config/hammerspoon/init.lua"
+  run mkdir -p $HOME/Library/LaunchAgents
+  run cp ~/.config/yadm/com.glenn.KeyRemapping.plist ~/Library/LaunchAgents
+else
+  note "Hammerspoon not installed; not setting it up."
+fi
