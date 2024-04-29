@@ -12,8 +12,8 @@ SYSTEM_TYPE=$(uname -s)
 source $HOME/.config/yadm/scripts/utils.sh
 autoload -U colors && colors
 
-mkdir "${HOME}/tmp"
-
+mkdir "${HOME}/.repo"
+mkdir "${HOME}/.tmp"
 
 if [ "$SYSTEM_TYPE" = "Darwin" ]; then
 
@@ -35,7 +35,7 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   # Set Avatar Image
   sudo dscl . -delete /Users/$USER JPEGPhoto
   sudo dscl . -delete /Users/$USER Picture
-  sudo dscl . -create /Users/$USER Picture "$HOME/.dotfileassets/me.jpg"
+  sudo dscl . -create /Users/$USER Picture "$HOME/.assets/me.jpeg"
 
   # Require password immediately after sleep or screen saver begins
   defaults write com.apple.screensaver askForPassword -int 1
@@ -59,14 +59,10 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   defaults write com.apple.swipescrolldirection -int 1
 
   ## set hostname
-  sudo scutil --set ComputerName "Anubis"
-  sudo scutil --set HostName "anubis"
-  sudo scutil --set LocalHostName "Anubis"
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Anubis"
-
-  # Save screen shots to other location
-  mkdir -p "${HOME}/tmp/screenshots"
-  defaults write com.apple.screencapture location -string "${HOME}/tmp/screenshots"
+  sudo scutil --set ComputerName "mbp"
+  sudo scutil --set HostName "mbp"
+  sudo scutil --set LocalHostName "mbp"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "mbp"
 
   # Prevent Photos from opening automatically when devices are plugged in
   defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
@@ -81,7 +77,7 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   defaults write -g InitialKeyRepeat -int 15
   defaults write -g KeyRepeat -int 2
 
-    ###############################################################################
+  ###############################################################################
   # ShortCut Settings                                                           #
   ###############################################################################
   echo "OSX ShortCut Settings"
@@ -101,20 +97,20 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   # 13: Lock Screen
 
   # Top left screen corner
-  defaults write com.apple.dock wvous-tl-corner -int 0
-  defaults write com.apple.dock wvous-tl-modifier -int 0
+  #defaults write com.apple.dock wvous-tl-corner -int 0
+  #defaults write com.apple.dock wvous-tl-modifier -int 0
 
   # Bottom left screen corner
-  defaults write com.apple.dock wvous-bl-corner -int 0
-  defaults write com.apple.dock wvous-bl-modifier -int 0
+  #defaults write com.apple.dock wvous-bl-corner -int 0
+  #defaults write com.apple.dock wvous-bl-modifier -int 0
 
   # Top right screen corner
-  defaults write com.apple.dock wvous-tr-corner -int 3
-  defaults write com.apple.dock wvous-tr-modifier -int 0
+  #defaults write com.apple.dock wvous-tr-corner -int 3
+  #defaults write com.apple.dock wvous-tr-modifier -int 0
 
   # Bottom right screen corner
-  defaults write com.apple.dock wvous-br-corner -int 0
-  defaults write com.apple.dock wvous-br-modifier -int 0
+  #defaults write com.apple.dock wvous-br-corner -int 0
+  #defaults write com.apple.dock wvous-br-modifier -int 0
 
   ############################################################################
   # Alfred                                                                   #
@@ -129,15 +125,35 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict-add mod 1048576
   defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict-add string "Space"
 
-  ############################################################################
-  # Magnet                                                                   #
-  ############################################################################
-  echo "Magnet Settings"
-  # Set keyboard mappings for Magnet
-  defaults write com.crowdcafe.windowmagnet expandWindowEastComboKey -dict keyCode 124 modifierFlags 1572864
-  defaults write com.crowdcafe.windowmagnet expandWindowWestComboKey -dict keyCode 123 modifierFlags 1572864
-  defaults write com.crowdcafe.windowmagnet maximizeWindowComboKey -dict keyCode 126 modifierFlags 1572864
-  defaults write com.crowdcafe.windowmagnet restoreWindowComboKey -dict keyCode 125 modifierFlags 1572864
+  ###############################################################################
+  #  Network
+  ###############################################################################
+  defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+  defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+  ###############################################################################
+  #  Dock
+  ###############################################################################
+  message "Changing dock defaults"
+	# Enable highlight hover effect for the grid view of a stack (Dock)
+	defaults write com.apple.dock mouse-over-hilite-stack -bool true
+	# Minimize windows into their application’s icon
+	defaults write com.apple.dock minimize-to-application -bool true
+	# Auto Hide Dock
+	defaults write com.apple.dock "autohide" -bool "false"
+  # Remove the auto-hiding Dock delay
+  defaults write com.apple.dock autohide-delay -float 0
+	# Don't Show Recent Applications
+	defaults write com.apple.dock "show-recents" -bool "false"
+	# Change Default Minimize Effect
+	defaults write com.apple.dock "mineffect" -string "scale"
+
+  ###############################################################################
+  #  Time Machine
+  ###############################################################################
+	message "Changing Time Machine defaults"
+	# Don't offer to use disk as TM Backup
+	defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
 
   ###############################################################################
   #  Settings                                                             #
@@ -149,12 +165,8 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   # dont show any icon on the desktop
   defaults write com.apple.finder CreateDesktop false
 
-  # automatically hide and show the Dock
-  defaults write com.apple.dock autohide -bool true
-
-  # Remove the auto-hiding Dock delay
-  defaults write com.apple.dock autohide-delay -float 0
-
+  defaults write com.apple.spaces spans-displays -bool false
+  #
   ###############################################################################
   # Audio                                                                       #
   ###############################################################################
