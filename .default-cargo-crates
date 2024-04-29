@@ -2,6 +2,7 @@ binary-security-check
 bottom
 cross
 exa
+lsd
 rigrep
 rls
 tree-sitter-cli
