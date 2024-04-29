@@ -220,7 +220,6 @@ brew "u-boot-tools"
 brew "unicorn", args: ["HEAD"]
 brew "unzip"
 brew "urlview"
-brew "virt-manager"
 brew "watchman"
 brew "wget"
 brew "wimlib"
@@ -264,7 +263,6 @@ cask "cleanmymac"
 cask "crossover"
 cask "devonthink"
 cask "discord"
-cask "easy-move-plus-resize"
 cask "elgato-control-center"
 cask "elgato-stream-deck"
 cask "fig"
@@ -318,6 +316,25 @@ cask "whisky"
 cask "wireshark"
 cask "yubico-yubikey-manager"
 cask "zed"
+mas "Amphetamine", id: 937984704
+mas "Apple Configurator", id: 1037126344
+mas "Bakery", id: 1575220747
+mas "Compressor", id: 424390742
+mas "DaisyDisk", id: 411643860
+mas "Final Cut Pro", id: 424389933
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Logic Pro", id: 634148309
+mas "Motion", id: 434290957
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Pixelmator Pro", id: 1289583905
+mas "Reeder", id: 1529448980
+mas "Remote Desktop", id: 409907375
+mas "SnippetsLab", id: 1006087419
+mas "Synalyze It! Pro", id: 475193367
+mas "Twitter", id: 1482454543
+mas "Xcode", id: 497799835
 vscode "ardenivanov.svelte-intellisense"
 vscode "astro-build.astro-vscode"
 vscode "asvetliakov.vscode-neovim"

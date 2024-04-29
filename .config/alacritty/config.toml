@@ -8,7 +8,8 @@ live_config_reload = true
   LC_CTYPE = "en_US.UTF-8"
 
 [window]
-  opacity = 0.90
+  opacity = 0.75
+  blur = true
   class = { instance = "alacritty", general = "alacritty" }
   dynamic_padding = true
   dynamic_title = true
@@ -17,13 +18,18 @@ live_config_reload = true
   decorations_theme_variant = "Dark"
   option_as_alt = "Both"
 
-[window.padding]
-  x = 4
-  y = 4
-
 [window.position]
   x = 50
   y = 50
+
+[window.dimensions]
+  columns = 80
+  lines = 24
+
+[window.padding]
+  x = 10
+  y = 10
+
 
 [shell]
   program = "/opt/homebrew/bin/zsh"
@@ -227,9 +233,8 @@ key = "Equals"
 mods = "Alt"
 
 [selection]
-  semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
-  save_to_clipboard = true
+save_to_clipboard = true
 
 [scrolling]
-  history = 50000
+  history = 0
   multiplier = 3
