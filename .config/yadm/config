@@ -1,12 +1,7 @@
 [yadm]
 	cipher = openssl
-	gpg-program = /usr/local/MacGPG2/bin/gpg2
-	gpg-pinentry = /usr/local/MacGPG2/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac
-[gpg]
-	program = /usr/local/MacGPG2/bin/gpg2
 [user]
   name = "Loc N"
   email = "l@nocsi.com"
-	signingKey = /Users/locnguyen/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/60ac169baae82fb5b36e992c60fc6ddb.pub
 [commit]
 	gpgsign = false
