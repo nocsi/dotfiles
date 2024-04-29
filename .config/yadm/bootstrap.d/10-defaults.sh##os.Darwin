@@ -59,10 +59,10 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   defaults write com.apple.swipescrolldirection -int 1
 
   ## set hostname
-  sudo scutil --set ComputerName "mbp"
-  sudo scutil --set HostName "mbp"
-  sudo scutil --set LocalHostName "mbp"
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "mbp"
+  #sudo scutil --set ComputerName "mbp"
+  #sudo scutil --set HostName "mbp"
+  #sudo scutil --set LocalHostName "mbp"
+  #sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "mbp"
 
   # Prevent Photos from opening automatically when devices are plugged in
   defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
