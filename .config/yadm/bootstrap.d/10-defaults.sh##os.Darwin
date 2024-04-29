@@ -117,13 +117,23 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   ############################################################################
   echo "Alfred Settings"
   # Disable spotlight shortcuts for Alfred
-  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
-  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
+  #defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
+  #defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
+
+  #/usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:79:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+  #/usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:80:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+  #/usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:81:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+  #/usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:82:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
 
   # Set spotline shortcut for alfred
   defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict-add key 49
   defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict-add mod 1048576
   defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict-add string "Space"
+
+  defaults read com.apple.symbolichotkeys.plist > /dev/null
+
+  /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
   ###############################################################################
   #  Network
