@@ -1,0 +1,42 @@
+[init]
+  defaultBranch = main
+[color]
+  ui = true
+[user]
+  name = Loc Nguyen
+  email = l@nocsi.com
+  signingkey = ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/60ac169baae82fb5b36e992c60fc6ddb.pub
+[gpg]
+  format = ssh
+[credential]
+	helper = cache --timeout=3600
+[credential "https://github.com"]
+  username = nocsi
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"
+[http]
+	emptyAuth = true
+	postBuffer = 524288000
+[commit]
+	gpgsign = true
+[core]
+	editor = nvim
+	excludesfile = /Users/locnguyen/.gitignore_global
+	pager = less -i
+[tag]
+	forceSignAnnotated = true
+[push]
+	default = current
+[pull]
+	default = current
+	rebase = false
+[oh-my-zsh]
+	hide-status = 1
+	hide-dirty = 1
+[safe]
+	directory = /Users/locnguyen/Work/casaba/nxstage/PureFlow/Firmware
