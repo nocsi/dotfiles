@@ -314,7 +314,6 @@ cask "vagrant"
 cask "visual-studio-code"
 cask "whisky"
 cask "wireshark"
-cask "yubico-yubikey-manager"
 cask "zed"
 mas "Amphetamine", id: 937984704
 mas "Apple Configurator", id: 1037126344
