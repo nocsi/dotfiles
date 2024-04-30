@@ -202,7 +202,6 @@ alias dsclean="find ~/ -name '.DS_Store' -delete"
 alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
 
 alias nerdctl="/opt/homebrew/bin/colima nerdctl --profile default -- $@"
-alias docker="nerdctl"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot

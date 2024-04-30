@@ -5,7 +5,12 @@ SYSTEM_TYPE=$(uname -s)
 source $HOME/.config/yadm/scripts/utils.sh
 autoload -U colors && colors
 
-path=(/opt/homebrew/bin /usr/local/bin $path)
+
+if [[ $(uname -m) == 'arm64' ]]; then
+  path=(/opt/homebrew/bin /usr/local/bin $path)
+else
+  path=(/usr/local/bin/homebrew/bin /usr/local/bin $path)
+fi
 
 step "Creating '.local/share' directory structure..."
 for x in cups ; do
@@ -23,12 +28,10 @@ step "Updating macOS..."
 run softwareupdate --all --install --force
 
 
-#if [[ $(uname -m) == 'arm64' ]]; then
-#  step "Installing Rosetta ..."
-#  sudo softwareupdate --install-rosetta --agree-to-license
-#fi
-
-
+if [[ $(uname -m) == 'arm64' ]]; then
+  step "Installing Rosetta ..."
+  sudo softwareupdate --install-rosetta --agree-to-license
+fi
 
 if [ "$SYSTEM_TYPE" = "Darwin" ]; then
  # install homebrew if it's missing
@@ -37,7 +40,11 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   else
     echo "Homebrew is already installed ..."
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    if [[ $(uname -m) == 'arm64' ]]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+      eval "$(/usr/local/bin/brew shellenv)"
+    fi
     brew update
   fi
 
@@ -54,7 +61,6 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     step "Installing Homebrew bundle"
     run brew bundle install --verbose --file=$HOME/.config/yadm/Brewfile
   fi
-
 
   if [[ -f $HOME/.config/yadm/Casks ]]; then
     step "Installing Homebrew Casks"
