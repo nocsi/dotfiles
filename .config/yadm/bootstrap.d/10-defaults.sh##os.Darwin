@@ -44,13 +44,21 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   # Show battery as percentage
   defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
+
+  # Disable auto-correct
+  defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+
   # Trackpad: map bottom right corner to right-click
-  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 0
   defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-  defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 2
+  defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 0
   defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+
+  defaults write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 0
+  defaults write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
   # Set misson controlle on the upper right corner
   defaults write com.apple.dock wvous-tr-corner -int 2
