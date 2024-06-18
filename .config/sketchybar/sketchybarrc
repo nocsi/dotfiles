@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
+#
+#-- Load the sketchybar-package and prepare the helper binaries
+# require("helpers")
+# require("init")
 
 source "$HOME/.config/sketchybar/colors.sh"     # Loads all defined colors
 source "$HOME/.config/sketchybar/icons.sh"      # Loads all defined icons
 source "$HOME/.config/sketchybar/userconfig.sh" # Loads all defined variables
 
-export PLUGIN_DIR="$HOME/.config/sketchybar/plugins" # Directory where all the plugins are stored
+
+
+export PLUGIN_DIR="$CONFIG_DIR/plugins"
 # Setting up and starting the helper process
 source "$HOME/.config/sketchybar/helper/helper.sh"
 # source "$PLUGIN_DIR/dynamic-island/helper.sh"

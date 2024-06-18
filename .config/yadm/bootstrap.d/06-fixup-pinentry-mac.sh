@@ -1,0 +1,1 @@
+06-fixup-pinentry-mac.sh##os.Darwin
