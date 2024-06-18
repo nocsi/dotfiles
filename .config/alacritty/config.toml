@@ -8,7 +8,7 @@ live_config_reload = true
   LC_CTYPE = "en_US.UTF-8"
 
 [window]
-  opacity = 0.75
+  opacity = 0.70
   blur = true
   class = { instance = "alacritty", general = "alacritty" }
   dynamic_padding = true
@@ -107,19 +107,19 @@ enabled = [
   size = 11.0
 
 [font.normal]
-  family = "FiraCode Nerd Font"
+  family = "Liga SFMono Nerd Font"
   style = "Regular"
 
 [font.bold]
-  family = "FiraCode Nerd Font"
+  family = "Liga SFMono Nerd Font"
   style = "Bold"
 
 [font.italic]
-  family = "FiraCode Nerd Font"
+  family = "Liga SFMono Nerd Font"
   style = "Italic"
 
 [font.bold_italic]
-  family = "FiraCode Nerd Font"
+  family = "Liga SFMono Nerd Font"
   style = "Bold Italic"
 
 [font.glyph_offset]

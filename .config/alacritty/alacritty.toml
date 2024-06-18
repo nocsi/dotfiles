@@ -8,4 +8,8 @@
 #
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
-import = ["~/.config/alacritty/config.toml", "~/.config/alacritty/catppuccin-macchiato.toml"]
+import = [
+  "~/.config/alacritty/config.toml", 
+  "~/.config/alacritty/themes/themes/kanagawa_dragon.toml"
+]
+
