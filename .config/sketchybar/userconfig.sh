@@ -9,7 +9,7 @@
 #
 
 # Set this variable to "on", if you are going to use the dynamic island with macOS's menu bar
-export P_DYNAMIC_ISLAND_TOPMOST=off
+export P_DYNAMIC_ISLAND_TOPMOST=on
 
 # Which display should the dynamic island be available?
 # Available options: All, Primary, Active
