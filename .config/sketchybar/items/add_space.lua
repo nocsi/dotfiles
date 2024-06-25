@@ -7,51 +7,51 @@ sbar.add(
 		width = 0
 	}
 )
-local apple =
+local add_space =
 	sbar.add(
 		"item",
 		{
+			position = "center",
 			icon = {
-				padding_left = 10,
-				padding_right = 10,
 				align = "center",
 				font = {
-					size = 14
+					size = 10
 				},
-				string = icons.apple,
-				color = colors.seezalt_dark,
+				string = icons.plus,
+				color = colors.white
 			},
 			background = {
-				color = colors.bg2
-			},
-			click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0"
+				color = {
+					alpha = 0
+				}
+			}
 		}
 	)
 sbar.add(
 	"bracket",
 	{
-		apple.name
+		add_space.name
 	},
 	{}
 )
 
-apple:subscribe(
+add_space:subscribe(
 	"mouse.entered",
 	function(env)
 		sbar.animate(
 			"elastic",
-			15,
+			10,
 			function()
-				apple:set(
+				add_space:set(
 					{
 						background = {
-							color = {
-								alpha = 1
-							}
+							color = colors.bg1
 						},
 						icon = {
-							string = "Menu",
-							color = colors.red,
+							padding_right = 10,
+							padding_left = 10,
+							string = "Add 􀅼",
+							color = colors.orange,
 							font = {
 								size = 12
 							}
@@ -62,25 +62,27 @@ apple:subscribe(
 		)
 	end
 )
-apple:subscribe(
+add_space:subscribe(
 	"mouse.exited",
 	function(env)
 		sbar.animate(
 			"elastic",
 			15,
 			function()
-				apple:set(
+				add_space:set(
 					{
 						background = {
 							color = {
-								alpha = 1
+								alpha = 0
 							}
 						},
 						icon = {
-							string = icons.apple,
-							color = colors.seezalt_dark,
+							padding_right = 0,
+							padding_left = 0,
+							string = icons.plus,
+							color = colors.grey,
 							font = {
-								size = 12
+								size = 18
 							}
 						}
 					}
@@ -89,23 +91,17 @@ apple:subscribe(
 		)
 	end
 )
-apple:subscribe(
+
+add_space:subscribe(
 	"mouse.clicked",
 	function(env)
-		sbar.animate(
-			"elastic",
-			15,
-			function()
-				apple:set(
-					{
-						label = {
-							font = {
-								colors = colors.bg1
-							}
-						}
-					}
-				)
-			end
+		add_space:set(
+			{
+				icon = {
+					string = icons.plus,
+					sbar.exec('osascript "$CONFIG_DIR/items/scripts/newSpace.scpt"')
+				}
+			}
 		)
 	end
 )

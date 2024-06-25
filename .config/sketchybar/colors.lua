@@ -1,28 +1,43 @@
 return {
-  black = 0xff181819,
-  white = 0xffe2e2e3,
-  red = 0xfffc5d7c,
-  green = 0xff9ed072,
-  blue = 0xff76cce0,
-  yellow = 0xffe7c664,
-  orange = 0xfff39660,
-  magenta = 0xffb39df3,
-  grey = 0xff7f8490,
-  transparent = 0x00000000,
+    black = 0xff141414,
+    white = 0xffacb1b5,
+    white_text = 0xffffffff,
+    white_transparent = 0x8faeaeae,
+    red = 0xff732313,
+    green = 0xffA3BE8C,
+    yellow = 0xffa18f6c,
+    orange = 0xffe27a49,
+    blue = 0xff6d8690,
+    magenta = 0xffa090a1,
+    grey = 0xff32312f,
+    granit = 0xff93a3ab,
+    transparent = 0x00000000,
+    inactive = 0xff727272,
+    active = 0xffcdcdcd,
+    hover = 0xffffffff,
 
-  bar = {
-    bg = 0xf02c2e34,
-    border = 0xff2c2e34,
-  },
-  popup = {
-    bg = 0xc02c2e34,
-    border = 0xff7f8490
-  },
-  bg1 = 0xff363944,
-  bg2 = 0xff414550,
-
-  with_alpha = function(color, alpha)
-    if alpha > 1.0 or alpha < 0.0 then return color end
-    return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
-  end,
+    seezalt = {
+        spanishgrey = 0xff8f969e,
+        light = 0xffacaeb1,
+        dark = 0xff45566a,
+        platinum = 0xffe5e5e5,
+    },
+    bar = {
+        bg = 0xff1b1b1b,
+        bg2 = 0xff232323,
+        transparent = 0xBF1e1e1e,
+        border = 0xD92525276
+    },
+    popup = {
+        bg = 0xd91e1e1e,
+        border = 0xD9252525
+    },
+    bg1 = 0xff1e1e1e,
+    bg2 = 0xff7e9195,
+    with_alpha = function(color, alpha)
+        if alpha > 1.0 or alpha < 0.0 then
+            return color
+        end
+        return (color and 0x001e1e1e) or (math.floor(alpha * 255.0) < 24)
+    end
 }
