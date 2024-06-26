@@ -5,12 +5,13 @@
 [user]
   name = Loc Nguyen
   email = l@nocsi.com
-#[gpg]
-#  format = ssh
-#[credential]
-#	helper = cache --timeout=3600
-#[credential "https://github.com"]
-#  username = nocsi
+  signingkey = 43B69474 
+[gpg]
+	program = /usr/local/MacGPG2/bin/gpg2
+[credential]
+	helper = cache --timeout=3600
+[credential "https://github.com"]
+  username = nocsi
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -25,15 +26,15 @@
 #	gpgsign = true
 [core]
 	editor = nvim
-  #excludesfile = /Users/locnguyen/.gitignore_global
+	excludesfile = /Users/locnguyen/.gitignore_global
 	pager = less -i
-#[tag]
-#	forceSignAnnotated = true
-#[push]
-#	default = current
-#[pull]
-#	default = current
-#	rebase = false
+[tag]
+	forceSignAnnotated = true
+[push]
+	default = current
+[pull]
+	default = current
+	rebase = false
 [oh-my-zsh]
 	hide-status = 1
 	hide-dirty = 1
