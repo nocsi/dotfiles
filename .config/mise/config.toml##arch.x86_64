@@ -31,18 +31,11 @@ KERL_CONFIGURE_OPTIONS = """--enable-m64-build
         --enable-kernel-poll
         --enable-lock-counter
         --enable-shared-zlib
-        --enable-smp-support
-        --enable-threads
-        --enable-wx
         --with-ssl=/usr/local/opt/openssl
         --with-wx-config=/usr/local/bin/wx-config
-        --without-javac
-        --without-jinterface
-        --with-dynamic-trace=dtrace
-        --disable-jit
 """
 CFLAGS = "-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
 CPPFLAGS = "-I/usr/local/opt/llvm/include"
-KERL_CONFIGURE_DISABLE_APPLICATIONS = "odbc megaco jinterface"
+KERL_CONFIGURE_DISABLE_APPLICATIONS = "megaco"
 RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/usr/local/opt/openssl --with-readline-dir=/usr/local/opt/readline --with-libyaml-dir=/usr/local/opt/libyaml --with-gmp-dir=/usr/local/opt/gmp"
 PYTHON_CONFIGURE_OPTS = "--enable-framework --enable-optimizations --with-lto=full"
