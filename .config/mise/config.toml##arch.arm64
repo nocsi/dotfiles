@@ -44,5 +44,5 @@ KERL_CONFIGURE_OPTIONS = """--enable-m64-build
 CFLAGS = "-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
 CPPFLAGS = "-I/opt/homebrew/opt/llvm/include"
 KERL_CONFIGURE_DISABLE_APPLICATIONS = "odbc megaco jinterface"
-RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl@3 --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
+RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
 PYTHON_CONFIGURE_OPTS = "--enable-framework --enable-optimizations --with-lto=full"
