@@ -65,7 +65,7 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   if [[ -f $HOME/.config/yadm/Casks ]]; then
     step "Installing Homebrew Casks"
     while IFS= read -r cask; do
-      run brew install $cask
+      run brew install --cask $cask
       run rm -rf /opt/homebrew/Caskroom/$cask
     done < $HOME/.config/yadm/Casks
   fi
