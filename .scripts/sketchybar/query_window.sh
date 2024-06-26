@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 # Query yabai for window info
 yabai_output=$(yabai -m query --windows --window)
 

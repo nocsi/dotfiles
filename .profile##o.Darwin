@@ -13,7 +13,7 @@ fi
 # Default Environment
 export EDITOR SUDO_EDITOR VISUAL
 export PAGER=less
-export SSH_ASKPASS
+# export SSH_ASKPASS
 #export VIMINIT=":set runtimepath^=$HOME/.SpaceVim|:source $HOME/.SpaceVim/vimrc"
 #export SPACEVIMDIR="$HOME/.SpaceVim.d/"
 #export PATH=$PATH:$HOME/bin:$HOME/go/bin
