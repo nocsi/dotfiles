@@ -100,7 +100,7 @@ else
   fi
 fi
 
-path=(~/.bin ~/Library/Android/sdk/platform-tools ~/Library/Android/sdk/emulator $path)
+path=(~/.local/bin ~/.bin ~/Library/Android/sdk/platform-tools ~/Library/Android/sdk/emulator $path)
 #path=(/opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts $path)
 # path=(/opt/homebrew/opt/llvm/bin $path)
 
@@ -133,8 +133,11 @@ z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
 z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 
 #rtx
-z4h load -- $($HOMEBREW_PREFIX/bin/mise activate zsh)
-eval "$(mise hook-env -s zsh)"
+# z4h load -- $($HOMEBREW_PREFIX/bin/mise activate zsh)
+#z4h load -- $($HOME/.local/bin/mise activate zsh)
+# z4h load -- $($HOME/.local/bin/mise activate --shims zsh)
+eval "$(~/.local/bin/mise activate --shims zsh)"
+# eval "$(mise hook-env -s zsh)"
 # z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
 
 # nix
