@@ -24,17 +24,18 @@ KERL_CONFIGURE_OPTIONS = """--enable-m64-build
         --disable-sctp
         --disable-silent-rules
         --enable-kernel-poll
-        --disable-sctp
         --enable-darwin-64bit
         --enable-dynamic-ssl-lib
+        --enable-shared-zlib
         --enable-dirty-schedulers
         --enable-kernel-poll
         --enable-lock-counter
-        --enable-shared-zlib
         --enable-smp-support
         --enable-threads
         --enable-wx
-        --with-ssl=/opt/homebrew/opt/openssl
+        --enable-webview
+        --enable-gettimeofday-as-os-system-time 
+        --with-ssl=$(brew --prefix openssl@1.1)
         --with-wx-config=/opt/homebrew/bin/wx-config
         --without-javac
         --without-jinterface
@@ -44,5 +45,5 @@ KERL_CONFIGURE_OPTIONS = """--enable-m64-build
 CFLAGS = "-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
 CPPFLAGS = "-I/opt/homebrew/opt/llvm/include"
 KERL_CONFIGURE_DISABLE_APPLICATIONS = "odbc megaco jinterface"
-RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
+RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl@1.1 --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
 PYTHON_CONFIGURE_OPTS = "--enable-framework --enable-optimizations --with-lto=full"
