@@ -3,7 +3,7 @@ experimental = true
 
 [tools]
 node = "20.10.0"
-go = "1.21.1"
+go = "1.22.4"
 bun = "0.7"
 watchexec = "latest"
 java = "openjdk-20"

@@ -1,5 +1,6 @@
 .aws/*
 .cloudflare/*
+.envrc
 .npmrc
 .ssh/id_*
 .ssh/*.key
