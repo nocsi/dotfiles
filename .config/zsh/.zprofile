@@ -35,11 +35,11 @@ fi
 TMPPREFIX="${TMPDIR%/}/zsh"
 path=(
   ~/.bin
-  $($HOMEBREW_PREFIX/bin/mise bin-paths)
+  $(~/.local/bin/mise bin-paths)
   /usr/local/bin
   $path
 )
 
-#export PATH="$HOME/.local/share/mise/shims:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 autoload -U colors && colors

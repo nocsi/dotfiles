@@ -135,9 +135,10 @@ z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 #rtx
 # z4h load -- $($HOMEBREW_PREFIX/bin/mise activate zsh)
 #z4h load -- $($HOME/.local/bin/mise activate zsh)
-# z4h load -- $($HOME/.local/bin/mise activate --shims zsh)
-eval "$(~/.local/bin/mise activate --shims zsh)"
-# eval "$(mise hook-env -s zsh)"
+z4h load -- $($HOME/.local/bin/mise activate --shims zsh)
+# z4h load -- $($HOME/.local/bin/mise hook-env -s zsh)
+# eval "$(~/.local/bin/mise activate --shims zsh)"
+eval "$(mise hook-env -s zsh)"
 # z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
 
 # nix
