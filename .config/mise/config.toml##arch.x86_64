@@ -22,6 +22,6 @@ KERL_CONFIGURE_OPTIONS = "--enable-m64-build --disable-debug --disable-hipe --di
 CFLAGS = "-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
 CPPFLAGS = "-I/usr/local/include -I$(brew --prefix readline)/include -I$(brew --prefix llvm)/include"
 KERL_CONFIGURE_DISABLE_APPLICATIONS = "megaco"
-LDFLAGS="-L$(brew --prefix readline)/lib"
+LDFLAGS="-L$(brew --prefix llvm)/lib -L$(brew --prefix readline)/lib"
 RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/usr/local/opt/openssl --with-readline-dir=/usr/local/opt/readline --with-libyaml-dir=/usr/local/opt/libyaml --with-gmp-dir=/usr/local/opt/gmp"
 PYTHON_CONFIGURE_OPTS = "--enable-framework --enable-optimizations --with-lto=full"
