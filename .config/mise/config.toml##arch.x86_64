@@ -18,7 +18,7 @@ python = "3.11.3"
 tuist = "latest"
 
 [env]
-KERL_CONFIGURE_OPTIONS = "--disable-debug --disable-hipe --disable-sctp --disable-silent-rules --enable-kernel-poll --disable-sctp --enable-darwin-64bit --enable-dynamic-ssl-lib --enable-dirty-schedulers --enable-kernel-poll --enable-lock-counter --enable-shared-zlib --with-ssl=$(brew --prefix openssl) --with-wx-config=$(brew --prefix wx-config)" 
+KERL_CONFIGURE_OPTIONS = "--disable-debug --disable-hipe --disable-sctp --disable-silent-rules --enable-kernel-poll --disable-sctp --enable-darwin-64bit --enable-dynamic-ssl-lib --enable-dirty-schedulers --enable-kernel-poll --enable-lock-counter --enable-shared-zlib --with-ssl=$(brew --prefix openssl) --with-wx-config=$(brew --prefix wxWidgets)" 
 CFLAGS = "-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
 CPPFLAGS = "-I/usr/local/include -I$(brew --prefix readline)/include -I$(brew --prefix llvm)/include"
 KERL_CONFIGURE_DISABLE_APPLICATIONS = "megaco"
