@@ -89,13 +89,14 @@ z4h init || return
 if [[ "$(uname -m)" == "arm64" ]]; then
   # Use arm64 brew, with fallback to x86 brew
   if [ -f /opt/homebrew/bin/brew ]; then
-    path=(/opt/homebrew/bin $path)
-    eval $(/opt/homebrew/bin/brew shellenv)
+    # path=(/opt/homebrew/bin $path)
+    eval "$(/opt/homebrew/bin/brew shellenv)" ||
+    eval "$(/usr/local/Homebrew/bin/brew shellenv)"
   fi
 else
   # Use x86 brew, with fallback to arm64 brew
   if [ -f /usr/local/bin/brew ]; then
-    path=(/usr/local/bin $path)
+    # path=(/usr/local/bin $path)
     eval $(/usr/local/bin/brew shellenv)
   fi
 fi
@@ -232,12 +233,13 @@ if command -v zoxide > /dev/null; then
 fi
 # Source the Lazyman shell initialization for aliases and nvims selector
 # shellcheck source=.config/nvim-Lazyman/.lazymanrc
-[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
+#[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
 # Source the Lazyman .nvimsbind for nvims key binding
 # shellcheck source=.config/nvim-Lazyman/.nvimsbind
-[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
+#[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
 # Luarocks bin path
 [ -d ${HOME}/.luarocks/bin ] && {
   export PATH="${HOME}/.luarocks/bin${PATH:+:${PATH}}"
 }
+
 fpath+=${ZDOTDIR:-~}/.zsh_functions
