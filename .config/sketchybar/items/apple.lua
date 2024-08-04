@@ -50,7 +50,7 @@ apple:subscribe(
 							}
 						},
 						icon = {
-							string = "Menu",
+							string = "Apple",
 							color = colors.red,
 							font = {
 								size = 12

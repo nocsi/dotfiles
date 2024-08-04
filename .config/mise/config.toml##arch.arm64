@@ -10,7 +10,7 @@ java = "openjdk-20"
 maven = "3.5.4"
 rust = "1.79.0"
 elixir = "1.16.1"
-erlang = "27.0"
+erlang = "27.0.1"
 "cargo:cargo-binstall" = "latest"
 zigmod = "latest"
 zig = "0.12.0"
@@ -18,32 +18,44 @@ python = "3.11.4"
 tuist = "latest"
 
 [env]
-KERL_CONFIGURE_OPTIONS = """--enable-m64-build
-        --disable-debug
-        --disable-hipe
-        --disable-sctp
-        --disable-silent-rules
-        --enable-kernel-poll
-        --enable-darwin-64bit
-        --enable-dynamic-ssl-lib
-        --enable-shared-zlib
-        --enable-dirty-schedulers
-        --enable-kernel-poll
-        --enable-lock-counter
-        --enable-smp-support
-        --enable-threads
-        --enable-wx
-        --enable-webview
-        --enable-gettimeofday-as-os-system-time 
-        --with-ssl=$(brew --prefix openssl@1.1)
-        --with-wx-config=/opt/homebrew/bin/wx-config
-        --without-javac
-        --without-jinterface
-        --with-dynamic-trace=dtrace
-        --disable-jit
-"""
-CFLAGS = "-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
-CPPFLAGS = "-I/opt/homebrew/opt/llvm/include"
-KERL_CONFIGURE_DISABLE_APPLICATIONS = "odbc megaco jinterface"
-RUBY_CONFIGURE_OPTS = "--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl@1.1 --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
-PYTHON_CONFIGURE_OPTS = "--enable-framework --enable-optimizations --with-lto=full"
+CC="clang"
+CXX="/opt/homebrew/opt/llvm/bin/clang++"
+CPP="/opt/homebrew/opt/llvm/bin/clang -E"
+KERL_USE_AUTOCONF=0
+KERL_DOC_TARGETS="chunks"
+KERL_CONFIGURE_OPTIONS="""
+--enable-m64-build \
+--disable-debug \
+--disable-hipe \
+--disable-sctp \
+--disable-silent-rules \
+--enable-kernel-poll \
+--enable-darwin-64bit \
+--enable-dirty-schedulers \
+--enable-dynamic-ssl-lib \
+--enable-shared-zlib \
+--enable-sharing-preserving \
+--enable-kernel-poll \
+--enable-lock-counter \
+--enable-smp-support \
+--enable-threads \
+--enable-vm-probes \
+--enable-wx \
+--enable-gettimeofday-as-os-system-time  \
+--with-ssl=/opt/homebrew/opt/openssl \
+--with-ssl-incl=/opt/homebrew/opt/openssl \
+--with-wx-config=/opt/homebrew/bin/wx-config \
+--without-javac \
+--without-jinterface \
+--without-odbc \
+--with-dynamic-trace=dtrace \
+--disable-native-libs \
+--disable-jit \
+--with-wx"""
+CFLAGS="-O2 -g -fno-stack-check -Wno-error=implicit-function-declaration -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/openssl/include -I$/opt/homebrew/opt/bzip2/include -I/opt/homebrew/opt/readline/include"
+CPPFLAGS="-I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/zlib/include -I/opt/homebrew/opt/bzip2/include -I/opt/homebrew/opt/libffi/include -I/opt/homebrew/opt/sqlite3/include"
+LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib -L$(brew --prefix libffi)/lib -L/opt/homebrew/opt/llvm/lib"
+PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig:$(brew --prefix bzip2)/lib/pkgconfig:$(brew --prefix sqlite3)/lib/pkgconfig"
+RUBY_CONFIGURE_OPTS="--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
+PYTHON_CONFIGURE_OPTS="--enable-framework --enable-optimizations --with-lto=full"
+MAKEFLAGS="-j10"

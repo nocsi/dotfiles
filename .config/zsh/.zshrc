@@ -103,7 +103,7 @@ fi
 
 path=(~/.local/bin ~/.bin ~/Library/Android/sdk/platform-tools ~/Library/Android/sdk/emulator $path)
 #path=(/opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts $path)
-# path=(/opt/homebrew/opt/llvm/bin $path)
+path=(/opt/homebrew/opt/llvm/bin $path)
 
 # Export environment variables.
 export GPG_TTY=$TTY
