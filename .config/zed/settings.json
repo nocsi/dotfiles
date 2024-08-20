@@ -57,15 +57,54 @@
       "soft_wrap": "preferred_line_length"
     },
     "Elixir": {
+      "show_whitespaces": "selection",
+       "language_servers": ["next-ls", "!elixir-ls", "!lexical"],
+      // "language_servers": ["elixir-ls", "tailwindcss-language-server"],
       "format_on_save": {
         "external": {
           "command": "mix",
           "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
         }
       }
+    },
+    "HEEX": {
+      "show_whitespaces": "selection",
+      "format_on_save": {
+        "external": {
+          "command": "mix",
+            "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
+          }
+      },
+      "language_servers": ["next-ls", "!elixir-ls", "!lexical"]
+      // "language_servers": ["elixir-ls", "tailwindcss-language-server"]
     }
   },
   "lsp": {
+    "next-ls": {
+        "initialization_options": {
+          "extensions": {
+            // example configuring the extensions
+            "credo": { "enable": false }
+          },
+          "experimental": {
+            // example configuring the experimental options
+            "completions": { "enable": true }
+          }
+        }
+      },
+    "elixir-ls": {
+        "settings": {
+          "dialyzerEnabled": false
+        }
+      },
+      "tailwindcss-language-server": {
+        "settings": {
+          "includeLanguages": {
+            "heex": "html",
+            "Elixir": "html"
+          }
+        }
+      },
     "rust-analyzer": {
       "initialization_options": {
         "inlayHints": {

@@ -16,21 +16,17 @@ zigmod = "latest"
 zig = "0.12.0"
 python = "3.11.4"
 tuist = "latest"
-pkl = "0.26.3"
 
 [env]
 CC="clang"
 CXX="/opt/homebrew/opt/llvm/bin/clang++"
 CPP="/opt/homebrew/opt/llvm/bin/clang -E"
-CLANG="/opt/homebrew/opt/llvm/bin/clang"
-KERL_BUILD_BACKEND="git"
-KERL_BUILD_DOCS="yes"
-KERL_DOC_TARGETS="chunks"
 KERL_USE_AUTOCONF=0
+KERL_DOC_TARGETS="chunks"
 KERL_CONFIGURE_OPTIONS="""
 --enable-m64-build \
 --disable-debug \
---enable-hipe \
+--disable-hipe \
 --disable-sctp \
 --disable-silent-rules \
 --enable-kernel-poll \
@@ -44,7 +40,6 @@ KERL_CONFIGURE_OPTIONS="""
 --enable-smp-support \
 --enable-threads \
 --enable-vm-probes \
---enable-webview \
 --enable-wx \
 --enable-gettimeofday-as-os-system-time  \
 --with-ssl=/opt/homebrew/opt/openssl \
@@ -57,9 +52,9 @@ KERL_CONFIGURE_OPTIONS="""
 --disable-native-libs \
 --disable-jit \
 --with-wx"""
-CFLAGS="-O2 -g -fno-stack-check -Wno-error=implicit-function-declaration -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/openssl/include -I$/opt/homebrew/opt/bzip2/include -I/opt/homebrew/opt/readline/include"
-CPPFLAGS="-I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/zlib/include -I/opt/homebrew/opt/bzip2/include -I/opt/homebrew/opt/libffi/include -I/opt/homebrew/opt/sqlite3/include"
-LDFLAGS="-L/opt/homebrew/opt/openssl/lib -L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/zlib/lib -L/opt/homebrew/opt/bzip2/lib -L/opt/homebrew/opt/libffi/lib -L/opt/homebrew/opt/llvm/lib"
+CFLAGS="-O2 -g -fno-stack-check -Wno-error=implicit-function-declaration -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/openssl/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include"
+CPPFLAGS="-I/opt/homebrew/opt/llvm/include -I$(brew --prefix zlib)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix libffi)/include -I$(brew --prefix sqlite3)/include"
+LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib -L$(brew --prefix libffi)/lib -L/opt/homebrew/opt/llvm/lib"
 PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig:$(brew --prefix bzip2)/lib/pkgconfig:$(brew --prefix sqlite3)/lib/pkgconfig"
 RUBY_CONFIGURE_OPTS="--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
 PYTHON_CONFIGURE_OPTS="--enable-framework --enable-optimizations --with-lto=full"
