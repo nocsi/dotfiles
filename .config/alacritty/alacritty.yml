@@ -11,6 +11,8 @@
 #import:
 #  - /path/to/alacritty.yml
 
+import:
+  - ~/.config/alacritty/color_schemas.yml
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
@@ -119,7 +121,7 @@ window:
 #history: 10000
 
 # Scrolling distance multiplier.
-#multiplier: 3
+ multiplier: 3
 
 # Font configuration
 font:
@@ -206,7 +208,7 @@ font:
 #builtin_box_drawing: true
 
 # If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night)
 #colors:
@@ -300,7 +302,8 @@ font:
 #
 # Allowed values are CellForeground/CellBackground, which reference the
 # affected cell, or hexadecimal colors like #ff00ff.
-#selection:
+selection:
+  save_to_clipboard: true
 #  text: CellBackground
 #  background: CellForeground
 
@@ -314,3 +317,43 @@ font:
 #  magenta: '#b294bb'
 #  cyan:    '#8abeb7'
 #  white:   '#c5c8c
+
+# Live config reload (changes require restart)
+live_config_reload: true
+
+# Shell
+#
+# You can set `shell.program` to the path of your favorite shell, e.g.
+# `/bin/fish`. Entries in `shell.args` are passed unmodified as arguments to the
+# shell.
+#
+# Default:
+#   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
+#   - (Windows) powershell
+shell:
+  program: /opt/homebrew/bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux"
+
+# Startup directory
+#
+# Directory the shell is started in. If this is unset, or `None`, the working
+# directory of the parent process will be used.
+#working_directory: None
+
+# Offer IPC using `alacritty msg` (unix only)
+#ipc_socket: true
+
+mouse:
+  # Click settings
+  #
+  # The `double_click` and `triple_click` settings control the time
+  # alacritty should wait for accepting multiple clicks as one double
+  # or triple click.
+  #double_click: { threshold: 300 }
+  #triple_click: { threshold: 300 }
+
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  hide_when_typing: true

@@ -100,7 +100,7 @@ else
   fi
 fi
 
-path=(~/.bin $path)
+path=(~/.bin ~/Library/Android/sdk/platform-tools ~/Library/Android/sdk/emulator $path)
 #path=(/opt/homebrew/opt/llvm/opt ~/.mix ~/.mix/escripts $path)
 # path=(/opt/homebrew/opt/llvm/bin $path)
 
@@ -140,7 +140,7 @@ eval "$(mise hook-env -s zsh)"
 # nix
 # z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
 
-#asdf 
+#asdf
 # z4h source -- ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh}
 # z4h source -- $HOME/.asdf/plugins/golang/set-env.zsh
 
@@ -163,6 +163,41 @@ alias ls="exa -bh --color=auto --icons"
 alias vi='vim'
 alias vim='nvim'
 alias vimdiff='nvim -d'
+vv() {
+  # Assumes all configs exist in directories named ~/.config/nvim-*
+  local config=$(fd --max-depth 1 --glob 'nvim-*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
+
+  # If I exit fzf without selecting a config, don't open Neovim
+  [[ -z $config ]] && echo "No config selected" && return
+
+  # Open Neovim with the selected config
+  NVIM_APPNAME=$(basename $config) nvim $@
+}
+
+# function nvims() {
+#   items=("default" "kickstart" "LazyVim" "NvChad" "AstroNvim")
+#   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+#   if [[ -z $config ]]; then
+#     echo "Nothing selected"
+#     return 0
+#   elif [[ $config == "default" ]]; then
+#     config=""
+#   fi
+#   NVIM_APPNAME=$config nvim $@
+# }
+
+alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
+alias nvim-kick="NVIM_APPNAME=kickstart nvim"
+alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+
+alias v='nvim' # default Neovim config
+alias vz='NVIM_APPNAME=nvim-lazyvim nvim' # LazyVim
+alias vc='NVIM_APPNAME=nvim-nvchad nvim' # NvChad
+alias vk='NVIM_APPNAME=nvim-kickstart nvim' # Kickstart
+alias va='NVIM_APPNAME=nvim-astrovim nvim' # AstroVim
+alias vl='NVIM_APPNAME=nvim-lunarvim nvim' # LunarVim
+
 alias dsclean="find ~/ -name '.DS_Store' -delete"
 alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
 
@@ -188,3 +223,17 @@ esac
 # export WASMTIME_HOME="$HOME/.wasmtime"
 
 # export PATH="$WASMTIME_HOME/bin:$PATH"
+if command -v zoxide > /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+# Source the Lazyman shell initialization for aliases and nvims selector
+# shellcheck source=.config/nvim-Lazyman/.lazymanrc
+[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
+# Source the Lazyman .nvimsbind for nvims key binding
+# shellcheck source=.config/nvim-Lazyman/.nvimsbind
+[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
+# Luarocks bin path
+[ -d ${HOME}/.luarocks/bin ] && {
+  export PATH="${HOME}/.luarocks/bin${PATH:+:${PATH}}"
+}
+fpath+=${ZDOTDIR:-~}/.zsh_functions
