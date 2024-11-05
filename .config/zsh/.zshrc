@@ -240,6 +240,7 @@ alias vim='nvim'
 alias vimdiff='nvim -d'
 alias dsclean="find ~/ -name '.DS_Store' -delete"
 alias config="git --git-dir=$HOME/.cfg --work-tree=$HOME"
+alias configp="git --git-dir=$HOME/.cfg_ --work-tree=$HOME"
 
 alias nerdctl="/opt/homebrew/bin/colima nerdctl --profile default -- $@"
 # export WASMTIME_HOME="$HOME/.wasmtime"

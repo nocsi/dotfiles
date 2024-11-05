@@ -1,0 +1,27 @@
+[user]
+	name = Loc N
+	email = l@nocsi.com
+#	signingkey = 25787986B19167B89BFF55CF3159FF4CB13EBFB4
+#[sendemail]
+#	smtpencryption = tls
+#smtpserver = mx.nocsi.com
+#smtpuser = l@nocsi.com
+#smtpserverport = 587
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+#[commit]
+#    gpgsign = true
+[alias]
+	up = !git pull --prune $@ && git submodule update --init --recursive
+#[credential]
+#    helper = osxkeychain
+[pull]
+	rebase = false
+	ff = only
+[color]
+	ui = true
+[core]
+	pager = less -r
