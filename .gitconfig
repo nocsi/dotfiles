@@ -8,8 +8,6 @@
   signingkey = 43B69474 
 [gpg]
 	program = /usr/local/MacGPG2/bin/gpg2
-[credential]
-	helper = cache --timeout=3600
 [credential "https://github.com"]
   username = nocsi
 [filter "lfs"]
@@ -40,3 +38,5 @@
 	hide-dirty = 1
 [safe]
 	directory = /Users/locnguyen/Work/casaba/nxstage/PureFlow/Firmware
+[credential]
+	helper = cache
