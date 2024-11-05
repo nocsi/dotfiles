@@ -80,10 +80,10 @@ path=(~/.local/bin ~/.bin ~/Library/Android/sdk/platform-tools ~/Library/Android
 path=(/opt/homebrew/opt/llvm/bin $path)
 
 fpath=($Z4H/romkatv/archive $fpath)
-[[ -d ~/.dotfiles/functions ]] && fpath=(~/.dotfiles/functions $fpath)
+[[ -d ~/.cfg/functions ]] && fpath=(~/.cfg/functions $fpath)
 
 # fpath+=${ZDOTDIR:-~}/.zsh_functions
-autoload -Uz -- zmv archive lsarchive unarchive ~/.dotfiles/functions/[^_]*(N:t)
+autoload -Uz -- zmv archive lsarchive unarchive ~/.cfg/functions/[^_]*(N:t)
 
 if [[ -x ~/.bin/redit ]]; then
   export VISUAL=~/.bin/redit
