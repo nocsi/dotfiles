@@ -1,0 +1,1 @@
+MANPAGER="less -gp '^       '${(q)1}'( .*)?\$'" man zshall
