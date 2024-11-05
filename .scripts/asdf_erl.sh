@@ -33,5 +33,4 @@ export KERL_CONFIGURE_OPTIONS="${KERL_CONFIGURE_OPTIONS[@]}"
 export KERL_CONFIGURE_DISABLE_APPLICATIONS="odbc megaco"
 export CFLAGS="-Wno-error=implicit-function-declaration -O2 -g -fno-stack-check"
 
-asdf install erlang 26.0.2
-
+asdf install erlang 26.1.2

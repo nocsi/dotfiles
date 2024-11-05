@@ -1,0 +1,318 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "features": {
+    "inline_completion_provider": "copilot"
+  },
+  // "theme": "Xcode Presentation Darker",
+  "theme": "Base16 Black Metal (Bathory) Dark",
+  "tab_size": 2,
+  "preferred_line_length": 100,
+  "soft_wrap": "preferred_line_length",
+  "use_autoclose": false,
+  "git": {
+    "inline_blame": {
+      "enabled": false,
+      "delay_ms": 500
+    }
+  },
+  "vertical_scroll_margin": 0,
+  "buffer_font_size": 13,
+  "buffer_font_family": "Liga SFMono Nerd Font",
+  "vim_mode": true,
+  "vim": {
+    // "always": use system clipboard
+    // "never": don't use system clipboard
+    // "on_yank": use system clipboard for yank operations
+    "use_system_clipboard": "always",
+    "use_smartcase_find": true,
+    // Lets `f` and `t` motions extend across multiple lines
+    "use_multiline_find": true
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": false
+  },
+  "cursor_blink": false,
+  "relative_line_numbers": true,
+  "scrollbar": {
+    "show": "never"
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
+    },
+    "version": "2"
+  },
+  "language_models": {
+     "ollama": {
+       "api_url": "https://ollama.nocsi.org",
+     }
+   },
+  "autosave": "on_focus_change",
+  "auto_install_extensions": {
+    "html": true,
+    "dockerfile": true,
+    "docker-compose": false
+  },
+  "format_on_save": "off",
+  "projects_online_by_default": true,
+  "terminal": {
+    "alternate_scroll": "off",
+    "blinking": "terminal_controlled",
+    "button": false,
+    "font_family": "Liga SFMono Nerd Font",
+    "toolbar": {
+      "title": true
+    },
+    "copy_on_select": true,
+    "line_height": "standard",
+    "env": {},
+    "shell": {
+      "with_arguments": {
+        "program": "/opt/homebrew/bin/zsh",
+        "args": ["--login"]
+      }
+    },
+    "working_directory": "current_project_directory"
+  },
+  "project_panel": {
+    "button": false,
+    "auto_fold_dirs": false,
+    "scrollbar": {
+      "show": "never"
+    }
+  },
+  "outline_panel": {
+    "button": false
+  },
+  // File syntax highlighting
+  "file_types": {
+    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
+    "JSON": ["json", "jsonc", "*.code-snippets"],
+  },
+  // File scan exclusions, hide on the file explorer and search
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    // above is default from Zed
+    "**/out",
+    "**/dist",
+    "**/.husky",
+    "**/.turbo",
+    "**/.vscode-test",
+    "**/.vscode",
+    "**/.next",
+    "**/.storybook",
+    "**/.tap",
+    "**/.nyc_output",
+    "**/node_modules"
+  ],
+
+  "load_direnv": "direct",
+
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50
+  },
+  "languages": {
+    "C": {
+      "format_on_save": "language_server",
+      "preferred_line_length": 64,
+      "soft_wrap": "preferred_line_length"
+    },
+    "Elixir": {
+      "language_servers": ["!lexical", "!elixir-ls", "next-ls"],
+      "show_whitespaces": "selection",
+      "format_on_save": {
+        "external": {
+          "command": "mix",
+          "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
+        }
+      }
+    },
+    "HEEX": {
+      "language_servers": ["!lexical", "!elixir-ls", "next-ls"],
+      "show_whitespaces": "selection",
+      "format_on_save": {
+        "external": {
+          "command": "mix",
+          "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
+        }
+      }
+    },
+    "Markdown": {
+      "format_on_save": "on"
+    },
+    "JavaScript": {
+      "tab_size": 2,
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "code_actions_on_format": {
+          "source.fixAll.biome": true,
+          "source.organizeImports.biome": true
+      }
+    },
+    "TypeScript": {
+      "inlay_hints": {
+        "enabled": true,
+        "show_parameter_hints": false,
+        "show_other_hints": true,
+        "show_type_hints": true,
+      },
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+
+    "Python": {
+      "format_on_save": { "language_server": { "name": "ruff" } },
+      "formatter": { "language_server": { "name": "ruff" } },
+      "language_servers": ["pyright", "ruff"],
+    },
+  },
+  "lsp": {
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "diagnosticMode": "workspace",
+          "typeCheckingMode": "strict"
+        },
+        "python": {
+          "pythonPath": ".venv/bin/python"
+        }
+      }
+    },
+    "biome": {
+      "settings": {
+        "require_config_file": true
+      }
+    },
+    "svelte-language-server": {
+      "initialization_options": {
+        "configuration": {
+          "typescript": {
+          },
+          "javascript": {
+          }
+        }
+      }
+    },
+    "elixir-ls": {
+        "settings": {
+          "dialyzerEnabled": false
+        }
+    },
+    "tailwindcss-language-server": {
+        "settings": {
+          "classAttributes": ["class", "className", "ngClass", "styles"],
+          "includeLanguages": {
+            "heex": "html",
+            "Elixir": "html"
+          }
+        }
+    },
+    "rust-analyzer": {
+        "initialization_options": {
+          "completion": {
+            "snippets": {
+              "custom": {
+                "Arc::new": {
+                  "postfix": "arc",
+                  "body": ["Arc::new(${receiver})"],
+                  "requires": "std::sync::Arc",
+                  "scope": "expr"
+                },
+                "Some": {
+                  "postfix": "some",
+                  "body": ["Some(${receiver})"],
+                  "scope": "expr"
+                },
+                "Ok": {
+                  "postfix": "ok",
+                  "body": ["Ok(${receiver})"],
+                  "scope": "expr"
+                },
+                "Rc::new": {
+                  "postfix": "rc",
+                  "body": ["Rc::new(${receiver})"],
+                  "requires": "std::rc::Rc",
+                  "scope": "expr"
+                },
+                "Box::pin": {
+                  "postfix": "boxpin",
+                  "body": ["Box::pin(${receiver})"],
+                  "requires": "std::boxed::Box",
+                  "scope": "expr"
+                },
+                "vec!": {
+                  "postfix": "vec",
+                  "body": ["vec![${receiver}]"],
+                  "description": "vec![]",
+                  "scope": "expr"
+                }
+              }
+            }
+          },
+          "inlayHints": {
+            "maxLength": null,
+            "lifetimeElisionHints": {
+              "enable": "skip_trivial",
+              "useParameterNames": true
+            },
+            "closureReturnTypeHints": {
+              "enable": "always"
+            }
+          }
+        }
+      },
+      "typescript-language-server": {
+        "initialization_options": {
+          "preferences": {
+            "includeInlayParameterNameHints": "all",
+            "includeInlayParameterNameHintsWhenArgumentMatchesName": true,
+            "includeInlayFunctionParameterTypeHints": true,
+            "includeInlayVariableTypeHints": true,
+            "includeInlayVariableTypeHintsWhenTypeMatchesName": false,
+            "includeInlayPropertyDeclarationTypeHints": true,
+            "includeInlayFunctionLikeReturnTypeHints": true,
+            "includeInlayEnumMemberValueHints": true,
+            "includeInlayEnumMemberDeclarationTypes": true
+          }
+        }
+      }
+    },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  }
+}

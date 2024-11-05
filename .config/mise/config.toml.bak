@@ -1,0 +1,61 @@
+[settings]
+experimental = true
+
+[tools]
+node = "20.10.0"
+go = "1.22.4"
+bun = "0.7"
+watchexec = "latest"
+java = "openjdk-20"
+maven = "3.5.4"
+rust = "1.79.0"
+elixir = "1.16.1"
+erlang = "27.0.1"
+"cargo:cargo-binstall" = "latest"
+zigmod = "latest"
+zig = "0.12.0"
+python = "3.11.4"
+tuist = "latest"
+
+[env]
+CC="clang"
+CXX="/opt/homebrew/opt/llvm/bin/clang++"
+CPP="/opt/homebrew/opt/llvm/bin/clang -E"
+KERL_USE_AUTOCONF=0
+KERL_DOC_TARGETS="chunks"
+KERL_CONFIGURE_OPTIONS="""
+--enable-m64-build \
+--disable-debug \
+--disable-hipe \
+--disable-sctp \
+--disable-silent-rules \
+--enable-kernel-poll \
+--enable-darwin-64bit \
+--enable-dirty-schedulers \
+--enable-dynamic-ssl-lib \
+--enable-shared-zlib \
+--enable-sharing-preserving \
+--enable-kernel-poll \
+--enable-lock-counter \
+--enable-smp-support \
+--enable-threads \
+--enable-vm-probes \
+--enable-wx \
+--enable-gettimeofday-as-os-system-time  \
+--with-ssl=/opt/homebrew/opt/openssl \
+--with-ssl-incl=/opt/homebrew/opt/openssl \
+--with-wx-config=/opt/homebrew/bin/wx-config \
+--without-javac \
+--without-jinterface \
+--without-odbc \
+--with-dynamic-trace=dtrace \
+--disable-native-libs \
+--disable-jit \
+--with-wx"""
+CFLAGS="-O2 -g -fno-stack-check -Wno-error=implicit-function-declaration -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/openssl/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include"
+CPPFLAGS="-I/opt/homebrew/opt/llvm/include -I$(brew --prefix zlib)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix libffi)/include -I$(brew --prefix sqlite3)/include"
+LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib -L$(brew --prefix libffi)/lib -L/opt/homebrew/opt/llvm/lib"
+PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig:$(brew --prefix bzip2)/lib/pkgconfig:$(brew --prefix sqlite3)/lib/pkgconfig"
+RUBY_CONFIGURE_OPTS="--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
+PYTHON_CONFIGURE_OPTS="--enable-framework --enable-optimizations --with-lto=full"
+MAKEFLAGS="-j10"

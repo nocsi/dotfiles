@@ -1,0 +1,351 @@
+// If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
+keybinds clear-defaults=true {
+  "normal" clear-defaults=true {
+    bind "Ctrl a" { SwitchToMode "Tmux"; }
+    // general stuff
+    bind "Alt n" { NewPane; }
+    bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
+    bind "Alt w" { ToggleFloatingPanes;}
+    bind "Alt t" { NewTab;}
+    bind "Ctrl h" "Alt Left" { MoveFocusOrTab "Left"; }
+    bind "Ctrl l" "Alt Right" { MoveFocusOrTab "Right"; }
+    bind "Ctrl j" "Alt Down" { MoveFocus "Down"; }
+    bind "Ctrl k" "Alt Up" { MoveFocus "Up"; }
+    bind "Alt +" { Resize "Increase"; }
+    bind "Alt -" { Resize "Decrease"; }
+    bind "Alt [" { PreviousSwapLayout; }
+    bind "Alt ]" { NextSwapLayout; }
+    bind "Alt i" { MoveTab "Left"; }
+    bind "Alt o" { MoveTab "Right"; }
+  }
+
+  tmux clear-defaults=true{
+    bind "g" {
+      Run "lazygit"  {
+        close_on_exit true
+      };
+      TogglePaneEmbedOrFloating;
+      SwitchToMode "normal";
+    }
+    bind "f" { SwitchToMode "entersearch"; SearchInput 0; }
+    bind "s" { SwitchToMode "scroll"; }
+    bind "r" { SwitchToMode "Resize"; }
+
+    bind "Ctrl a" { Write 2; SwitchToMode "Normal"; }
+    bind "Esc" { SwitchToMode "normal"; }
+    bind "g" { SwitchToMode "Locked"; }
+    bind "p" { SwitchToMode "Pane"; }
+    bind "t" { SwitchToMode "Tab"; }
+    bind "n" { SwitchToMode "Resize"; }
+    bind "h" { SwitchToMode "Move"; }
+    bind "s" { SwitchToMode "Scroll"; }
+    bind "o" { SwitchToMode "Session"; }
+    bind "q" { Quit; }
+
+    bind "t" { NewTab; SwitchToMode "normal"; }
+    bind "Ctrl h" { GoToPreviousTab; SwitchToMode "normal"; }
+    bind "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
+
+    bind "," { SwitchToMode "RenameTab"; }
+
+    bind "w" {
+      Run "sessions"  {
+        close_on_exit true
+      };
+      TogglePaneEmbedOrFloating;
+      SwitchToMode "normal";
+    }
+
+
+    bind "_" { NewPane "Right"; SwitchToMode "normal"; }
+    bind "-" { NewPane "Down"; SwitchToMode "normal"; }
+    bind "x" { CloseFocus; SwitchToMode "normal"; }
+    bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+    bind "a" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
+    bind "e" { EditScrollback; SwitchToMode "normal"; }
+
+    bind "h" { MoveFocus "Left"; SwitchToMode "normal"; }
+    bind "j" { MoveFocus "Down"; SwitchToMode "normal"; }
+    bind "k" { MoveFocus "Up"; SwitchToMode "normal"; }
+    bind "l" { MoveFocus "Right"; SwitchToMode "normal"; }
+
+    bind "L" { MovePane "Right"; SwitchToMode "normal"; }
+    bind "H" { MovePane "Left"; SwitchToMode "normal"; }
+    bind "K" { MovePane "Up"; SwitchToMode "normal"; }
+    bind "J" { MovePane "Down"; SwitchToMode "normal"; }
+
+    bind ";" { ToggleFloatingPanes; SwitchToMode "normal"; }
+    bind "d" { Detach; SwitchToMode "normal"; }
+    bind "1" { GoToTab 1; SwitchToMode "normal"; }
+    bind "2" { GoToTab 2; SwitchToMode "normal"; }
+    bind "3" { GoToTab 3; SwitchToMode "normal"; }
+    bind "4" { GoToTab 4; SwitchToMode "normal"; }
+    bind "5" { GoToTab 5; SwitchToMode "normal"; }
+    bind "6" { GoToTab 6; SwitchToMode "normal"; }
+    bind "7" { GoToTab 7; SwitchToMode "normal"; }
+    bind "8" { GoToTab 8; SwitchToMode "normal"; }
+    bind "9" { GoToTab 9; SwitchToMode "normal"; }
+  }
+  resize {
+    bind "h" "Left" { Resize "Left"; }
+    bind "j" "Down" { Resize "Down"; }
+    bind "k" "Up" { Resize "Up"; }
+    bind "l" "Right" { Resize "Right"; }
+  }
+
+  search {
+    bind "n" { Search "Down"; }
+    bind "N" { Search "Up"; }
+    bind "c" { SearchToggleOption "CaseSensitivity"; }
+    bind "w" { SearchToggleOption "Wrap"; }
+    bind "o" { SearchToggleOption "WholeWord"; }
+  }
+
+  entersearch {
+    bind "Enter" { SwitchToMode "search"; }
+  }
+}
+
+plugins {
+    tab-bar location="zellij:tab-bar"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    compact-bar location="zellij:compact-bar"
+    // session-manager location="zellij:session-manager"
+}
+
+// Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
+// eg. when terminal window with an active zellij session is closed
+// Options:
+//   - detach (Default)
+//   - quit
+//
+// on_force_close "quit"
+
+//  Send a request for a simplified ui (without arrow fonts) to plugins
+//  Options:
+//    - true
+//    - false (Default)
+//
+simplified_ui true
+
+// Choose the path to the default shell that zellij will use for opening new panes
+// Default: $SHELL
+//
+// default_shell "fish"
+
+// Choose the path to override cwd that zellij will use for opening new panes
+//
+// default_cwd ""
+
+// Toggle between having pane frames around the panes
+// Options:
+//   - true (default)
+//   - false
+//
+pane_frames false
+
+// Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
+// Options:
+//   - true (default)
+//   - false
+//
+// auto_layout true
+
+// Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
+// Options:
+//   - true (default)
+//   - false
+//
+session_serialization false
+
+// Whether pane viewports are serialized along with the session, default is false
+// Options:
+//   - true
+//   - false (default)
+// serialize_pane_viewport true
+
+// Scrollback lines to serialize along with the pane viewport when serializing sessions, 0
+// defaults to the scrollback size. If this number is higher than the scrollback size, it will
+// also default to the scrollback size. This does nothing if `serialize_pane_viewport` is not true.
+//
+// scrollback_lines_to_serialize 10000
+
+// Define color themes for Zellij
+// For more examples, see: https://github.com/zellij-org/zellij/tree/main/example/themes
+// Once these themes are defined, one of them should to be selected in the "theme" section of this file
+//
+
+themes {
+        // gruvbox-dark
+    default {
+        fg 213 196 161
+        bg 40 40 40
+        black 60 56 54
+        red 204 36 29
+        green 152 151 26
+        yellow 215 153 33
+        blue 69 133 136
+        magenta 177 98 134
+        cyan 104 157 106
+        white 251 241 199
+        orange 214 93 14
+    }
+
+    catppuccin-latte {
+        bg "#acb0be";
+        fg "#acb0be";
+        red "#d20f39";
+        green "#40a02b";
+        blue "#1e66f5";
+        yellow "#df8e1d";
+        magenta "#ea76cb";
+        orange "#fe640b";
+        cyan "#04a5e5";
+        black "#4c4f69";
+        white "#dce0e8";
+    }
+
+    catppuccin-frappe{
+        bg "#626880";
+        fg "#c6d0f5";
+        red "#e78284";
+        green "#a6d189";
+        blue "#8caaee";
+        yellow "#e5c890";
+        magenta "#f4b8e4";
+        orange "#ef9f76";
+        cyan "#99d1db";
+        black "#292c3c";
+        white "#c6d0f5";
+    }
+
+    catppuccin-macchiato{
+        bg "#5b6078";
+        fg "#cad3f5";
+        red "#ed8796";
+        green "#a6da95";
+        blue "#8aadf4";
+        yellow "#eed49f";
+        magenta "#f5bde6";
+        orange "#f5a97f";
+        cyan "#91d7e3";
+        black "#24273a";
+        white "#cad3f5";
+    }
+
+    catppuccin-mocha{
+        bg "#585b70";
+        fg "#cdd6f4";
+        red "#f38ba8";
+        green "#a6e3a1";
+        blue "#89b4fa";
+        yellow "#f9e2af";
+        magenta "#f5c2e7";
+        orange "#fab387";
+        cyan "#89dceb";
+        black "#181825";
+        white "#cdd6f4";
+    }
+	rose-pine-moon {
+		bg "#44415a"
+		fg "#e0def4"
+		red "#eb6f92"
+		green "#3e8fb0"
+		blue "#9ccfd8"
+		yellow "#f6c177"
+		magenta "#c4a7e7"
+		orange "#fe640b"
+		cyan "#ea9a97"
+		black "#393552"
+		white "#e0def4"
+	}
+}
+
+// Choose the theme that is specified in the themes section.
+// Default: default
+//
+theme "rose-pine-moon"
+
+// The name of the default layout to load on startup
+// Default: "default"
+//
+default_layout "compact"
+
+// Choose the mode that zellij uses when starting up.
+// Default: normal
+//
+// default_mode "locked"
+
+// Toggle enabling the mouse mode.
+// On certain configurations, or terminals this could
+// potentially interfere with copying text.
+// Options:
+//   - true (default)
+//   - false
+//
+mouse_mode true
+
+// Configure the scroll back buffer size
+// This is the number of lines zellij stores for each pane in the scroll back
+// buffer. Excess number of lines are discarded in a FIFO fashion.
+// Valid values: positive integers
+// Default value: 10000
+//
+scroll_buffer_size 100000
+
+// Provide a command to execute when copying text. The text will be piped to
+// the stdin of the program to perform the copy. This can be used with
+// terminal emulators which do not support the OSC 52 ANSI control sequence
+// that will be used by default if this option is not set.
+// Examples:
+//
+// copy_command "xclip -selection clipboard" // x11
+// copy_command "wl-copy"                    // wayland
+copy_command "pbcopy"                     // osx
+
+// Choose the destination for copied text
+// Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.
+// Does not apply when using copy_command.
+// Options:
+//   - system (default)
+//   - primary
+//
+// copy_clipboard "primary"
+
+// Enable or disable automatic copy (and clear) of selection when releasing mouse
+// Default: true
+//
+copy_on_select true
+
+// Path to the default editor to use to edit pane scrollbuffer
+// Default: $EDITOR or $VISUAL
+//
+// scrollback_editor "/usr/bin/vim"
+
+// When attaching to an existing session with other users,
+// should the session be mirrored (true)
+// or should each user have their own cursor (false)
+// Default: false
+//
+// mirror_session true
+
+// The folder in which Zellij will look for layouts
+//
+// layout_dir "/path/to/my/layout_dir"
+
+// The folder in which Zellij will look for themes
+//
+// theme_dir "/path/to/my/theme_dir"
+
+// Enable or disable the rendering of styled and colored underlines (undercurl).
+// May need to be disabled for certain unsupported terminals
+// Default: true
+//
+// styled_underlines false
+
+// Enable or disable writing of session metadata to disk (if disabled, other sessions might not know
+// metadata info on this session)
+// Default: false
+//
+// disable_session_metadata true

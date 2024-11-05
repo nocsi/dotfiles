@@ -1,9 +1,0 @@
-.DS_Store
-bin/terraform
-bin/packer
-.python-version
-.config/direnv/allow
-.config/direnv/allow/*
-./kube/
-.password-store
-.password-store-nocsi

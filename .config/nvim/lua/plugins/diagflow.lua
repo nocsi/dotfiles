@@ -1,0 +1,3 @@
+return {
+  "dgagn/diagflow.nvim",
+}

@@ -1,42 +1,35 @@
--- Prepend mise shims to PATH
--- vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+-- This file simply bootstraps the installation of Lazy.nvim and then calls other files for execution
+-- This file doesn't necessarily need to be touched, BE CAUTIOUS editing this file and proceed at your own risk.
+local lazypath = vim.env.LAZY or vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
+  -- stylua: ignore
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
+end
+vim.opt.rtp:prepend(lazypath)
 
-local path_sep = vim.loop.os_uname().version:match "Windows" and "\\" or "/"
-local join = function(...) return table.concat({ ... }, path_sep) end
-local getpath = function(arg)
-  local path = vim.fn.stdpath(arg)
-  return vim.fn.substitute(path, [[\(.*\)\zsnvim]], "astronvim", "")
+-- validate that lazy is available
+if not pcall(require, "lazy") then
+  -- stylua: ignore
+  vim.api.nvim_echo({ { ("Unable to load lazy from: %s\n"):format(lazypath), "ErrorMsg" }, { "Press any key to exit...", "MoreMsg" } }, true, {})
+  vim.fn.getchar()
+  vim.cmd.quit()
 end
 
-local data_path = getpath "data"
-local astro_config = join(data_path, "core")
-local user_path = getpath "config"
-
-vim.env.XDG_DATA_HOME = data_path
-vim.env.XDG_CACHE_HOME = join(data_path, "cache")
-vim.env.XDG_STATE_HOME = join(data_path, "state")
-
-vim.opt.runtimepath = {
-  user_path,
-  astro_config,
-  vim.env.VIMRUNTIME,
-  join(astro_config, "after"),
-  join(user_path, "after"),
-}
-
-vim.opt.packpath = {
-  join(data_path, "nvim", "site"),
-  user_path,
-  vim.env.VIMRUNTIME,
-}
-
-astronvim_installation = { home = astro_config }
-
-local execute = loadfile(join(astro_config, "init.lua"))
-
-if not execute then
-  vim.api.nvim_err_writeln "Could not load AstroNvim's init.lua"
-  return
+local function system(command)
+  local file = assert(io.popen(command, 'r'))
+  local output = file:read('*all'):gsub("%s+", "")
+  file:close()
+  return output
 end
 
-execute()
+if vim.fn.executable("python3") > 0 then
+  vim.g.python3_host_prog = system("which python3")
+end
+
+if vim.fn.executable("ruby") > 0 then
+  vim.g.ruby_host_prog = system("which ruby")
+end
+
+
+require "lazy_setup"
+require "polish"

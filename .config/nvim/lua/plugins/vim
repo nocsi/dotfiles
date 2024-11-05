@@ -1,0 +1,8 @@
+return {
+  "metalelf0/base16-black-metal-scheme",
+  name = "base16-black-metal-scheme,
+  opts = {
+
+  },
+
+}
