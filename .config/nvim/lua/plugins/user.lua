@@ -7,39 +7,50 @@
 return {
 
   -- == Adding Plugins ==
+  "andweeb/presence.nvim",
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function() require("lsp_signature").setup() end,
+  },
+  {
+    "goolord/alpha-nvim",
+    opts = function(_, opts)
+      -- customize the dashboard header
+      opts.section.header.val = {
+        " █████  ███████ ████████ ██████   ██████",
+        "██   ██ ██         ██    ██   ██ ██    ██",
+        "███████ ███████    ██    ██████  ██    ██",
+        "██   ██      ██    ██    ██   ██ ██    ██",
+        "██   ██ ███████    ██    ██   ██  ██████",
+        " ",
+        "    ███    ██ ██    ██ ██ ███    ███",
+        "    ████   ██ ██    ██ ██ ████  ████",
+        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
+        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
+        "    ██   ████   ████   ██ ██      ██",
+      }
+      return opts
+    end,
+  },
+  {
+    "smjonas/inc-rename.nvim",
+    config = function() require("inc_rename").setup() end,
+  },
+  {
+    "tzachar/highlight-undo.nvim",
+    opts = {},
+  },
+  {
+    "smjonas/live-command.nvim",
+    -- live-command supports semantic versioning via Git tags
+    -- tag = "2.*",
+    config = function() require("live-command").setup() end,
+  },
+  { "CRAG666/code_runner.nvim", config = true },
+  { "luckasRanarison/tailwind-tools.nvim", config = true },
 
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "BufRead",
-  --   config = function() require("lsp_signature").setup() end,
-  -- },
-
-  -- == Overriding Plugins ==
-
-  -- customize alpha options
-  -- {
-  --   "goolord/alpha-nvim",
-  --   opts = function(_, opts)
-  --     -- customize the dashboard header
-  --     opts.section.header.val = {
-  --       " █████  ███████ ████████ ██████   ██████",
-  --       "██   ██ ██         ██    ██   ██ ██    ██",
-  --       "███████ ███████    ██    ██████  ██    ██",
-  --       "██   ██      ██    ██    ██   ██ ██    ██",
-  --       "██   ██ ███████    ██    ██   ██  ██████",
-  --       " ",
-  --       "    ███    ██ ██    ██ ██ ███    ███",
-  --       "    ████   ██ ██    ██ ██ ████  ████",
-  --       "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-  --       "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-  --       "    ██   ████   ████   ██ ██      ██",
-  --     }
-  --     return opts
-  --   end,
-  -- },
-
-  -- You can disable default plugins as follows:
-  -- { "max397574/better-escape.nvim", enabled = false },
+  { "max397574/better-escape.nvim", enabled = false },
 
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
@@ -66,13 +77,36 @@ return {
   { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" },
   "folke/which-key.nvim",
   "christoomey/vim-tmux-navigator",
+  -- },
+
+  { "mrjones2014/smart-splits.nvim" },
+  {
+    "mrjones2014/legendary.nvim",
+    -- since legendary.nvim handles all your keymaps/commands,
+    -- its recommended to load legendary.nvim before other plugins
+    priority = 10000,
+    lazy = false,
+    -- sqlite is only needed if you want to use frecency sorting
+    -- dependencies = { 'kkharji/sqlite.lua' }
+  },
 
   -- Colorschemes
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { "metalelf0/base16-black-metal-scheme", name = "base16", priority = 1000 },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "scottmckendry/telescope-resession.nvim" },
+    config = true,
+  },
+  {
+    "CRAG666/betterTerm.nvim",
+    opts = {
+      position = "bot",
+      size = 15,
+    },
+  },
+  { "CRAG666/code_runner.nvim", config = true },
 
-  
-
+  { "JoosepAlviste/nvim-ts-context-commentstring", config = true },
   -- cmp plugins
   { "hrsh7th/nvim-cmp" },
   { "hrsh7th/cmp-nvim-lsp" },
@@ -86,8 +120,9 @@ return {
     config = function() require("copilot_cmp").setup() end,
   },
 
+  { "metalelf0/base16-black-metal-scheme", config = function(plugin, opts) end },
   -- Snippets
-  -- { "L3MON4D3/LuaSnip" },
+  { "L3MON4D3/LuaSnip" },
   { "rafamadriz/friendly-snippets", commit = "d27a83a363e61009278b6598703a763ce9c8e617" }, -- a bunch of snippets to use
 
   -- LSP
@@ -97,6 +132,18 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+    },
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    config = true,
+  },
+  {
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+    opts = {
+      -- your options here
     },
   },
   "jose-elias-alvarez/null-ls.nvim",

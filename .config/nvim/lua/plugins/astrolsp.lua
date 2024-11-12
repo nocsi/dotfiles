@@ -19,6 +19,7 @@ return {
     },
     -- customize lsp formatting options
     formatting = {
+
       -- control auto formatting on save
       format_on_save = {
         enabled = true, -- enable or disable format on save globally
@@ -34,7 +35,8 @@ return {
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         "lua_ls",
       },
-      timeout_ms = 1500, -- default format timeout
+      timeout_ms = 3200, -- adjust the timeout_ms variable for formatting
+
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
@@ -48,6 +50,7 @@ return {
       "pyright",
       "bashls",
       "dockerls",
+      "emmet_ls",
       "lexical",
       "erlangls",
       "texlab",
@@ -56,6 +59,7 @@ return {
       "nil_ls",
       "marksman",
       "lua_ls",
+      "svelte",
       "tilt_ls",
       "r_language_server",
       "buck2",
@@ -109,6 +113,25 @@ return {
         },
       },
     },
+    commands = {
+      Format = {
+        function() vim.lsp.buf.format() end,
+        -- condition to create the user command
+        -- can either be a string of a client capability or a function of `fun(client, bufnr): boolean`
+        cond = "textDocument/formatting",
+        -- the rest of the user command options (:h nvim_create_user_command)
+        desc = "Format file with LSP",
+      },
+    },
+    capabilities = {
+      textDocument = {
+        foldingRange = { dynamicRegistration = false },
+      },
+    },
+    lsp_handlers = {
+      ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true }),
+      ["textDocument/signatureHelp"] = false, -- set to false to disable any custom handlers
+    },
     -- mappings to be set up on attaching of a language server
     mappings = {
       n = {
@@ -130,11 +153,8 @@ return {
         -- },
       },
     },
-    -- A custom `on_attach` function to be run after the default `on_attach` function
-    -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
-    on_attach = function(client, bufnr)
-      -- this would disable semanticTokensProvider for all clients
-      -- client.server_capabilities.semanticTokensProvider = nil
-    end,
+    -- this would disable semanticTokensProvider for all clients
+    -- client.server_capabilities.semanticTokensProvider = nil
+    -- end,
   },
 }

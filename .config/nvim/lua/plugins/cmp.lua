@@ -40,17 +40,113 @@ local kind_icons = {
   TypeParameter = "",
   Copilot = "",
 }
--- find more here: https://www.nerdfonts.com/cheat-sheet
 
 return {
   "hrsh7th/nvim-cmp",
+  event = "InsertEnter",
+  keys = { ":", "/", "?" }, -- lazy load cmp on more keys along with insert mode
   dependencies = {
     "luckasRanarison/tailwind-tools.nvim",
+    "hrsh7th/cmp-buffer", -- source for text in buffer
+    "hrsh7th/cmp-path", -- source for file system paths
+    {
+      "L3MON4D3/LuaSnip",
+      -- follow latest release.
+      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      -- install jsregexp (optional!).
+      build = "make install_jsregexp",
+    },
+    "saadparwaiz1/cmp_luasnip", -- for autocompletion
+    "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind-nvim",
+    "hrsh7th/cmp-cmdline", -- add cmp-cmdline as dependency of cmp
+    "hrsh7th/cmp-emoji", -- add cmp source as dependency of cmp
   },
+  config = function(plugin, opts)
+    --local cmp = require "cmp"
+    -- local luasnip = require "luasnip"
+
+    local lspkind = require "lspkind"
+    -- require("luasnip.loaders.from_vscode").lazy_load()
+
+    cmp.setup {
+      completion = {
+        completeopt = "menu,menuone,preview,noselect",
+      },
+      snippet = { -- configure how nvim-cmp interacts with snippet engine
+        expand = function(args) luasnip.lsp_expand(args.body) end,
+      },
+      mapping = cmp.mapping.preset.insert {
+        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+        ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+        ["<CR>"] = cmp.mapping.confirm { select = false },
+      },
+      -- sources for autocompletion
+      sources = cmp.config.sources {
+        { name = "nvim_lsp" }, -- snippets
+        { name = "luasnip" }, -- snippets
+        { name = "buffer" }, -- text within current buffer
+        { name = "path" }, -- file system paths
+      },
+
+      -- configure lspkind for vs-code like pictograms in completion menu
+      formatting = {
+        format = lspkind.cmp_format {
+          maxwidth = 50,
+          ellipsis_char = "...",
+        },
+      },
+    }
+
+    -- run cmp setup
+    cmp.setup(opts)
+
+    -- configure `cmp-cmdline` as described in their repo: https://github.com/hrsh7th/cmp-cmdline#setup
+    cmp.setup.cmdline("/", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "buffer" },
+      },
+    })
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        {
+          name = "cmdline",
+          option = {
+            ignore_cmds = { "Man", "!" },
+          },
+        },
+      }),
+    })
+  end,
 
   -- override the options table that is used in the `require("cmp").setup()` call
   opts = function(_, opts)
+    local astrocore, astroui = require "astrocore", require "astroui"
+    local function truncate(str, len)
+      if not str then return end
+      local truncated = vim.fn.strcharpart(str, 0, len)
+      return truncated == str and str or truncated .. astroui.get_icon "Ellipsis"
+    end
+
+    if not opts.formatting then opts.formatting = {} end
+    opts.formatting.format = astrocore.patch_func(opts.formatting.format, function(format, ...)
+      -- get item from original formatting function
+      local vim_item = format(...)
+
+      -- truncate text fields to maximum of 25% of the window
+      vim_item.abbr = truncate(vim_item.abbr, math.floor(0.25 * vim.o.columns))
+      vim_item.menu = truncate(vim_item.menu, math.floor(0.25 * vim.o.columns))
+
+      return vim_item
+    end)
     -- opts parameter is the default options table
     -- the function is lazy loaded so cmp is able to be required
     local cmp = require "cmp"
@@ -68,7 +164,7 @@ return {
       },
       -- Accept currently selected item. If none selected, `select` first item.
       -- Set `select` to `false` to only confirm explicitly selected items.
-      ["<CR>"] = cmp.mapping.confirm { select = true },
+      ["<CR>"] = cmp.mapping.confirm { select = false },
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -102,11 +198,12 @@ return {
     }
     opts.sources = cmp.config.sources {
       { name = "copilot", priority = 1200 },
-      { name = "nvim_lsp", priority = 1000 },
+      --{ name = "nvim_lsp", priority = 1000 },
       { name = "luasnip", priority = 750 },
       { name = "buffer", priority = 500 },
       { name = "path", priority = 250 },
-      { name = "cmdline", priority = 150 },
+      --{ name = "cmdline", priority = 150 },
+      --{ name = "emoji", priority = 150 },
     }
     opts.window = {
       documentation = {
@@ -129,6 +226,7 @@ return {
           buffer = "[Buffer]",
           path = "[Path]",
           copilot = "[Copilot]",
+          emoji = "[Emoji]",
         })[entry.source.name]
         return vim_item
       end,

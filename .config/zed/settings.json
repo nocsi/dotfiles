@@ -48,17 +48,18 @@
     "show": "never"
   },
   "assistant": {
+    "enable_experimental_live_diffs": true,
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest"
+      "provider": "ollama",
+      "model": "codellama:latest"
     },
     "version": "2"
   },
   "language_models": {
-     "ollama": {
-       "api_url": "https://ollama.nocsi.org",
-     }
-   },
+    "ollama": {
+      "api_url": "https://ollama.nocsi.org"
+    }
+  },
   "autosave": "on_focus_change",
   "auto_install_extensions": {
     "html": true,
@@ -87,21 +88,25 @@
     "working_directory": "current_project_directory"
   },
   "project_panel": {
-    "button": false,
+    // "button": false,
     "auto_fold_dirs": false,
     "scrollbar": {
       "show": "never"
     }
   },
+  "collaboration_panel": {
+    "dock": "right",
+    "button": false
+  },
   "outline_panel": {
+    "dock": "right",
     "button": false
   },
   // File syntax highlighting
   "file_types": {
     "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "JSON": ["json", "jsonc", "*.code-snippets"],
+    "JSON": ["json", "jsonc", "*.code-snippets"]
   },
-  // File scan exclusions, hide on the file explorer and search
   "file_scan_exclusions": [
     "**/.git",
     "**/.svn",
@@ -124,9 +129,7 @@
     "**/.nyc_output",
     "**/node_modules"
   ],
-
   "load_direnv": "direct",
-
   "inlay_hints": {
     "enabled": true,
     "show_type_hints": true,
@@ -172,8 +175,8 @@
         }
       },
       "code_actions_on_format": {
-          "source.fixAll.biome": true,
-          "source.organizeImports.biome": true
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
       }
     },
     "TypeScript": {
@@ -181,7 +184,7 @@
         "enabled": true,
         "show_parameter_hints": false,
         "show_other_hints": true,
-        "show_type_hints": true,
+        "show_type_hints": true
       },
       "formatter": {
         "language_server": {
@@ -193,12 +196,11 @@
         "source.organizeImports.biome": true
       }
     },
-
     "Python": {
       "format_on_save": { "language_server": { "name": "ruff" } },
       "formatter": { "language_server": { "name": "ruff" } },
-      "language_servers": ["pyright", "ruff"],
-    },
+      "language_servers": ["pyright", "ruff"]
+    }
   },
   "lsp": {
     "pyright": {
@@ -214,103 +216,108 @@
     },
     "biome": {
       "settings": {
-        "require_config_file": true
+        // "require_config_file": true
       }
     },
     "svelte-language-server": {
       "initialization_options": {
         "configuration": {
-          "typescript": {
-          },
-          "javascript": {
-          }
+          "typescript": {},
+          "javascript": {}
         }
       }
     },
-    "elixir-ls": {
-        "settings": {
-          "dialyzerEnabled": false
+    "next-ls": {
+      "initialization_options": {
+        "extensions": {
+          // example configuring the extensions
+          "credo": { "enable": false }
+        },
+        "experimental": {
+          // example configuring the experimental options
+          "completions": { "enable": true }
         }
+      }
     },
     "tailwindcss-language-server": {
-        "settings": {
-          "classAttributes": ["class", "className", "ngClass", "styles"],
-          "includeLanguages": {
-            "heex": "html",
-            "Elixir": "html"
-          }
+      "settings": {
+        "classAttributes": ["class", "className", "ngClass", "styles"],
+        "includeLanguages": {
+          "heex": "html",
+          "Elixir": "html"
         }
+      }
     },
     "rust-analyzer": {
-        "initialization_options": {
-          "completion": {
-            "snippets": {
-              "custom": {
-                "Arc::new": {
-                  "postfix": "arc",
-                  "body": ["Arc::new(${receiver})"],
-                  "requires": "std::sync::Arc",
-                  "scope": "expr"
-                },
-                "Some": {
-                  "postfix": "some",
-                  "body": ["Some(${receiver})"],
-                  "scope": "expr"
-                },
-                "Ok": {
-                  "postfix": "ok",
-                  "body": ["Ok(${receiver})"],
-                  "scope": "expr"
-                },
-                "Rc::new": {
-                  "postfix": "rc",
-                  "body": ["Rc::new(${receiver})"],
-                  "requires": "std::rc::Rc",
-                  "scope": "expr"
-                },
-                "Box::pin": {
-                  "postfix": "boxpin",
-                  "body": ["Box::pin(${receiver})"],
-                  "requires": "std::boxed::Box",
-                  "scope": "expr"
-                },
-                "vec!": {
-                  "postfix": "vec",
-                  "body": ["vec![${receiver}]"],
-                  "description": "vec![]",
-                  "scope": "expr"
-                }
+      "initialization_options": {
+        "completion": {
+          "snippets": {
+            "custom": {
+              "Arc::new": {
+                "postfix": "arc",
+                "body": ["Arc::new(${receiver})"],
+                "requires": "std::sync::Arc",
+                "scope": "expr"
+              },
+              "Some": {
+                "postfix": "some",
+                "body": ["Some(${receiver})"],
+                "scope": "expr"
+              },
+              "Ok": {
+                "postfix": "ok",
+                "body": ["Ok(${receiver})"],
+                "scope": "expr"
+              },
+              "Rc::new": {
+                "postfix": "rc",
+                "body": ["Rc::new(${receiver})"],
+                "requires": "std::rc::Rc",
+                "scope": "expr"
+              },
+              "Box::pin": {
+                "postfix": "boxpin",
+                "body": ["Box::pin(${receiver})"],
+                "requires": "std::boxed::Box",
+                "scope": "expr"
+              },
+              "vec!": {
+                "postfix": "vec",
+                "body": ["vec![${receiver}]"],
+                "description": "vec![]",
+                "scope": "expr"
               }
             }
-          },
-          "inlayHints": {
-            "maxLength": null,
-            "lifetimeElisionHints": {
-              "enable": "skip_trivial",
-              "useParameterNames": true
-            },
-            "closureReturnTypeHints": {
-              "enable": "always"
-            }
           }
-        }
-      },
-      "typescript-language-server": {
-        "initialization_options": {
-          "preferences": {
-            "includeInlayParameterNameHints": "all",
-            "includeInlayParameterNameHintsWhenArgumentMatchesName": true,
-            "includeInlayFunctionParameterTypeHints": true,
-            "includeInlayVariableTypeHints": true,
-            "includeInlayVariableTypeHintsWhenTypeMatchesName": false,
-            "includeInlayPropertyDeclarationTypeHints": true,
-            "includeInlayFunctionLikeReturnTypeHints": true,
-            "includeInlayEnumMemberValueHints": true,
-            "includeInlayEnumMemberDeclarationTypes": true
+        },
+        "inlayHints": {
+          "maxLength": null,
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true
+          },
+          "closureReturnTypeHints": {
+            "enable": "always"
           }
         }
       }
     },
+    "typescript-language-server": {
+      "initialization_options": {
+        "preferences": {
+          "includeInlayParameterNameHints": "all",
+          "includeInlayParameterNameHintsWhenArgumentMatchesName": true,
+          "includeInlayFunctionParameterTypeHints": true,
+          "includeInlayVariableTypeHints": true,
+          "includeInlayVariableTypeHintsWhenTypeMatchesName": false,
+          "includeInlayPropertyDeclarationTypeHints": true,
+          "includeInlayFunctionLikeReturnTypeHints": true,
+          "includeInlayEnumMemberValueHints": true,
+          "includeInlayEnumMemberDeclarationTypes": true
+        }
+      }
+    }
+  },
   "telemetry": {
     "diagnostics": false,
     "metrics": false

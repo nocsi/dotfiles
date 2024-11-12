@@ -16,20 +16,15 @@ if not pcall(require, "lazy") then
 end
 
 local function system(command)
-  local file = assert(io.popen(command, 'r'))
-  local output = file:read('*all'):gsub("%s+", "")
+  local file = assert(io.popen(command, "r"))
+  local output = file:read("*all"):gsub("%s+", "")
   file:close()
   return output
 end
 
-if vim.fn.executable("python3") > 0 then
-  vim.g.python3_host_prog = system("which python3")
-end
+if vim.fn.executable "python3" > 0 then vim.g.python3_host_prog = system "which python3" end
 
-if vim.fn.executable("ruby") > 0 then
-  vim.g.ruby_host_prog = system("which ruby")
-end
-
+if vim.fn.executable "ruby" > 0 then vim.g.ruby_host_prog = system "which ruby" end
 
 require "lazy_setup"
 require "polish"

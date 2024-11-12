@@ -9,6 +9,7 @@ return {
   { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.elixir-phoenix" },
   { import = "astrocommunity.pack.go" },
+  { import = "astrocommunity.pack.java" },
   { import = "astrocommunity.pack.just" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.pkl" },
@@ -20,6 +21,12 @@ return {
   { import = "astrocommunity.editing-support.nvim-treesitter-context" },
   { import = "astrocommunity.motion.nvim-surround" },
   { import = "astrocommunity.recipes.telescope-nvchad-theme" },
+  { import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints" },
+  { import = "astrocommunity.utility.lua-json5" },
+  { import = "astrocommunity.recipes.neovide" },
+    { import = "astrocommunity.pack.typescript-all-in-one" },
+
+
   {
     import = "astrocommunity.lsp.nvim-lint",
     opts = {
@@ -45,7 +52,7 @@ return {
         perl = { "checkpatch", "perlcritic", "perlimports" },
         php = { "php", "phpcs", "phpinsights", "phpmd", "phpstan", "psalm" },
         proto = { "buf_lint" },
-        python = { "bandit", "flake8", "mypy", "pycodestyle", "pydocstyle", "pylint", "ruff", "vulture" },
+        python = { "bandit", "flake8", "mypy", "pycodestyle", "pydocstyle", "pylint", "ruff", "vulture" },{ import = "astrocommunity.pack.typescript" },
         ruby = { "ruby", "rubocop", "standardrb" },
         shell = { "shellcheck" },
         sql = { "sqlfluff" },

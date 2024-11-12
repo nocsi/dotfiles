@@ -25,7 +25,7 @@ require("lazy").setup({
         "netrwPlugin",
         "tarPlugin",
         "tohtml",
-        -- "zipPlugin", -- removing supports Clojure LSP jar analysis
+        "zipPlugin",
       },
     },
   },

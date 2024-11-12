@@ -1,52 +1,65 @@
-local actions = require "telescope.actions"
-
 return {
   "nvim-telescope/telescope.nvim",
-  opts = {
-    defaults = {
-      -- layout_config = {
-      --   -- prompt_position = "top",
-      --   height = 0.90,
-      --   width = 0.90,
-      --   bottom_pane = {
-      --     height = 25,
-      --     preview_cutoff = 120,
-      --   },
-      --   center = {
-      --     height = 0.4,
-      --     preview_cutoff = 40,
-      --     width = 0.5,
-      --   },
-      --   cursor = {
-      --     preview_cutoff = 40,
-      --   },
-      --   horizontal = {
-      --     preview_cutoff = 120,
-      --     preview_width = 0.6,
-      --   },
-      --   vertical = {
-      --     preview_cutoff = 40,
-      --   },
-      --   flex = {
-      --     flip_columns = 150,
-      --   },
-      -- },
-      prompt_prefix = " ",
-      scroll_strategy = "limit",
-    },
-    pickers = {
-      buffers = {
-        initial_mode = "insert",
-        -- Be able to "delete" (close) a buffer from the list of buffers.
+  cmd = "Telescope",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "debugloop/telescope-undo.nvim",
+  },
+  config = function()
+    local ts = require "telescope"
+    ts.setup {
+      defaults = {
+        winblend = 10,
+        path_display = { "smart" },
+        layout_strategy = "flex",
+        layout_config = {
+          prompt_position = "top",
+        },
+        file_ignore_patterns = { "vendor/*" },
         mappings = {
-          i = {
-            ["<C-d>"] = actions.delete_buffer,
-          },
           n = {
-            ["dd"] = actions.delete_buffer,
+            ["dd"] = "delete_buffer",
           },
         },
-        scroll_strategy = "limit",
+      },
+      pickers = {},
+      extensions = {
+        file_browser = {
+          hijack_netrw = false,
+        },
+      },
+    }
+    local extensions = {
+      "fzf",
+      "notify",
+      "undo",
+      -- 'yank_history',
+    }
+    for _, e in pairs(extensions) do
+      ts.load_extension(e)
+    end
+  end,
+  require("telescope").setup {
+    defaults = {
+      mappings = {
+        i = {
+          ["<C-g>"] = function(prompt_bufnr)
+            -- Use nvim-window-picker to choose the window by dynamically attaching a function
+            local action_set = require "telescope.actions.set"
+            local action_state = require "telescope.actions.state"
+
+            local picker = action_state.get_current_picker(prompt_bufnr)
+            picker.get_selection_window = function(picker, entry)
+              local picked_window_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
+              -- Unbind after using so next instance of the picker acts normally
+              picker.get_selection_window = nil
+              return picked_window_id
+            end
+
+            return action_set.edit(prompt_bufnr, "edit")
+          end,
+        },
       },
     },
   },

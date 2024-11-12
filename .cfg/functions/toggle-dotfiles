@@ -3,11 +3,11 @@
 if (( ARGC == 0 )); then
   case "${GIT_DIR-}" in
     '')
-      export GIT_DIR=~/.dotfiles-public
+      export GIT_DIR=~/.cfg
       export GIT_WORK_TREE=~
     ;;
     ~/.dotfiles-public)
-      export GIT_DIR=~/.dotfiles-private
+      export GIT_DIR=~/.cfg_
       export GIT_WORK_TREE=~
     ;;
     *)
@@ -18,11 +18,11 @@ if (( ARGC == 0 )); then
 elif (( ARGC == 1 )); then
   case "$1" in
     public)
-      export GIT_DIR=~/.dotfiles-public
+      export GIT_DIR=~/.cfg
       export GIT_WORK_TREE=~
     ;;
     private)
-      export GIT_DIR=~/.dotfiles-private
+      export GIT_DIR=~/.cfg_
       export GIT_WORK_TREE=~
     ;;
     '')

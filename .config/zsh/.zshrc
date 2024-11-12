@@ -114,7 +114,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-extra-args
 if (( $+z4h_win_env )); then
   export NO_AT_BRIDGE=1
   export LIBGL_ALWAYS_INDIRECT=1
