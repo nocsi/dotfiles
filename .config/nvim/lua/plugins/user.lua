@@ -76,8 +76,11 @@ return {
   { "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" },
   { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" },
   "folke/which-key.nvim",
-  "christoomey/vim-tmux-navigator",
-  -- },
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+    enabled = true,
+  },
 
   { "mrjones2014/smart-splits.nvim" },
   {
@@ -146,6 +149,7 @@ return {
       -- your options here
     },
   },
+  { "nvim-java/nvim-java", enabled = true },
   "jose-elias-alvarez/null-ls.nvim",
   "mfussenegger/nvim-dap",
   "rcarriga/nvim-dap-ui",
@@ -162,6 +166,12 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
+  },
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    enabled = true,
+    priority = 1000,
   },
   {
     "windwp/nvim-autopairs",
