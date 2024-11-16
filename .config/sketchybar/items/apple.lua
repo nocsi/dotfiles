@@ -1,111 +1,68 @@
-local colors = require("colors")
-local icons = require("icons")
-local settings = require("settings")
-sbar.add(
-	"item",
-	{
-		width = 0
-	}
-)
-local apple =
-	sbar.add(
-		"item",
-		{
-			icon = {
-				padding_left = 10,
-				padding_right = 10,
-				align = "center",
-				font = {
-					size = 14
-				},
-				string = icons.apple,
-				color = colors.seezalt_dark,
-			},
-			background = {
-				color = colors.bg2
-			},
-			click_script = "$CONFIG_DIR/helpers/menus/bin/menus -s 0"
-		}
-	)
-sbar.add(
-	"bracket",
-	{
-		apple.name
-	},
-	{}
-)
+local colors = require("config.colors")
+local icons = require("config.icons")
+local settings = require("config.settings")
 
-apple:subscribe(
-	"mouse.entered",
-	function(env)
-		sbar.animate(
-			"elastic",
-			15,
-			function()
-				apple:set(
-					{
-						background = {
-							color = {
-								alpha = 1
-							}
-						},
-						icon = {
-							string = "Apple",
-							color = colors.red,
-							font = {
-								size = 12
-							}
-						}
-					}
-				)
-			end
-		)
-	end
-)
-apple:subscribe(
-	"mouse.exited",
-	function(env)
-		sbar.animate(
-			"elastic",
-			15,
-			function()
-				apple:set(
-					{
-						background = {
-							color = {
-								alpha = 1
-							}
-						},
-						icon = {
-							string = icons.apple,
-							color = colors.seezalt_dark,
-							font = {
-								size = 12
-							}
-						}
-					}
-				)
-			end
-		)
-	end
-)
-apple:subscribe(
-	"mouse.clicked",
-	function(env)
-		sbar.animate(
-			"elastic",
-			15,
-			function()
-				apple:set(
-					{
-						label = {
-							font = {
-								colors = colors.bg1
-							}
-						}
-					}
-				)
-			end
-		)
-	end
-)
+-- local apple = sbar.add("item", "apple", {
+--  icon = { string = settings.icons.text.apple },
+--   label = { drawing = false },
+--   click_script = "$CONFIG_DIR/items/menus/bin/menus -s 0"
+--})
+
+local apple = sbar.add("item", {
+    icon = {
+        font = {
+            size = 22.0,
+        },
+        string = settings.modes.main.icon,
+        padding_right = 8,
+        padding_left = 8,
+        highlight_color = settings.modes.service.color,
+    },
+    label = {
+        drawing = false,
+    },
+    background = {
+        color = settings.items.colors.background,
+        border_color = settings.modes.main.color,
+        border_width = 1,
+    },
+
+    padding_left = 1,
+    padding_right = 1,
+    click_script = "$CONFIG_DIR/items/menus/bin/menus -s 0",
+})
+
+apple:subscribe("aerospace_enter_service_mode", function(_)
+    sbar.animate("tanh", 10, function()
+        apple:set({
+            background = {
+                border_color = settings.modes.service.color,
+                border_width = 3,
+            },
+            icon = {
+                highlight = true,
+                string = settings.modes.service.icon,
+            },
+        })
+    end)
+end)
+
+apple:subscribe("aerospace_leave_service_mode", function(_)
+    sbar.animate("tanh", 10, function()
+        apple:set({
+            background = {
+                border_color = settings.modes.main.color,
+                border_width = 1,
+            },
+            icon = {
+                highlight = false,
+                string = settings.modes.main.icon,
+            },
+        })
+    end)
+end)
+
+-- Padding to the right of the main button
+sbar.add("item", {
+    width = 7,
+})

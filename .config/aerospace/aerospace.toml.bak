@@ -4,28 +4,34 @@ start-at-login = true
 after-login-command = []
 
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffc6a0f6 inactive_color=0xff939ab7 width=6.0 hidpi=on', # requires https://github.com/FelixKratz/JankyBorders
+  'exec-and-forget sketchybar >> $HOME/.sketchybar/service.log 2>&1',
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+  #'exec-and-forget borders active_color=0xffc6a0f6 inactive_color=0xff939ab7 width=6.0 hidpi=on', # requires https://github.com/FelixKratz/JankyBorders
   #     'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar'
 ]
 
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE FOCUSED_DISPLAY=$(aerospace list-monitors --focused | awk "{print $1}")',
+  #'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 on-focus-changed = [
   'move-mouse window-lazy-center',
+  'exec-and-forget sketchybar --trigger aerospace_focus_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
   'exec-and-forget /bin/bash -c /opt/homebrew/bin/sketchybar --trigger front_app_switched',
   'exec-and-forget sketchybar --trigger update_windows',
 ]
 
 enable-normalization-flatten-containers = false
-enable-normalization-opposite-orientation-for-nested-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = true
 
 accordion-padding = 30
+
+non-empty-workspaces-root-containers-layout-on-startup = 'smart'
 
 default-root-container-layout = 'tiles'
 
@@ -39,7 +45,12 @@ inner.horizontal = [{ monitor."Built-in Retina Display" = 10 }, 15]
 inner.vertical = [{ monitor."Built-in Retina Display" = 10 }, 15]
 outer.left = [{ monitor."Built-in Retina Display" = 5 }, 25]
 outer.bottom = [{ monitor."Built-in Retina Display" = 5 }, 10]
-outer.top = [{ monitor."Built-in Retina Display" = 5 }, 52]
+outer.top = [
+  { monitor."Built-in Retina Display" = 5 },
+  { monitor."LG HDR 4K" = 40 },
+  { monitor."Sidecar Display" = 40 },
+  52,
+]
 outer.right = [{ monitor."Built-in Retina Display" = 5 }, 25]
 
 [exec] # Again, you don't need to copy all config sections to your config.
@@ -48,6 +59,9 @@ inherit-env-vars = true # If you don't touch "exec" section,
 PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 
 [mode.main.binding]
+alt-t = 'exec-and-forget wezterm start'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 alt-space = 'layout floating tiling'
@@ -61,6 +75,7 @@ cmd-keypadPlus = 'resize smart +70'
 
 cmd-g = 'mode join'
 cmd-q = ['close --quit-if-last-window']
+
 # cmd-w = []
 
 # All possible keys:
@@ -85,23 +100,29 @@ cmd-shift-f = 'macos-native-fullscreen'
 alt-g = 'split horizontal'
 alt-v = 'split vertical'
 
-alt-h = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
-alt-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
-alt-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
-alt-l = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
+cmd-alt-ctrl-h = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
+cmd-alt-ctrl-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
+cmd-alt-ctrl-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
+cmd-alt-ctrl-l = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
 cmd-left = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
 cmd-down = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
 cmd-up = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
 cmd-right = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
 
-cmd-shift-h = 'move left'
-cmd-shift-j = 'move down'
-cmd-shift-k = 'move up'
-cmd-shift-l = 'move right'
-cmd-shift-left = 'move left'
-cmd-shift-down = 'move down'
-cmd-shift-up = 'move up'
-cmd-shift-right = 'move right'
+cmd-alt-shift-h = 'move left'
+cmd-alt-shift-j = 'move down'
+cmd-alt-shift-k = 'move up'
+cmd-alt-shift-l = 'move right'
+cmd-alt-shift-left = 'move left'
+cmd-alt-shift-down = 'move down'
+cmd-alt-shift-up = 'move up'
+cmd-alt-shift-right = 'move right'
+
+
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
 
 cmd-1 = 'workspace --auto-back-and-forth 1'  # Notes
 cmd-2 = 'workspace --auto-back-and-forth 2'  # Terminal
@@ -127,7 +148,22 @@ alt-shift-9 = 'move-node-to-workspace 9'
 alt-shift-0 = 'move-node-to-workspace 10'
 # cmd-shift-t = 'move-node-to-workspace t'
 
+
+ctrl-alt-shift-cmd-n = 'workspace next'
+ctrl-alt-shift-cmd-p = 'workspace prev'
+ctrl-alt-shift-cmd-c = 'reload-config'
+
+
 alt-tab = 'workspace-back-and-forth'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+alt-shift-semicolon = [
+  'mode service',
+  'exec-and-forget sketchybar --trigger aerospace_enter_service_mode',
+]
 alt-p = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-p = [
   'move-node-to-monitor --wrap-around next',
@@ -146,9 +182,41 @@ esc = [
   'exec-and-forget sketchybar --trigger hide_message',
   'exec-and-forget sketchybar --reload',
   'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
 ]
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+f = [
+  'layout floating tiling',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
+] # Toggle between floating and tiling layout
+backspace = [
+  'close-all-windows-but-current',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
+]
+
+alt-shift-left = [
+  'join-with left',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
+]
+alt-shift-down = [
+  'join-with down',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
+]
+alt-shift-up = [
+  'join-with up',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
+]
+alt-shift-right = [
+  'join-with right',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_leave_service_mode',
+]
 
 
 b = [
@@ -163,8 +231,6 @@ shift-b = [
   'exec-and-forget sketchybar --trigger hide_message',
   'mode main',
 ]
-
-backspace = ['close-all-windows-but-current', 'mode main']
 
 [mode.resize.binding]
 keypadMinus = 'resize smart -70'
@@ -189,7 +255,7 @@ cmd-alt-h = ['join-with left', 'mode main']
 #    run = "layout floating"
 
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
+if.app-name-regex-substring = '^wezterm-gui$'
 run = ['layout tiling', 'move-node-to-workspace 2']
 
 
@@ -234,7 +300,7 @@ run = ['move-node-to-workspace 9']
 ## move to social workspace
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
-run = ['move-node-to-workspace 8']
+run = ['move-node-to-workspace 7']
 [[on-window-detected]]
 if.app-id = 'com.readdle.smartemail-Mac'
 run = ['move-node-to-workspace 7']
