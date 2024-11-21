@@ -1,3 +1,6 @@
 [submodule "themes"]
   path = .config/alacritty/themes
   url = https://github.com/alacritty/alacritty-theme
+[submodule ".config/sketchybar/wentsketchy"]
+	path = .config/sketchybar/wentsketchy
+	url = https://github.com/lucax88x/wentsketchy

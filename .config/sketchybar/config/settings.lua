@@ -4,13 +4,17 @@ local icons <const> = require("config.icons")
 local dimens <const> = require("config.dimens")
 
 return {
+    paddings = 3,
+    group_paddings = 5,
+
+    -- This is a font configuration for SF Pro and SF Mono (installed manually)
     modes = {
         main = {
-            icon = icons.rebel,
+            icon = icons.text.apple,
             color = colors.rainbow[1],
         },
         service = {
-            icon = icons.nuke,
+            icon = icons.apple,
             color = 0xffff9e64,
         },
     },

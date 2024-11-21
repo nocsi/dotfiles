@@ -36,11 +36,11 @@ key-mapping.preset = 'qwerty'
 [gaps]
 # Allow for more space on smaller screens
 inner.horizontal = [{ monitor."Built-in Retina Display" = 10 }, 15]
-inner.vertical = [{ monitor."Built-in Retina Display" = 10 }, 15]
-outer.left = [{ monitor."Built-in Retina Display" = 5 }, 25]
+inner.vertical = [{ monitor."Built-in Retina Display" = 10 }, 22]
+outer.left = [{ monitor."Built-in Retina Display" = 5 }, 30]
 outer.bottom = [{ monitor."Built-in Retina Display" = 5 }, 10]
-outer.top = [{ monitor."Built-in Retina Display" = 5 }, 52]
-outer.right = [{ monitor."Built-in Retina Display" = 5 }, 25]
+outer.top = [{ monitor."Built-in Retina Display" = 5 }, 35]
+outer.right = [{ monitor."Built-in Retina Display" = 5 }, 30]
 
 [exec] # Again, you don't need to copy all config sections to your config.
 inherit-env-vars = true # If you don't touch "exec" section,

@@ -11,7 +11,7 @@
     "inline_completion_provider": "copilot"
   },
   // "theme": "Xcode Presentation Darker",
-  "theme": "Base16 Black Metal (Bathory) Dark",
+  "theme": "Tokyo Night",
   "tab_size": 2,
   "preferred_line_length": 100,
   "soft_wrap": "preferred_line_length",

@@ -3,46 +3,45 @@ local icons = require("config.icons")
 local colors = require("config.colors")
 local settings = require("config.settings")
 
+local popup_width = 250
+local docker_socket = ""
+local count = 0
+
+local compose_items = {}
+
 local docker = sbar.add("item", "widgets.docker", 42, {
+    socket = "",
     icon = {
-        padding_right = 0,
-        font = {
-            style = "Black",
-            size = 12.0,
-        },
+        string = settings.icons.apps["Docker"],
+        font = settings.fonts.icons(),
     },
     label = {
-        width = 45,
         align = "right",
     },
     position = "right",
-    update_freq = 15,
+    update_freq = 60,
 })
 
-local composes = sbar.add("item", "docker.compose", {
-    position = "right",
-    background = {
-        height = 22,
-        color = { alpha = 0 },
-        border_width = 0,
-        drawing = true,
-    },
+local docker_bracket = sbar.add("bracket", "widgets.docker.bracket", { docker.name }, {
+    background = { color = colors.bg1 },
+    popup = { align = "center", height = 30 },
+})
+
+local hostname = sbar.add("item", {
+    position = "popup." .. docker_bracket.name,
     icon = {
-        string = icons.brew,
-        color = colors.green,
+        align = "left",
+        string = "Hostname:",
+        width = popup_width / 2,
     },
     label = {
-        string = "Docker Composes: ",
-        color = colors.white,
+        max_chars = 20,
+        string = "????????????",
+        width = popup_width / 2,
+        align = "right",
     },
 })
-
 local spaces = {}
-
-sbar.add("bracket", "widgets.docker.bracket", { composes.name }, {
-    background = { color = colors.bg1 },
-})
-
 local function addWorkspaceItem(composeName)
     local spaceId = "workspace_" .. composeName
 
@@ -98,32 +97,77 @@ end
 
 local function update_docker_compose()
     local command = "~/.scripts/docker_composes.sh"
-    sbar.exec(command, function(result)
+    local should_draw = docker_bracket:query().popup.drawing == "off"
+
+    local COUNTER = 0
+
+    sbar.exec(command, function(result, exit_code)
         for composeName in result:gmatch("[^\r\n]+") do
-            addWorkspaceItem(composeName)
+            local color = colors.grey
+            local compose = sbar.add("item", "docker.compose." .. composeName, {
+                position = "popup." .. docker_bracket.name,
+                width = popup_width,
+                align = "center",
+                icon = {
+                    align = "left",
+                    string = "Compose:",
+                    width = popup_width / 2,
+                },
+                label = {
+                    color = colors.blue,
+                    max_chars = 20,
+                    string = composeName,
+                    width = popup_width / 2,
+                    align = "right",
+                },
+                padding_left = 2,
+                padding_right = 2,
+                background = {
+                    color = colors.bg2,
+                    border_width = 1,
+                    height = 24,
+                    border_color = colors.bg1,
+                    corner_radius = 9,
+                },
+            })
+
+            --addWorkspaceItem(composeName)
         end
     end)
 end
 
-local function update()
-    local date = os.date("%a. %d %b.")
-    local time = os.date("%H:%M")
-    docker:set({ icon = date, label = time })
+local function hide_details()
+    docker_bracket:set({ popup = { drawing = false } })
+end
 
+local function toggle_details()
+    local should_draw = docker_bracket:query().popup.drawing == "off"
+    if should_draw then
+        docker_bracket:set({ popup = { drawing = true } })
+    else
+        hide_details()
+    end
+end
+
+local function update(env)
     local command = "~/.scripts/docker_host.sh"
-    sbar.exec(command, function(result)
+    sbar.exec(command, function(result, exit_code)
         local docker_host = string.match(result, "Host:%s*(.-)\n")
+        local docker_socket = string.match(result, "Socket:%s*(.-)\n")
         local docker_count = string.match(result, "Count:%s*(.-)\n")
         local docker_list = string.match(result, "List:%s*(.-)\n")
         update_docker_compose()
         if result then
             docker:set({
                 label = {
-                    string = docker_host .. "abc",
+                    string = docker_count,
                     color = "0xFFFFFFFF",
+                    drawing = true,
                 },
                 icon = {
-                    color = "0xFFFFFFFF",
+                    string = settings.icons.apps["Docker"],
+                    font = settings.fonts.icons(),
+                    color = "0xff0db7ed",
                 },
             })
             print(result)
@@ -135,3 +179,6 @@ end
 
 docker:subscribe("routine", update)
 docker:subscribe("forced", update)
+docker:subscribe("mouse.entered", toggle_details)
+docker:subscribe("mouse.clicked", toggle_details)
+docker:subscribe("mouse.exited", "mouse.exited.global", hide_details)

@@ -34,12 +34,14 @@ local function updateWindows(windows)
 
         local windowId = parsedWindow["id"]
         local windowName = parsedWindow["name"]
+        -- local icon = getIconForApp(windowName)
         local icon = settings.icons.apps[windowName] or settings.icons.apps["default"]
 
         frontApps[windowName] = sbar.add("item", constants.items.FRONT_APPS .. "." .. windowName, {
             label = {
                 padding_left = 0,
                 string = windowName,
+                drawing = true,
             },
             icon = {
                 string = icon,
