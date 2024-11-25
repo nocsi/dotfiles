@@ -1,0 +1,21 @@
+default-remote: colima-incus
+remotes:
+  colima-incus:
+    addr: unix:///Users/locnguyen/.colima/incus/incus.sock
+    auth_type: tls
+    project: default
+    protocol: incus
+    public: false
+  docker:
+    addr: https://docker.io
+    protocol: oci
+    public: true
+  images:
+    addr: https://images.linuxcontainers.org
+    protocol: simplestreams
+    public: true
+  local:
+    addr: unix://
+    protocol: incus
+    public: false
+aliases: {}
