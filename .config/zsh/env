@@ -1,0 +1,44 @@
+# vi: ft=zsh
+
+if [[ -x ~/.bin/redit ]]; then
+  export VISUAL=~/.bin/redit
+else
+  export VISUAL=${${commands[nvim]:t}:-vi}
+fi
+
+# vi-mode go to different modes faster
+export KEYTIMEOUT=1
+# add brew and packages to PATH
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH:$HOME/.local/bin"
+
+export EDITOR=$VISUAL
+# LANG=""
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export GPG_TTY=$TTY
+export PAGER=less
+export GOPATH="$HOME/.go"
+export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export HOMEBREW_NO_ANALYTICS=1
+export SYSTEMD_LESS=${LESS}S
+export HOMEBREW_NO_ENV_HINTS=1
+export MANOPT=--no-hyphenation
+
+# pnpm
+export PNPM_HOME="/Users/locnguyen/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+if (( $+z4h_win_env )); then
+  export NO_AT_BRIDGE=1
+  export LIBGL_ALWAYS_INDIRECT=1
+  [[ -z $SSH_CONNECTON && $P9K_SSH != 1 && -z $DISPLAY ]] && export DISPLAY=localhost:0.0
+  (( $+z4h_win_home )) && hash -d w=$z4h_win_home
+fi
+
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+
+ export DOCKER_HOST="$(docker context inspect colima | jq -r '.[0].Endpoints.docker.Host')"

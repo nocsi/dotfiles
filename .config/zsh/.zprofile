@@ -7,7 +7,6 @@ if [[ -z ${SSH_CONNECTION} ]]; then
 fi
 export SSH_AUTH_SOCK=/Users/locnguyen/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 
-
 # Browser
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'

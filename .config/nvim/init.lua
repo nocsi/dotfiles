@@ -15,16 +15,22 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
-local function system(command)
-  local file = assert(io.popen(command, "r"))
-  local output = file:read("*all"):gsub("%s+", "")
-  file:close()
-  return output
-end
-
-if vim.fn.executable "python3" > 0 then vim.g.python3_host_prog = system "which python3" end
-
-if vim.fn.executable "ruby" > 0 then vim.g.ruby_host_prog = system "which ruby" end
-
 require "lazy_setup"
 require "polish"
+
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.relativenumber = false
+vim.wo.wrap = true
+vim.wo.linebreak = true
+vim.opt.termguicolors = true
+
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    -- try_lint without arguments runs the linters defined in `linters_by_ft`
+    -- for the current filetype
+    require("lint").try_lint()
+  end,
+})

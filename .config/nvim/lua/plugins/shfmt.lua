@@ -3,6 +3,6 @@ return {
   opts = {
     cmd = "shfmt",
     args = { "-l", "-w" },
-    auto_format = false,
+    auto_format = true,
   },
 }

@@ -1,4 +1,6 @@
+. "$HOME/.config/wezterm/shell-integration.sh"
 typeset -pm 'z4h_ssh_*'
+bindkey -v
 
 zstyle ':z4h:' auto-update      'no'
 zstyle ':z4h:' auto-update-days '28'
@@ -75,6 +77,22 @@ else
   fi
 fi
 
+export ATUIN_NOBIND="true"
+eval "$(atuin init zsh)"
+# ctrl+r for full atuin view
+bindkey '^r' _atuin_search_widget
+
+# interactive directory walking (https://github.com/antonmedv/walk)
+function w {
+  cd "$(walk "$@")"
+}
+
+# UV (https://docs.astral.sh/uv/getting-started/installation/#upgrading-uv)
+# add autocompletions
+eval "$(uv --generate-shell-completion zsh)
+eval "$(uvx --generate-shell-completion zsh)
+
+
 path+=(~/.dotnet/tools(-/N) '/mnt/c/Program Files/Microsoft VS Code/bin'(-/N))
 path=(~/.local/bin ~/.bin ~/Library/Android/sdk/platform-tools ~/Library/Android/sdk/emulator $path)
 path=(/opt/homebrew/opt/llvm/bin $path)
@@ -84,42 +102,12 @@ fpath=($Z4H/romkatv/archive $fpath)
 
 # fpath+=${ZDOTDIR:-~}/.zsh_functions
 autoload -Uz -- zmv archive lsarchive unarchive ~/.cfg/functions/[^_]*(N:t)
-
-if [[ -x ~/.bin/redit ]]; then
-  export VISUAL=~/.bin/redit
-else
-  export VISUAL=${${commands[nano]:t}:-vi}
-fi
-
-
-export EDITOR=$VISUAL
-export GPG_TTY=$TTY
-export PAGER=less
-export GOPATH=$HOME/go
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export HOMEBREW_NO_ANALYTICS=1
-export SYSTEMD_LESS=${LESS}S
-export HOMEBREW_NO_ENV_HINTS=1
-export MANOPT=--no-hyphenation
+source $HOME/.config/zsh/env
 
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 z4h source -c -- $ZDOTDIR/.zshrc-private
 z4h compile -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
 # z4h source -- ${XDG_CONFIG_HOME:-$HOME/.config/asdf-direnv/zshrc}
-
-# pnpm
-export PNPM_HOME="/Users/locnguyen/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-
-if (( $+z4h_win_env )); then
-  export NO_AT_BRIDGE=1
-  export LIBGL_ALWAYS_INDIRECT=1
-  [[ -z $SSH_CONNECTON && $P9K_SSH != 1 && -z $DISPLAY ]] && export DISPLAY=localhost:0.0
-  (( $+z4h_win_home )) && hash -d w=$z4h_win_home
-fi
 
 () {
   local hist
@@ -150,9 +138,9 @@ function z4h-ssh-configure() {
 
 [[ -e ~/.ssh/control-master ]] || zf_mkdir -p -m 700 ~/.ssh/control-master
 
-if [[ -e ~/gitstatus/gitstatus.plugin.zsh ]]; then
+if [[ -e $(brew --prefix)/opt/gitstatus/gitstatus.plugin.zsh ]]; then
   : ${GITSTATUS_LOG_LEVEL=DEBUG}
-  : ${POWERLEVEL9K_GITSTATUS_DIR=~/gitstatus}
+  : ${POWERLEVEL9K_GITSTATUS_DIR=$(brew --prefix)/opt/gitstatus}
 fi
 
 () {
@@ -223,6 +211,23 @@ zstyle ':z4h:cd-down'                        fzf-bindings       tab:repeat
 
 zstyle ':zle:up-line-or-beginning-search'    leave-cursor       no
 zstyle ':zle:down-line-or-beginning-search'  leave-cursor       no
+
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+
+zstyle ':completion:*' format '-- %d --'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*' rehash true
 
 zstyle ':completion:*'                       sort               false
 zstyle ':completion:*:ls:*'                  list-dirs-first    true
@@ -324,6 +329,10 @@ z4h load -- $($HOME/.local/bin/mise activate --shims zsh)
 if command -v mise > /dev/null; then
   eval "$(mise hook-env -s zsh)"
 fi
+if command -v pkgx > /dev/null; then
+  z4h source -c -- "$(pkgx --shellcode)"
+fi
+
 if command -v zoxide > /dev/null; then
   eval "$(zoxide init zsh)"
 fi

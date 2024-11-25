@@ -15,10 +15,12 @@ maven = "3.9.9"
 rust = "1.82.0"
 erlang = "27.1.2"
 zig = "0.13.0"
-python = "3.13.0"
-elixir = "1.17.3"
+python = "3.12.7"
+elixir = "1.17.3-otp-27"
 pnpm = "9.12.3"
 go = "1.23.2"
+lua = "5.1"
+gleam = "1.1.0"
 
 [env]
 CC="clang"
@@ -59,9 +61,10 @@ KERL_CONFIGURE_OPTIONS="""
 --disable-native-libs \
 --disable-jit \
 --with-wx"""
+
 CFLAGS="-O2 -g -fno-stack-check -Wno-error=implicit-function-declaration -I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/openssl/include -I$/opt/homebrew/opt/bzip2/include -I/opt/homebrew/opt/readline/include"
 CPPFLAGS="-I/opt/homebrew/opt/llvm/include -I/opt/homebrew/opt/zlib/include -I/opt/homebrew/opt/bzip2/include -I/opt/homebrew/opt/libffi/include -I/opt/homebrew/opt/sqlite3/include"
-LDFLAGS="-L/opt/homebrew/opt/openssl/lib -L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/zlib/lib -L/opt/homebrew/opt/bzip2/lib -L/opt/homebrew/opt/libffi/lib -L/opt/homebrew/opt/llvm/lib"
+LDFLAGS="-L/opt/homebrew/opt/openssl/lib -L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/zlib/lib -L/opt/homebrew/opt/bzip2/lib -L/opt/homebrew/opt/libffi/lib -L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
 PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig:$(brew --prefix bzip2)/lib/pkgconfig:$(brew --prefix sqlite3)/lib/pkgconfig"
 RUBY_CONFIGURE_OPTS="--enable-yjit --with-openssl-dir=/opt/homebrew/opt/openssl --with-readline-dir=/opt/homebrew/opt/readline --with-libyaml-dir=/opt/homebrew/opt/libyaml --with-gmp-dir=/opt/homebrew/opt/gmp"
 PYTHON_CONFIGURE_OPTS="--enable-framework --enable-optimizations --with-lto=full"
