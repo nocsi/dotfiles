@@ -8,3 +8,5 @@ rls
 tree-sitter-cli
 asm-lsp
 zellij
+https://github.com/astral-sh/uv uv
+binsider

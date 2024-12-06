@@ -1,3 +1,5 @@
+export DIRENV_LOG_FORMAT=
+
 use_kerl() {
     OTP_VERSION="$1"
     if has kerl; then
@@ -61,3 +63,5 @@ use_docker() {
         tput sgr0
     fi
 }
+
+export DIRENV_LOG_FORMAT=$'\033[3m\033[2m[direnv]\033[23m %s\033[0m'
