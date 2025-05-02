@@ -1,5 +1,11 @@
-default-remote: colima-incus
+default-remote: alpine.nocsi.org
 remotes:
+  alpine.nocsi.org:
+    addr: https://alpine.nocsi.org:8443
+    auth_type: tls
+    project: default
+    protocol: incus
+    public: false
   colima-incus:
     addr: unix:///Users/locnguyen/.colima/incus/incus.sock
     auth_type: tls
