@@ -1,3 +1,4 @@
+if true then return {} end -- WARN: REMOVE THIS L┌────────────────────┐
 return {
   {
     "jay-babu/mason-null-ls.nvim",

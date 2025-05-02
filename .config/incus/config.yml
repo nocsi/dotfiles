@@ -1,5 +1,11 @@
-default-remote: colima-incus
+default-remote: local
 remotes:
+  alpine:
+    addr: https://10.10.15.2:8443
+    auth_type: tls
+    project: default
+    protocol: incus
+    public: false
   colima-incus:
     addr: unix:///Users/locnguyen/.colima/incus/incus.sock
     auth_type: tls
@@ -16,6 +22,12 @@ remotes:
     public: true
   local:
     addr: unix://
+    protocol: incus
+    public: false
+  nas:
+    addr: https://10.10.15.4:8443
+    auth_type: tls
+    project: default
     protocol: incus
     public: false
 aliases: {}
