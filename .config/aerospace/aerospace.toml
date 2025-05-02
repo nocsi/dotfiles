@@ -4,6 +4,7 @@ start-at-login = true
 after-login-command = []
 
 after-startup-command = [
+  'exec-and-forget sketchybar >> $HOME/.sketchybar/service.log 2>&1',
   'exec-and-forget borders active_color=0xffc6a0f6 inactive_color=0xff939ab7 width=6.0 hidpi=on', # requires https://github.com/FelixKratz/JankyBorders
   #     'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar'
 ]
@@ -60,7 +61,7 @@ cmd-keypadMinus = 'resize smart -70'
 cmd-keypadPlus = 'resize smart +70'
 
 cmd-g = 'mode join'
-cmd-q = ['close --quit-if-last-window']
+# cmd-q = ['close --quit-if-last-window']
 # cmd-w = []
 
 # All possible keys:
@@ -114,6 +115,17 @@ cmd-8 = 'workspace --auto-back-and-forth 8'  # Mail
 cmd-9 = 'workspace --auto-back-and-forth 9'  # Music
 cmd-0 = 'workspace --auto-back-and-forth 10' # Secrets
 # cmd-t = 'workspace --auto-back-and-forth t'  # Meeting
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
 
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
@@ -192,10 +204,13 @@ cmd-alt-h = ['join-with left', 'mode main']
 if.app-id = 'com.github.wez.wezterm'
 run = ['layout tiling', 'move-node-to-workspace 2']
 
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.safari'
-run = ['layout tiling', 'move-node-to-workspace 3']
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'org.qutebrowser.qutebrowser'
@@ -205,8 +220,15 @@ run = ['layout tiling', 'move-node-to-workspace 3']
 if.app-id = 'md.obsidian'
 run = ['layout tiling', 'move-node-to-workspace 1']
 
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = ['layout tiling', 'move-node-to-workspace 1']
+
 
 # Windows that should float
+[[on-window-detected]] # Exclude apps
+if.app-id = 'com.apple.iphonesimulator'
+run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 run = 'layout floating'
