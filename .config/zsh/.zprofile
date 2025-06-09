@@ -40,6 +40,6 @@ path=(
   $path
 )
 
-export PATH="$HOME/.local/share/mise/shims:$PATH"
+export PATH="$HOME/.mix/escripts:$HOME/.local/share/mise/shims:$PATH"
 
 autoload -U colors && colors

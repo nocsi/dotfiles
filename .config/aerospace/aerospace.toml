@@ -23,16 +23,18 @@ on-focus-changed = [
   'exec-and-forget sketchybar --trigger update_windows',
 ]
 
-enable-normalization-flatten-containers = false
-enable-normalization-opposite-orientation-for-nested-containers = false
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
 
-accordion-padding = 30
+accordion-padding = 8
 
 default-root-container-layout = 'tiles'
 
 default-root-container-orientation = 'auto'
 
 key-mapping.preset = 'qwerty'
+# [key-mapping.key-notation-to-key-code]
+# hyper = 'ctrl+alt+cmd'
 
 [gaps]
 # Allow for more space on smaller screens
@@ -49,20 +51,153 @@ inherit-env-vars = true # If you don't touch "exec" section,
 PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 
 [mode.main.binding]
-alt-slash = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
-alt-space = 'layout floating tiling'
-alt-r = [
+ctrl-alt-cmd-space = ['mode alt']
+
+ctrl-alt-cmd-slash = 'layout tiles horizontal vertical'
+ctrl-alt-cmd-comma = 'layout accordion horizontal vertical'
+ctrl-alt-cmd-shift-space = 'layout floating tiling'
+ctrl-alt-cmd-r = [
   'mode resize',
   'exec-and-forget sketchybar --trigger send_message MESSAGE="RESIZE MODE" HOLD="true"',
 ]
+ctrl-alt-cmd-semicolon = 'mode spacial'
+ctrl-alt-cmd-w = 'mode workspace'
 
-cmd-keypadMinus = 'resize smart -70'
-cmd-keypadPlus = 'resize smart +70'
+ctrl-alt-cmd-keypadMinus = 'resize smart -70'
+ctrl-alt-cmd-keypadPlus = 'resize smart +70'
 
-cmd-g = 'mode join'
+
+ctrl-alt-cmd-h = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop left',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-j = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop down',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-k = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop up',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-l = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop right',
+  'move-mouse window-force-center',
+]
+
+ctrl-alt-cmd-1 = 'workspace --auto-back-and-forth 1'  # Notes
+ctrl-alt-cmd-2 = 'workspace --auto-back-and-forth 2'  # Terminal
+ctrl-alt-cmd-3 = 'workspace --auto-back-and-forth 3'  # Browser
+ctrl-alt-cmd-4 = 'workspace --auto-back-and-forth 4'  # AltBrowser
+ctrl-alt-cmd-5 = 'workspace --auto-back-and-forth 5'  # Remote
+ctrl-alt-cmd-6 = 'workspace --auto-back-and-forth 6'  # Database
+ctrl-alt-cmd-7 = 'workspace --auto-back-and-forth 7'  # Chat
+ctrl-alt-cmd-8 = 'workspace --auto-back-and-forth 8'  # Mail
+ctrl-alt-cmd-9 = 'workspace --auto-back-and-forth 9'  # Music
+ctrl-alt-cmd-0 = 'workspace --auto-back-and-forth 10' # Secrets
+ctrl-alt-cmd-u = 'workspace prev'
+ctrl-alt-cmd-i = 'workspace next'
+
+
 # cmd-q = ['close --quit-if-last-window']
 # cmd-w = []
+
+# 'alt' binding mode declaration
+[mode.alt.binding]
+# ctrl-alt-cmd-space = ['mode alt']
+space = ['mode main']
+esc = ['mode alt']
+backtick = ['reload-config', 'mode main']
+
+# You can uncomment this line to open up terminal with alt + enter shortcut
+# See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
+# alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#layout
+
+slash = 'layout tiles horizontal vertical'
+comma = 'layout accordion horizontal vertical'
+
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+h = ['focus --boundaries-action stop left', 'move-mouse window-force-center']
+j = ['focus --boundaries-action stop down', 'move-mouse window-force-center']
+k = ['focus --boundaries-action stop up', 'move-mouse window-force-center']
+l = ['focus --boundaries-action stop right', 'move-mouse window-force-center']
+
+c = ['move-mouse window-force-center']
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move
+shift-h = 'move left'
+shift-j = 'move down'
+shift-k = 'move up'
+shift-l = 'move right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+minus = 'resize smart -64'
+equal = 'resize smart +64'
+shift-minus = 'resize smart -128'
+shift-equal = 'resize smart +128'
+
+# reset layout
+# shift-r = ['flatten-workspace-tree', 'mode alt'] # reset layout
+
+# Fullscreen is under 'm' for "Maximize"
+m = ['fullscreen']
+
+# No more toggling for these commands
+# f = ['layout floating']
+# t = ['layout tiling']
+
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+u = 'workspace prev'
+i = 'workspace next'
+shift-u = 'move-node-to-workspace prev'
+shift-i = 'move-node-to-workspace next'
+1 = 'workspace 1'
+2 = 'workspace 2'
+3 = 'workspace 3'
+4 = 'workspace 4'
+5 = 'workspace 5'
+6 = 'workspace 6'
+7 = 'workspace 7'
+8 = 'workspace 8'
+9 = 'workspace 9'
+0 = 'workspace 10'
+p = ['focus-monitor prev', 'move-mouse window-force-center']
+n = ['focus-monitor next', 'move-mouse window-force-center']
+shift-p = 'move-workspace-to-monitor prev'
+shift-n = 'move-workspace-to-monitor next'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+shift-1 = 'move-node-to-workspace 1'
+shift-2 = 'move-node-to-workspace 2'
+shift-3 = 'move-node-to-workspace 3'
+shift-4 = 'move-node-to-workspace 4'
+shift-5 = 'move-node-to-workspace 5'
+shift-6 = 'move-node-to-workspace 6'
+shift-7 = 'move-node-to-workspace 7'
+shift-8 = 'move-node-to-workspace 8'
+shift-9 = 'move-node-to-workspace 9'
+shift-0 = 'move-node-to-workspace 10'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
+tab = 'workspace-back-and-forth'
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
+shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+shift-r = ['flatten-workspace-tree', 'mode alt'] # reset layout
+#s = ['layout sticky tiling', 'mode alt'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+f = ['fullscreen'] # Toggle between fullscreen
+shift-f = [
+  'layout floating tiling',
+  'mode alt',
+] # Toggle between floating and tiling layout
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+r = 'mode resize'
+semicolon = 'mode spacial'
+w = 'mode workspace'
 
 # All possible keys:
 # - Letters.        a, b, c, ..., z
@@ -77,77 +212,121 @@ cmd-g = 'mode join'
 
 # All possible modifiers: cmd, alt, ctrl, shift
 
-cmd-enter = 'exec-and-forget open -n /Volumes/Macintosh\ HD/Applications/Wezterm.app'
-cmd-m = 'exec-and-forget open -n /Volumes/Macintosh\ HD/Applications/Marta.app'
+ctrl-alt-cmd-enter = 'exec-and-forget open -n /Volumes/Macintosh\ HD/Applications/Ghostty.app'
+# cmd-m = 'exec-and-forget open -n /Volumes/Macintosh\ HD/Applications/Marta.app'
 
-cmd-shift-f = 'macos-native-fullscreen'
-# cmd-f = 'fullscreen'
+ctrl-alt-cmd-f = 'fullscreen'
+ctrl-alt-cmd-shift-f = ['layout floating tiling', 'mode alt']
+# ctrl-alt-cmd-shift-f = 'macos-native-fullscreen'
 
-alt-g = 'split horizontal'
-alt-v = 'split vertical'
 
-alt-h = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
-alt-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
-alt-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
-alt-l = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
-cmd-left = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
-cmd-down = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
-cmd-up = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
-cmd-right = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
+# ctrl-alt-cmd-shift-j = 'mode join'
+# ctrl-alt-cmd-g = 'split horizontal'
+# ctrl-alt-cmd-v = 'split vertical'
 
-cmd-shift-h = 'move left'
-cmd-shift-j = 'move down'
-cmd-shift-k = 'move up'
-cmd-shift-l = 'move right'
-cmd-shift-left = 'move left'
-cmd-shift-down = 'move down'
-cmd-shift-up = 'move up'
-cmd-shift-right = 'move right'
+ctrl-alt-cmd-h = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop left',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-j = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop down',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-k = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop up',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-l = [
+  'focus --boundaries all-monitors-outer-frame --boundaries-action stop right',
+  'move-mouse window-force-center',
+]
+ctrl-alt-cmd-c = ['move-mouse window-force-center']
 
-cmd-1 = 'workspace --auto-back-and-forth 1'  # Notes
-cmd-2 = 'workspace --auto-back-and-forth 2'  # Terminal
-cmd-3 = 'workspace --auto-back-and-forth 3'  # Browser
-cmd-4 = 'workspace --auto-back-and-forth 4'  # AltBrowser
-cmd-5 = 'workspace --auto-back-and-forth 5'  # Remote
-cmd-6 = 'workspace --auto-back-and-forth 6'  # Database
-cmd-7 = 'workspace --auto-back-and-forth 7'  # Chat
-cmd-8 = 'workspace --auto-back-and-forth 8'  # Mail
-cmd-9 = 'workspace --auto-back-and-forth 9'  # Music
-cmd-0 = 'workspace --auto-back-and-forth 10' # Secrets
-# cmd-t = 'workspace --auto-back-and-forth t'  # Meeting
+# alt-h = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
+# alt-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
+# alt-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
+# alt-l = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
+ctrl-alt-cmd-left = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop left'
+ctrl-alt-cmd-down = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop down'
+ctrl-alt-cmd-up = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop up'
+ctrl-alt-cmd-right = 'focus --boundaries all-monitors-outer-frame --boundaries-action stop right'
 
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
-alt-shift-0 = 'move-node-to-workspace 10'
+ctrl-alt-cmd-1 = 'workspace --auto-back-and-forth 1'  # Notes
+ctrl-alt-cmd-2 = 'workspace --auto-back-and-forth 2'  # Terminal
+ctrl-alt-cmd-3 = 'workspace --auto-back-and-forth 3'  # Browser
+ctrl-alt-cmd-4 = 'workspace --auto-back-and-forth 4'  # AltBrowser
+ctrl-alt-cmd-5 = 'workspace --auto-back-and-forth 5'  # Remote
+ctrl-alt-cmd-6 = 'workspace --auto-back-and-forth 6'  # Database
+ctrl-alt-cmd-7 = 'workspace --auto-back-and-forth 7'  # Chat
+ctrl-alt-cmd-8 = 'workspace --auto-back-and-forth 8'  # Mail
+ctrl-alt-cmd-9 = 'workspace --auto-back-and-forth 9'  # Music
+ctrl-alt-cmd-0 = 'workspace --auto-back-and-forth 10' # Secrets
+ctrl-alt-cmd-u = 'workspace prev'
+ctrl-alt-cmd-i = 'workspace next'
+
+ctrl-alt-cmd-shift-p = 'move-workspace-to-monitor --wrap-around prev'
+ctrl-alt-cmd-shift-n = 'move-workspace-to-monitor --wrap-around next'
+
+# ctrl-alt-cmd-shift-p = 'move-node-to-workspace prev'
+# ctrl-alt-cmd-shift-n = 'move-node-to-workspace next'
+ctrl-alt-cmd-shift-h = ['move-node-to-workspace prev']
+ctrl-alt-cmd-shift-l = ['move-node-to-workspace next']
+ctrl-alt-cmd-shift-k = ['move-workspace-to-monitor prev']
+ctrl-alt-cmd-shift-j = ['move-workspace-to-monitor next']
+
+# ctrl-alt-cmd-shift-h = 'move left'
+# ctrl-alt-cmd-shift-j = 'move down'
+# ctrl-alt-cmd-shift-k = 'move up'
+# ctrl-alt-cmd-shift-l = 'move right'
+ctrl-alt-cmd-shift-left = 'move left'
+ctrl-alt-cmd-shift-down = 'move down'
+ctrl-alt-cmd-shift-up = 'move up'
+ctrl-alt-cmd-shift-right = 'move right'
+
+
+#
+ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'
+ctrl-alt-cmd-shift-2 = 'move-node-to-workspace 2'
+ctrl-alt-cmd-shift-3 = 'move-node-to-workspace 3'
+ctrl-alt-cmd-shift-4 = 'move-node-to-workspace 4'
+ctrl-alt-cmd-shift-5 = 'move-node-to-workspace 5'
+ctrl-alt-cmd-shift-6 = 'move-node-to-workspace 6'
+ctrl-alt-cmd-shift-7 = 'move-node-to-workspace 7'
+ctrl-alt-cmd-shift-8 = 'move-node-to-workspace 8'
+ctrl-alt-cmd-shift-9 = 'move-node-to-workspace 9'
+ctrl-alt-cmd-shift-0 = 'move-node-to-workspace 10'
 # cmd-shift-t = 'move-node-to-workspace t'
 
-alt-tab = 'workspace-back-and-forth'
-alt-p = 'move-workspace-to-monitor --wrap-around next'
-alt-shift-p = [
+
+ctrl-alt-cmd-tab = 'workspace-back-and-forth'
+ctrl-alt-cmd-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+ctrl-alt-cmd-n = [
   'move-node-to-monitor --wrap-around next',
   'focus-monitor next --wrap-around',
+  'move-mouse window-force-center',
 ]
-cmd-alt-h = []
 
-alt-shift-s = [
+ctrl-alt-cmd-p = [
+  'move-node-to-monitor --wrap-around prev',
+  'focus-monitor next --wrap-around',
+  'move-mouse window-force-center',
+]
+
+# cmd-t = 'workspace --auto-back-and-forth t'  # Meeting
+#
+# # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+# alt-1 = 'workspace 1'
+# alt-2 = 'workspace 2'
+# alt-3 = 'workspace 3'
+# alt-4 = 'workspace 4'
+# alt-5 = 'workspace 5'
+# alt-6 = 'workspace 6'
+# alt-7 = 'workspace 7'
+# alt-8 = 'workspace 8'
+# alt-9 = 'workspace 9'
+ctrl-alt-cmd-shift-s = [
   'mode service',
   'exec-and-forget sketchybar --trigger send_message MESSAGE="SERVICE MODE" HOLD="true"',
 ]
@@ -159,7 +338,7 @@ esc = [
   'exec-and-forget sketchybar --reload',
   'mode main',
 ]
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
+ctrl-alt-cmd-r = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 
 
@@ -179,14 +358,32 @@ shift-b = [
 backspace = ['close-all-windows-but-current', 'mode main']
 
 [mode.resize.binding]
-keypadMinus = 'resize smart -70'
-keypadPlus = 'resize smart +70'
+ctrl-alt-cmd-space = ['mode binding']
+space = ['mode main', 'exec-and-forget sketchybar --trigger hide_message']
+esc = ['mode alt', 'exec-and-forget sketchybar --trigger hide_message']
+r = ['mode alt', 'exec-and-forget sketchybar --trigger hide_message']
+# space = 'mode main'
+# esc = 'mode alt'
+# r = 'mode alt'
+keypadMinus = 'resize smart -64'
+keypadPlus = 'resize smart +64'
 h = ['resize width -64']
 j = ['resize height -64']
 k = ['resize height +64']
 l = ['resize width +64']
-esc = ['mode main', 'exec-and-forget sketchybar --trigger hide_message']
-enter = ['mode main', 'exec-and-forget sketchybar --trigger hide_message']
+shift-h = ['resize width -8']
+shift-j = ['resize height -8']
+shift-k = ['resize height +8']
+shift-l = ['resize width +8']
+
+[mode.spacial.binding]
+ctrl-alt-cmd-space = ['mode special']
+space = 'mode main'
+esc = 'mode alt'
+h = ['join-with left', 'mode alt']
+j = ['join-with down', 'mode alt']
+k = ['join-with up', 'mode alt']
+l = ['join-with right', 'mode alt']
 
 [mode.join.binding]
 h = ['join-with left', 'mode main']
@@ -196,9 +393,39 @@ l = ['join-with right', 'mode main']
 cmd-h = ['join-with left', 'mode main']
 cmd-alt-h = ['join-with left', 'mode main']
 
+
+[mode.workspace.binding]
+ctrl-alt-cmd-space = ['mode wordspace']
+space = 'mode main'
+esc = 'mode alt'
+w = 'mode alt'
+h = ['workspace prev', 'move-mouse window-force-center']
+l = ['workspace next', 'move-mouse window-force-center']
+j = ['focus-monitor next', 'move-mouse window-force-center']
+k = ['focus-monitor prev', 'move-mouse window-force-center']
+shift-h = ['move-node-to-workspace prev']
+shift-l = ['move-node-to-workspace next']
+shift-k = ['move-node-to-monitor prev']
+shift-j = ['move-node-to-monitor next']
+
 #[[on-window-detected]]
 #if.app-name-regex-substring = ".*"
 #    run = "layout floating"
+
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Code - Insiders|Warp|Xcode|Simulator'
+run = ['layout tiling', 'move-node-to-workspace 2']
+
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Sublime Merge'
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Slack|Mailspring|Calendar|zoom.us'
+run = ['layout tiling', 'move-node-to-workspace 8']
+
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
@@ -284,3 +511,8 @@ run = ['move-node-to-workspace 5']
 [[on-window-detected]]
 if.app-id = 'org.jkiss.dbeaver.core.product'
 run = ['move-node-to-workspace 6']
+
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Signal|Discord|Messages'
+run = ['layout tiling', 'move-node-to-workspace 7']

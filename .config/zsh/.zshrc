@@ -160,6 +160,7 @@ fi
 z4h bindkey z4h-eof Ctrl+D
 z4h bindkey z4h-accept-line Enter
 # z4h bindkey '^I' autosuggest-accept
+# z4h bindkey '^I' autosuggest-accept
 
 z4h bindkey z4h-accept-line         Enter
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace Ctrl+H
@@ -322,9 +323,9 @@ fi
 POSTEDIT=$'\n\n\e[2A'
 
 z4h source -c -- $ZDOTDIR/.zshrc-private
-z4h source -c -- $ZDOTDIR/.exports
 z4h compile -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
 z4h load -- $($HOME/.local/bin/mise activate --shims zsh)
+z4h source -c -- $ZDOTDIR/.zprofile
 
 if command -v mise > /dev/null; then
   eval "$(mise hook-env -s zsh)"
