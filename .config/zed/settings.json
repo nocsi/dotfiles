@@ -1,0 +1,337 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  // Visual Settings
+  "theme": "Catppuccin Mocha",
+  "icon_theme": "Catppuccin Mocha",
+  "buffer_font_size": 15,
+  "ui_font_size": 16,
+  "agent_ui_font_size": 16,
+  "agent_buffer_font_size": 14,
+  "buffer_font_family": "Monaspace Argon",
+  "buffer_font_features": {
+    "ss01": true,
+    "ss02": true,
+    "ss03": true,
+    "ss04": true,
+    "ss05": true,
+    "ss06": true,
+    "ss07": true,
+    "ss08": true,
+    "calt": true,
+    "dlig": true,
+  },
+  "wrap_guides": [80, 120],
+  "preferred_line_length": 120,
+  "show_whitespaces": "trailing",
+  "active_pane_modifiers": {
+    "inactive_opacity": 0.6,
+    "border_size": 0.3,
+  },
+  "use_system_path_prompts": false,
+  "use_system_prompts": false,
+  "terminal": {
+    "button": true,
+    "toolbar": {
+      "breadcrumbs": false,
+    },
+    "cursor_shape": "block",
+    "font_family": "Monaspace Argon",
+    "font_size": 16,
+    "line_height": "standard",
+    "env": {
+      "EDITOR": "zed -w",
+      "VISUAL": "zed -w",
+      "GIT_EDITOR": "zed --wait",
+    },
+    "detect_venv": {
+      "on": {
+        "activate_script": "default",
+        "directories": [".venv", "venv"],
+      },
+    },
+  },
+  "bottom_dock_layout": "left_aligned",
+  "scrollbar": {
+    "show": "auto",
+    "axes": {
+      "horizontal": false,
+    },
+  },
+  "tabs": {
+    "file_icons": false,
+    "git_status": true,
+    "show_close_button": "hover",
+    "show_diagnostics": "errors",
+    "activate_on_close": "history",
+  },
+  "max_tabs": 8,
+  "tab_bar": {
+    "show": true,
+    "show_tab_bar_buttons": true,
+    "show_nav_history_buttons": false,
+  },
+  "toolbar": {
+    "quick_actions": false,
+    "breadcrumbs": false,
+    "agent_review": true,
+    "code_actions": false,
+    "selections_menu": true,
+  },
+  "title_bar": {
+    "show_branch_name": true,
+    "show_branch_icon": false,
+  },
+  "project_panel": {
+    "auto_reveal_entries": false,
+    "sticky_scroll": true,
+    "hide_root": true,
+  },
+  "notification_panel": {
+    "button": true,
+  },
+  "collaboration_panel": {
+    "button": true,
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 150,
+      "padding": 2,
+      "min_column": 80,
+      "max_severity": "error",
+    },
+  },
+  "search": {
+    "button": true,
+  },
+  "minimap": { "show": "never" },
+  "indent_guides": {
+    "enabled": true,
+    "line_width": 2,
+    "active_line_width": 4,
+    "coloring": "fixed",
+    "background_coloring": "disabled",
+  },
+  "colorize_brackets": true,
+  "experimental.theme_overrides": {
+    // "editor.indent_guide_active": "#FF0000" // When using fixed
+    // "editor.indent_guide": "#00FF00" // When using fixed
+  },
+
+  // Ensure some extensions are always installed as the config reliest on them
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "just": true,
+    "rainbow-csv": true,
+  },
+
+  // Vim mode setup
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "on_yank",
+    "cursor_shape": {
+      "normal": "block",
+      "insert": "bar",
+      "replace": "underline",
+      "visual": "hollow",
+    },
+  },
+  "cursor_blink": false,
+  "relative_line_numbers": "enabled",
+  "scroll_beyond_last_line": "off",
+  "pane_split_direction_horizontal": "down",
+  "pane_split_direction_vertical": "right",
+  "command_aliases": {
+    "W": "w",
+    "Wq": "wq",
+    "Q": "q",
+  },
+
+  // Zed inner workings.
+  "on_last_window_closed": "quit_app",
+  "restore_on_startup": "last_workspace",
+  "use_autoclose": true,
+  "format_on_save": "on",
+  "auto_indent_on_paste": true,
+  "extend_comment_on_newline": false,
+  "inlay_hints": {
+    "enabled": true,
+  },
+
+  // AI
+  "show_edit_predictions": true,
+  "edit_predictions": {
+    "mode": "subtle",
+    "enabled_in_text_threads": true,
+  },
+  "features": {
+    "edit_prediction_provider": "zed",
+  },
+  "agent": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4",
+    },
+    "button": true,
+    "always_allow_tool_actions": true,
+    "default_profile": "write",
+    "play_sound_when_agent_done": true,
+  },
+
+  "context_servers": {
+    "postgres-context-server": {
+      "enabled": true,
+      "settings": {
+        // "database_url": "postgresql://jongretar:jongretar@localhost:5432/database"
+      },
+    },
+    "chrome-devtools": {
+      "enabled": true,
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "env": {},
+    },
+  },
+
+  // Git
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": true,
+      "show_commit_summary": true,
+      "delay_ms": 500,
+      "min_column": 80,
+      "padding": 2,
+    },
+  },
+
+  "file_types": {
+    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
+    "YAML": ["sls"],
+    "Markdown": ["qmd", "rmd", "md", "livemd"],
+  },
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.jj",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    // above is default from Zed
+    "**/out",
+    "**/.next",
+    "**/_freeze",
+    "**/node_modules",
+  ],
+  "journal": {
+    "hour_format": "hour24",
+  },
+
+  "ssh_connections": [],
+
+  // Language Specific Settings
+  "languages": {
+    "Markdown": {
+      "show_edit_predictions": false,
+      "soft_wrap": "preferred_line_length",
+      "preferred_line_length": 120,
+    },
+    "Elixir": {
+      "language_servers": ["expert", "!elixir-ls", "!next-ls", "!lexical", "..."],
+    },
+    "Python": {
+      "code_actions_on_format": {
+        "source.organizeImports.ruff": true,
+      },
+      "language_servers": ["ty", "ruff", "!basedpyright", "!pyrefly", "!pyright", "!pylsp"],
+    },
+    "JSON": {
+      "wrap_guides": [],
+      "use_autoclose": true,
+    },
+    "JSONC": {
+      "wrap_guides": [],
+      "use_autoclose": true,
+    },
+    "R": {
+      // "language_servers": ["air"],
+      "format_on_save": "on",
+      "tab_size": 2,
+    },
+    "Ruby": {
+      "language_servers": ["ruby-lsp", "!solargraph", "!rubocop", "..."],
+    },
+    "Rust": {},
+    "Zig": {},
+    "Lua": {},
+    "Typst": {
+      "soft_wrap": "preferred_line_length",
+      "preferred_line_length": 80,
+    },
+    "TypeScript": {
+      "tab_size": 4,
+      "inlay_hints": {
+        "enabled": true,
+        "show_parameter_hints": false,
+        "show_type_hints": true,
+        "show_other_hints": true,
+      },
+    },
+  },
+
+  // LSP Settings
+  "lsp": {
+    "expert": {
+      "binary": {
+        "arguments": ["--stdio"],
+      },
+    },
+    "tinymist": {
+      "settings": {
+        // "exportPdf": "onSave",
+        "outputPath": "$root/target/$dir/$name",
+      },
+      "initialization_options": {
+        "preview": {
+          "background": {
+            "enabled": true,
+          },
+        },
+      },
+    },
+    "rubocop": {
+      "initialization_options": {},
+    },
+    "ruby-lsp": {
+      "initialization_options": {
+        "enabledFeatures": {
+          // "diagnostics": false,
+          // "linters": ["standard"],
+          // "formatter": "none"
+        },
+      },
+    },
+    // "ruff": {
+    //   "initialization_options": {
+    //     "settings": {
+    //       // Ruff server settings goes here
+    //       "lineLength": 80,
+    //       "lint": {
+    //         "extendSelect": ["E", "F", "I"]
+    //       }
+    //     }
+    //   }
+    // }
+  },
+}

@@ -1,0 +1,54 @@
+[tools]
+age = "latest"
+age-plugin-yubikey = "latest"
+agebox = "latest"
+aichat = "latest"
+atuin = "latest"
+cfssl = "latest"
+claude = { version = "latest", bin = "claude", platforms = """
+[linux-arm64]
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{version}/linux-arm64/claude"
+
+[linux-x64]
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{version}/linux-x64/claude"
+
+[macos-arm64]
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{version}/darwin-arm64/claude"
+
+[macos-x64]
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{version}/darwin-x64/claude"
+
+[windows-x64]
+bin = "claude.exe"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{version}/win32-x64/claude.exe"
+""", version_list_url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/stable" }
+cloudflared = "latest"
+codex = "latest"
+direnv = "latest"
+dust = "latest"
+elixir = "1.18.4"
+erlang = "28.0.4"
+fnox = "latest"
+gemini-cli = "latest"
+gitsign = "latest"
+go = "1.25.0"
+just = "latest"
+lazydocker = "latest"
+lazygit = "latest"
+lazyjournal = "latest"
+lazyssh = "latest"
+lima = "latest"
+nim = "latest"
+node = "23.11.1"
+"npm:@anthropic-ai/claude-code" = "latest"
+pnpm = "latest"
+python = "3.14"
+restic = "latest"
+rust = "stable"
+shellcheck = "latest"
+starship = "latest"
+zellij = "latest"
+zoxide = "latest"
+
+[settings]
+experimental = true

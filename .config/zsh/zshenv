@@ -1,0 +1,26 @@
+# Load Homebrew
+#eval "$(/opt/homebrew/bin/brew shellenv)"
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)
+eval "$($HOME/.local/bin/mise activate zsh)"
+
+if [ -z "$EDITOR" ]; then
+    export EDITOR=nvim
+fi
+if [ -z "$VISUAL" ]; then
+    export VISUAL=nvim
+fi
+
+export LESS="-# 1 -R -F"
+export PAGER="ov"
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+
+# Cargo
+. "$HOME/.cargo/env"
+
+# uv
+export PATH="$HOME/.local/bin:$PATH"
+
+export BAT_THEME=Coldark-Dark
+
+. "$HOME/.config/zsh/zshrc" || return

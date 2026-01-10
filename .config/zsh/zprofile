@@ -1,0 +1,38 @@
+
+# ---------------- Autocomplete ----------------
+# initialise completions with ZSH's compinit
+autoload -Uz compinit && compinit
+# needed to make ..<tab> ../
+zstyle ':completion:*' special-dirs true
+
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+# zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autopair/autopair.zsh
+
+
+# Some local Stuff
+source ~/.config/zsh/plugins/zsh-vi-mode.plugin.zsh
+source ~/.config/zsh/plugins/yazi-command.zsh
+source ~/.config/zsh/plugins/jupyter-count.zsh
+source ~/.config/zsh/plugins/television.zsh
+source ~/.config/zsh/plugins/k8s.zsh
+source ~/.config/zsh/plugins/misc.zsh
+
+# Tab title setup
+ZSH_TAB_TITLE_ONLY_FOLDER=true
+source ~/.config/zsh/plugins/zsh-tab-title.plugin.zsh
+
+
+# Few things should only happen in term.
+if [[ "$TERM_PROGRAM" = "WezTerm" ]]; then
+
+  # Display welcome screen
+  fastfetch
+
+  # Display number of running Jupyter instances.
+  count_jupyter_instances
+
+fi

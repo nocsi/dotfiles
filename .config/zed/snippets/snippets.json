@@ -1,0 +1,17 @@
+{
+  "Backticks": {
+    "prefix": "bt",
+    "body": "`${1}`",
+    "description": "Backticks"
+  },
+  "Code Cell": {
+    "prefix": "cc",
+    "body": "```${1:python}\n$0\n```",
+    "description": "Code Cell"
+  },
+  "Quarto Cell": {
+    "prefix": "qc",
+    "body": "```{${1:python}}\n$0\n```",
+    "description": "Code Cell"
+  }
+}

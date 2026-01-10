@@ -1,0 +1,63 @@
+use_kerl() {
+    OTP_VERSION="$1"
+    if has kerl; then
+        OTP_INSTALLATION=$(kerl list installations | grep "^$OTP_VERSION " | cut -d' ' -f2)
+        if [ -s "$OTP_INSTALLATION/activate" ] ; then
+            tput setaf 2
+            echo "Using Erlang/OTP $OTP_VERSION (in $OTP_INSTALLATION) via kerl"
+            tput sgr0
+            . "$OTP_INSTALLATION/activate"
+
+            export OTP_ROOT="$OTP_INSTALLATION"
+            export OTP_VERSION
+        else
+            tput setaf 1
+            echo "Erlang/OTP $OTP_VERSION not available via kerl; using default"
+            tput sgr0
+        fi
+    else
+        tput setaf 1
+        echo "kerl not available; using default Erlang"
+        tput sgr0
+    fi
+}
+use_elixir() {
+    ELIXIR_VERSION="$1"
+    if has kiex; then
+        if [ -s "$HOME/.kiex/elixirs/elixir-$ELIXIR_VERSION.env" ]; then
+            tput setaf 2
+            echo "Using Elixir $ELIXIR_VERSION via kiex"
+            tput sgr0
+            . "$HOME/.kiex/elixirs/elixir-$ELIXIR_VERSION.env"
+        else
+            tput setaf 1
+            echo "Elixir $ELIXIR_VERSION not available via kiex; using default"
+            tput sgr0
+        fi
+    else
+        tput setaf 1
+        echo "kiex not available; using default Elixir"
+        tput sgr0
+    fi
+}
+use_docker() {
+    CONTAINER="$1"
+    NAME="$2"
+    ARGS="$3"
+    if has docker; then
+        if [ $( docker ps -a -f name=$NAME | wc -l ) -eq 2 ]; then
+            tput setaf 1
+            echo "$NAME exists"
+            tput sgr0
+        else
+            tput setaf 2
+            echo "Using $NAME $CONTAINER $ARGS via docker"
+            tput sgr0
+            $(docker run --rm --name $NAME -d $ARGS $CONTAINER)
+        fi
+    else
+        tput setaf 1
+        echo "docker not available; using default Elixir"
+        tput sgr0
+    fi
+}

@@ -1,0 +1,278 @@
+[
+  // Clear out a few defaults
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-h": null, // Undefine this shortcut so that I can write the pipe character
+      "ctrl-w": null // Does not play well with hesitant VIM users
+    }
+  },
+
+  {
+    "bindings": {
+      "cmd-,": "zed::OpenSettingsFile"
+    }
+  },
+
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-shift-o": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ],
+      "cmd-alt-p": ["task::Spawn", { "task_name": "file_finder", "reveal_target": "center" }],
+      "cmd-alt-shift-o": ["task::Spawn", { "task_name": "project_finder", "reveal_target": "center" }],
+      "cmd-k cmd-s": "zed::OpenKeymapFile",
+      "cmd-,": "zed::OpenSettingsFile",
+      "ctrl-w z": "workspace::ToggleZoom",
+      "ctrl-q t": "terminal_panel::ToggleFocus",
+      "ctrl-q p": "project_panel::ToggleFocus",
+      "ctrl-q o": "outline_panel::ToggleFocus",
+      "ctrl-q g": "git_panel::ToggleFocus",
+      "ctrl-q a": "agent::ToggleFocus",
+      "ctrl-q c": "collab_panel::ToggleFocus",
+      "ctrl-q b": "debug_panel::ToggleFocus",
+      "ctrl-q d": "diagnostics::Deploy"
+    }
+  },
+
+  // Panel Stuff
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-k": "terminal::Clear"
+    }
+  },
+
+  {
+    "context": "GitPanel > Editor && vim_mode==normal",
+    "bindings": {
+      "escape": "git_panel::FocusChanges"
+    }
+  },
+
+  // Window's navigation
+  {
+    "context": "ProjectPanel || (Workspace && !menu && !(Picker > Editor))",
+    "bindings": {
+      // Window's motions
+      "ctrl-shift-z": "workspace::ToggleZoom",
+      "ctrl-shift-h": "workspace::ActivatePaneLeft",
+      "ctrl-shift-l": "workspace::ActivatePaneRight",
+      "ctrl-shift-k": "workspace::ActivatePaneUp",
+      "ctrl-shift-j": "workspace::ActivatePaneDown",
+      "ctrl-shift-left": "workspace::ActivatePaneLeft",
+      "ctrl-shift-right": "workspace::ActivatePaneRight",
+      "ctrl-shift-up": "workspace::ActivatePaneUp",
+      "ctrl-shift-down": "workspace::ActivatePaneDown"
+    }
+  },
+
+  // Global Leader key
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      "space l g": ["task::Spawn", { "task_name": "LazyGit", "reveal_target": "center" }],
+      "space s f": "file_finder::Toggle",
+      "space b n": "workspace::NewFile"
+    }
+  },
+  {
+    "context": "(Workspace && !Editor && !Terminal) || (Editor && VimControl)",
+    "bindings": {
+      "space space": "tab_switcher::ToggleAll",
+      "space l g": ["task::Spawn", { "task_name": "LazyGit", "reveal_target": "center" }],
+      "space y": ["task::Spawn", { "task_name": "yazi", "reveal_target": "center" }],
+      "space k 9": ["task::Spawn", { "task_name": "K9s", "reveal_target": "center" }],
+      "space j j": ["task::Spawn", { "task_name": "JJUI", "reveal_target": "center" }],
+      "space s b": "tab_switcher::ToggleAll",
+      "space s f": ["task::Spawn", { "task_name": "file_finder", "reveal_target": "center" }],
+      "space s p": ["task::Spawn", { "task_name": "project_finder", "reveal_target": "center" }],
+      "space s t": ["task::Spawn", { "task_name": "text_finder", "reveal_target": "center" }],
+      "space b n": "workspace::NewFile",
+      "space b b": "pane::AlternateFile",
+      "space b d": ["pane::CloseActiveItem", { "close_pinned": false }],
+      "space b q": ["pane::CloseOtherItems", { "close_pinned": false }],
+      "space v": ["task::Spawn", { "task_name": "Preview in Skim" }],
+      "space b p": "pane::TogglePinTab",
+      "space i h": "editor::ToggleInlayHints",
+      "space g '": "editor::GoToHunk",
+      "space g ð": "editor::GoToPreviousHunk",
+      "space g h": "editor::ToggleSelectedDiffHunks",
+      "space g S": "git::ToggleStaged",
+      "space g r": "git::Restore", // "d p"
+      "space g s": "git::StageAndNext", // "d u"
+      "space g u": "git::UnstageAndNext", // "d shift-u"
+      "space g b": "git::Blame",
+      "space g d": "git::Diff",
+      "space g c": "git::Commit",
+      "space p": "editor::GoToDiagnostic",
+      "space shift-p": "editor::GoToPreviousDiagnostic",
+      "space h": "editor::Hover"
+    }
+  },
+
+  // *** VIM Editor ***
+  {
+    "context": "Editor && VimControl && !menu",
+    "bindings": {
+      "ctrl-w L": ["workspace::MoveItemToPaneInDirection", { "direction": "right" }],
+      "ctrl-w H": ["workspace::MoveItemToPaneInDirection", { "direction": "left" }],
+      "ctrl-w J": ["workspace::MoveItemToPaneInDirection", { "direction": "down" }],
+      "ctrl-w K": ["workspace::MoveItemToPaneInDirection", { "direction": "up" }],
+
+      "cmd-alt-1": ["workspace::MoveItemToPane", { "destination": 0, "focus": true, "clone": false }],
+      "cmd-alt-2": ["workspace::MoveItemToPane", { "destination": 1, "focus": true, "clone": false }],
+      "cmd-alt-3": ["workspace::MoveItemToPane", { "destination": 2, "focus": true, "clone": false }],
+      "cmd-alt-4": ["workspace::MoveItemToPane", { "destination": 3, "focus": true, "clone": false }],
+      "cmd-alt-5": ["workspace::MoveItemToPane", { "destination": 4, "focus": true, "clone": false }],
+      "cmd-alt-6": ["workspace::MoveItemToPane", { "destination": 5, "focus": true, "clone": false }],
+      "cmd-alt-7": ["workspace::MoveItemToPane", { "destination": 6, "focus": true, "clone": false }],
+      "cmd-alt-8": ["workspace::MoveItemToPane", { "destination": 7, "focus": true, "clone": false }],
+      "cmd-alt-9": ["workspace::MoveItemToPane", { "destination": 8, "focus": true, "clone": false }],
+
+      "cmd-shift-o": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ],
+
+      "alt-s": "editor::UnwrapSyntaxNode",
+      "alt-k": "editor::MoveLineUp",
+      "alt-j": "editor::MoveLineDown",
+      "alt-w": "vim::NextSubwordStart",
+      "alt-b": "vim::PreviousSubwordStart",
+      "alt-e": "vim::NextSubwordEnd",
+      "cmd-alt-k": "editor::AddSelectionAbove",
+      "cmd-alt-j": "editor::AddSelectionBelow", // Insert cursor below
+      "´": ["vim::PushJump", { "line": false }],
+      "°": ["vim::PushJump", { "line": true }],
+
+      // Pane Stuff - This is needed again to override 'Editor' context default bindings
+      "ctrl-shift-h": "workspace::ActivatePaneLeft",
+      "ctrl-shift-l": "workspace::ActivatePaneRight",
+      "ctrl-shift-j": "workspace::ActivatePaneDown",
+      "ctrl-shift-k": "workspace::ActivatePaneUp",
+      "ctrl-shift-left": "workspace::ActivatePaneLeft",
+      "ctrl-shift-right": "workspace::ActivatePaneRight",
+      "ctrl-shift-down": "workspace::ActivatePaneDown",
+      "ctrl-shift-up": "workspace::ActivatePaneUp",
+
+      // Brackets are in a bad place in IS keyboards
+      "' '": "vim::NextSectionStart",
+      "' ð": "vim::NextSectionEnd",
+      "ð ð": "vim::PreviousSectionStart",
+      "ð ´": "vim::PreviousSectionEnd",
+      "' m": "vim::NextMethodStart",
+      "' shift-m": "vim::NextMethodEnd",
+      "ð m": "vim::PreviousMethodStart",
+      "ð shift-m": "vim::PreviousMethodEnd",
+      "ð *": "vim::PreviousComment",
+      "ð /": "vim::PreviousComment",
+      "' *": "vim::NextComment",
+      "' /": "vim::NextComment",
+      "ð -": "vim::PreviousLesserIndent",
+      "ð +": "vim::PreviousGreaterIndent",
+      "ð =": "vim::PreviousSameIndent",
+      "' -": "vim::NextLesserIndent",
+      "' +": "vim::NextGreaterIndent",
+      "' =": "vim::NextSameIndent",
+      "' b": "pane::ActivateNextItem",
+      "ð b": "pane::ActivatePreviousItem",
+      "' shift-b": "pane::ActivateLastItem",
+      "ð shift-b": ["pane::ActivateItem", 0],
+      "' space": "vim::InsertEmptyLineBelow",
+      "ð space": "vim::InsertEmptyLineAbove"
+    }
+  },
+
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
+    "bindings": {
+      // Traditional Vim behavior
+      "Q": "vim::AnyQuotes",
+      "B": "vim::AnyBrackets",
+
+      // mini.ai plugin behavior
+      "q": "vim::MiniQuotes",
+      "b": "vim::MiniBrackets"
+    }
+  },
+
+  // Visual Vim mode
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "v": "editor::SelectLargerSyntaxNode",
+      "V": "editor::SelectSmallerSyntaxNode",
+      "ctrl-s": "vim::PushAddSurrounds",
+      "shift-x": "vim::Exchange"
+    }
+  },
+
+  {
+    "context": "(vim_mode == normal || vim_mode == visual) && !VimCount",
+    "bindings": {
+      "^": "vim::StartOfLine",
+      "0": "vim::FirstNonWhitespace",
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward"
+    }
+  },
+
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore",
+      "alt-s": "editor::UnwrapSyntaxNode",
+      "alt-w": "vim::NextSubwordStart",
+      "alt-e": "vim::NextSubwordEnd",
+      "alt-b": "vim::PreviousSubwordStart"
+    }
+  },
+
+  // *** Extension Based Configurations ***
+  // Elixir
+  {
+    "context": "Editor && (extension==ex || extension==exs)",
+    "bindings": {
+      "alt-a": [
+        "task::Spawn",
+        {
+          "task_name": "Fawkes: Choose alternate target",
+          "reveal_target": "center"
+        }
+      ]
+    }
+  },
+
+  // Text based
+  {
+    "context": "Editor && !VimCount && (vim_mode == normal || vim_mode == visual) && (extension==md || extension==typ || extension==qmd)",
+    "bindings": {
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }]
+    }
+  },
+
+  // R Code
+  {
+    "context": "Editor && extension==R",
+    "bindings": {
+      "ctrl-shift-m": ["workspace::SendKeystrokes", "space |> space"],
+      "alt--": ["workspace::SendKeystrokes", "space < - space"]
+    }
+  },
+
+  // Cell mode for jupyter
+  {
+    "context": "extension==R || extension==py",
+    "bindings": {
+      "ctrl-alt-i": ["workspace::SendKeystrokes", "\n# space %%\n"]
+    }
+  }
+]
